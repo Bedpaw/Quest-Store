@@ -3,6 +3,7 @@ import Home from "@/views/Home.vue";
 import AdminBoard from "../views/AdminBoard";
 import MentorBoard from "../views/MentorBoard";
 import ClassDetails from "../components/ClassDetails";
+import {authGuard} from "@/auth/authGuard";
 
 
 export const routes = [
@@ -14,7 +15,8 @@ export const routes = [
   {
     path: ROUTES.admin.path,
     name: ROUTES.admin.name,
-    component: AdminBoard
+    component: AdminBoard,
+    beforeEnter: authGuard
   },
   {
     path: ROUTES.mentor.path,

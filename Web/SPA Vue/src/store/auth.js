@@ -10,7 +10,10 @@ const initialState = user
 
 export const auth = {
   namespaced: true,
-  state: initialState,
+  state: {
+    initialState,
+    user: {}
+  },
 
   mutations: {
     loginSuccess(state, user) {
