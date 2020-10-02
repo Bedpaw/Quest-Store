@@ -43,6 +43,9 @@
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+      <v-list-item>
+        <login></login>
+      </v-list-item>
       </v-list>
     </v-navigation-drawer>
   </nav>
@@ -52,9 +55,11 @@
 <script>
 import { ROUTES } from "../utils/macros/routes";
 import { user } from "../mock/user-mock";
+import Login from "@/components/Login";
 
 export default {
 name: "Navbar",
+  components: {Login},
   data: () => ({
     user: user,
     drawer: true,
