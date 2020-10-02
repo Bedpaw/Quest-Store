@@ -1,8 +1,11 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace QuestStore.API
@@ -30,6 +33,18 @@ namespace QuestStore.API
                 });
 
             });
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(
+                    options =>
+                    {
+                        options.Authority = $"https://{Configuration["Auth0:Domain"]}/";
+                        options.Audience = Configuration["Auth0:Audience"];
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            NameClaimType = ClaimTypes.NameIdentifier,
+                            RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+                        };
+                    });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -49,6 +64,7 @@ namespace QuestStore.API
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
