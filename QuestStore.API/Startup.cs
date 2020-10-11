@@ -12,17 +12,27 @@ namespace QuestStore.API
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
         }
 
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment Environment { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            
+
+            services.AddCors(
+                options =>
+                {
+                    options.AddPolicy(
+                        "CorsDevelopmentPolicy",
+                        builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+                });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -33,6 +43,7 @@ namespace QuestStore.API
                 });
 
             });
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(
                     options =>
@@ -47,9 +58,9 @@ namespace QuestStore.API
                     });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
+            if (Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -61,7 +72,7 @@ namespace QuestStore.API
             });
 
             app.UseHttpsRedirection();
-
+            app.UseCors("CorsDevelopmentPolicy");
             app.UseRouting();
 
             app.UseAuthentication();
