@@ -15,6 +15,12 @@ export const ROUTES = {
     label: 'Mentor Board'
 
   },
+  profile: {
+    path: '/profile',
+    name: 'Profile',
+    label: 'Profile'
+
+  },
   quests: {
     path: '/quests',
     name: 'Quests',

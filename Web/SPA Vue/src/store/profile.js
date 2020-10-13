@@ -13,7 +13,7 @@ export const profile = {
   namespaced: true,
   state: initialState,
   getters: {
-    isAdmin: state => state.user.roles.includes("Admin")
+    isAdmin: (state => state.user.roles.includes("Admin"))
   },
   mutations: {
     setUser: (state, payload) => {

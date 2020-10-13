@@ -16,9 +16,9 @@
           nav
           class="py-0"
       >
-        <v-list-item two-line :class="miniVariant && 'px-0'">
-          <v-list-item-avatar>
-            <img :src="user.avatar">
+        <v-list-item two-line :class="miniVariant && 'px-0'" class="v-chip--clickable" @click="pushIfNotProfilePage">
+          <v-list-item-avatar >
+            <img :src="user.avatar" >
           </v-list-item-avatar>
 
           <v-list-item-content>
@@ -76,6 +76,11 @@ name: "Navbar",
         icon: 'mdi-teach',
         route: ROUTES.mentor
       },
+      {
+        title: 'test',
+        icon: '',
+        route: '/test'
+      }
     ],
     color: 'primary',
     colors: [
@@ -90,7 +95,18 @@ name: "Navbar",
     miniVariant: true,
     expandOnHover: true,
     background: false,
-  })
+  }),
+  computed: {
+  isNotProfilePage() {
+     return this.$route.path !== ROUTES.profile.path
+  }
+  },
+  methods: {
+    pushIfNotProfilePage() {
+      if (this.isNotProfilePage) this.$router.push(ROUTES.profile.path)
+    }
+  }
+
 }
 </script>
 

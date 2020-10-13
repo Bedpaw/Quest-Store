@@ -6,7 +6,7 @@
 
 <script>
 export default {
-name: "MentorBoard"
+name: "MentorBoard.vue"
 }
 </script>
 

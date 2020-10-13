@@ -4,6 +4,8 @@ import AdminBoard from "../views/AdminBoard";
 import MentorBoard from "../views/MentorBoard";
 import ClassDetails from "../components/ClassDetails";
 import {authGuard} from "@/auth/authGuard";
+import Profile from "@/views/Profile";
+import test from "@/views/test";
 
 
 export const routes = [
@@ -12,6 +14,7 @@ export const routes = [
     name: ROUTES.home.name,
     component: Home,
   },
+
   {
     path: ROUTES.admin.path,
     name: ROUTES.admin.name,
@@ -24,8 +27,19 @@ export const routes = [
     component: MentorBoard
   },
   {
+    path: ROUTES.profile.path,
+    name: ROUTES.profile.name,
+    component: Profile,
+    beforeEnter: authGuard
+  },
+  {
     path: ROUTES.classroom.path,
     name: ROUTES.classroom.name,
     component: ClassDetails
   },
+  {
+    path: '/test',
+    name: 'test',
+    component: test
+  }
   ]

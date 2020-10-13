@@ -1,4 +1,6 @@
 export const ADD_CLASS = 'ADD_CLASS'
+export const UPDATE_CLASS = 'UPDATE_CLASS'
+export const DELETE_CLASS = 'DELETE_CLASS'
 
 
 
