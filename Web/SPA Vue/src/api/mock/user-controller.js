@@ -1,6 +1,5 @@
 export const userController = {
-
   getUsers() {
-    return
+    return ''
   }
 }
