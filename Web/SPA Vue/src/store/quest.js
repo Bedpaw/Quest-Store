@@ -1,8 +1,9 @@
 import {arrayUtils} from "@/utils/array-utils";
 import {ADD_QUEST, DELETE_QUEST, UPDATE_QUEST} from "@/utils/macros/mutation-types";
+import {quests} from "@/mock/quests-mock";
 
 const initialState = {
-  quests: []
+  quests: quests
 }
 
 export const quest = {

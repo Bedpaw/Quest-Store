@@ -32,7 +32,7 @@
 
             <v-col cols="12" sm="6" md="6">
               <v-text-field
-                  v-model="editedUser.accountBalance"
+                  v-model="editedUser.coins"
                   label="Account Balance"
                   type="number"
                   step="10"
@@ -79,7 +79,7 @@ export default {
     emptyUserTemplate: {
       name:'',
       surname: '',
-      accountBalance: '',
+      coins: '',
       email: '',
       role:''
     },

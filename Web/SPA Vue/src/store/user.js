@@ -1,7 +1,7 @@
-import {users} from "../mock/user-mock";
-import {ADD_USER, DELETE_USER, UPDATE_USER} from "../utils/macros/mutation-types";
-import {ROLES} from "../utils/macros/roles";
-import {arrayUtils} from "../utils/array-utils";
+import {users} from "@/mock/user-mock";
+import {ADD_USER, DELETE_USER, UPDATE_USER} from "@/utils/macros/mutation-types";
+import {ROLES} from "@/utils/macros/roles";
+import {arrayUtils} from "@/utils/array-utils";
 
 const initialState = {
   users: users

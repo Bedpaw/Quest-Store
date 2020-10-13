@@ -76,6 +76,14 @@ name: "Navbar",
         icon: 'mdi-teach',
         route: ROUTES.mentor
       },
+      { title: ROUTES.quests.label,
+        icon: 'mdi-axe',
+        route: ROUTES.quests
+      },
+      { title: ROUTES.artifacts.label,
+        icon: 'mdi-seal',
+        route: ROUTES.artifacts
+      },
       {
         title: 'test',
         icon: '',

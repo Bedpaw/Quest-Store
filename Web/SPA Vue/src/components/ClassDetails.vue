@@ -2,7 +2,7 @@
   <div>
     <v-card v-for="_class in getClassById($route.params.id)" :key="_class.id">
         <v-card-title>{{_class.name}}</v-card-title>
-        <v-card-subtitle>Mentor: {{_class.mentor.getFullName()}}</v-card-subtitle>
+        <v-card-subtitle>Mentors: {{_class.mentors.map(mentor => mentor.getFullName()).toString()}}</v-card-subtitle>
         <h3>Students</h3>
         <div
             v-for="(student, index) in _class.students"

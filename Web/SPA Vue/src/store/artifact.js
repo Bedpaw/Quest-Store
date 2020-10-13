@@ -1,8 +1,9 @@
 import {arrayUtils} from "@/utils/array-utils";
 import {ADD_ARTIFACT, DELETE_ARTIFACT, UPDATE_ARTIFACT} from "@/utils/macros/mutation-types";
+import {artifacts} from "@/mock/artifacts-mock";
 
 const initialState = {
-  artifacts: []
+  artifacts: artifacts
 }
 
 export const artifact = {
