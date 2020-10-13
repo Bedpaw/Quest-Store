@@ -6,6 +6,8 @@ import ClassDetails from "../components/ClassDetails";
 import {authGuard} from "@/auth/authGuard";
 import Profile from "@/views/Profile";
 import test from "@/views/test";
+import Artifacts from "@/views/Artifacts";
+import Quests from "@/views/Quests";
 
 
 export const routes = [
@@ -36,6 +38,16 @@ export const routes = [
     path: ROUTES.classroom.path,
     name: ROUTES.classroom.name,
     component: ClassDetails
+  },
+  {
+    path: ROUTES.artifacts.path,
+    name: ROUTES.artifacts.name,
+    component: Artifacts
+  },
+  {
+    path: ROUTES.quests.path,
+    name: ROUTES.quests.name,
+    component: Quests
   },
   {
     path: '/test',

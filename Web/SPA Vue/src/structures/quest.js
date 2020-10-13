@@ -2,10 +2,16 @@ import {Basic} from "./basic";
 import {QUEST_TYPES} from "../utils/macros/quest-types";
 
 export class Quest extends Basic {
-  constructor(image='', prize=100, type=QUEST_TYPES.BASIC) {
-    super();
+  constructor({
+    id,
+    name,
+    description,
+    image= '',
+    reward= 100,
+    type= QUEST_TYPES.BASIC}) {
+    super(id, name, description);
     this.image = image
-    this.prize = prize
+    this.reward = reward
     this.type = type
   }
 }

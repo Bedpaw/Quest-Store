@@ -11,7 +11,7 @@
 
       <!--Concat mentor fullName -->
       <template v-slot:item.mentor="{ item }">
-        {{ item.mentor.getFullName()}}
+        {{ item.mentors.map(mentor => mentor.getFullName().toString())}}
       </template>
 
       <!--Number of students column -->
@@ -78,8 +78,8 @@ name: "ClassroomsTable",
         filterable: true
       },
       {
-        text: 'Mentor',
-        value: 'mentor',
+        text: 'Mentors',
+        value: 'mentors',
         sortable: true,
         filterable: true
       },

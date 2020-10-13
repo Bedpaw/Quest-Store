@@ -13,25 +13,26 @@ export const ROUTES = {
     path: '/mentor',
     name: 'Mentor Board',
     label: 'Mentor Board'
-
   },
   profile: {
     path: '/profile',
     name: 'Profile',
     label: 'Profile'
-
   },
   quests: {
     path: '/quests',
     name: 'Quests',
+    label: 'Quests'
   },
   artifacts: {
     path: '/artifacts',
     name: 'Artifacts',
+    label: 'Artifacts'
   },
   classroom: {
     path: '/class/:id',
-    name: 'class'
+    name: 'class',
+    label: 'Classrooms'
   }
 }
 

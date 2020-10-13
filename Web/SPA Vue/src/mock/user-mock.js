@@ -15,7 +15,7 @@ export const users = [
     email: "bedpaw@test.com",
     role: ROLES.ADMIN,
     image: '',
-    accountBalance: 100,
+    coins: 100,
     artifacts: []
   }),
   new User({
@@ -25,7 +25,7 @@ export const users = [
     email: "kowal@test.com",
     role: ROLES.STUDENT,
     image: '',
-    accountBalance: 0,
+    coins: 0,
     artifacts: []
   }),
   new User({
@@ -35,7 +35,7 @@ export const users = [
     email: "Bruce@gmail.com",
     role: ROLES.MENTOR,
     image: '',
-    accountBalance: 0,
+    coins: 0,
     artifacts: []
   }),
   new User({
@@ -45,7 +45,7 @@ export const users = [
     email: "Kowalczyk@wp.pl",
     role: ROLES.STUDENT,
     image: '',
-    accountBalance:1000,
+    coins:1000,
     artifacts: []
   }),
 ]

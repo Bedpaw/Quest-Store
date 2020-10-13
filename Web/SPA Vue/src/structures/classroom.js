@@ -6,12 +6,12 @@ export class Classroom extends Basic {
       name,
       description,
       image= '',
-      students=[],
-      mentor= {},
+      students= [],
+      mentors= [],
     }) {
     super(id, name, description);
     this.image = image
-    this.mentor = mentor
+    this.mentor = mentors
     this.students = students
   }
 }

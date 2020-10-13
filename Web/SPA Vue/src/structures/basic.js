@@ -5,6 +5,6 @@ export class Basic {
     description='') {
     this.id = id
     this.name = name
-    this.desription = description
+    this.description = description
   }
 }

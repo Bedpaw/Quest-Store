@@ -21,9 +21,9 @@
       </template>
 
       <!--Styling account balance column -->
-      <template v-slot:item.accountBalance="{ item }">
+      <template v-slot:item.coins="{ item }">
         <v-chip small color="yellow" style="font-weight: bold">
-          {{ item.accountBalance }}
+          {{ item.coins }}
         </v-chip>
       </template>
 
@@ -99,7 +99,7 @@ export default {
       },
       {
         text: 'Cool coins',
-        value: 'accountBalance',
+        value: 'coins',
         sortable: true,
         filterable: true
       },
