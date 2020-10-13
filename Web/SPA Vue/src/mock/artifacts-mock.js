@@ -8,7 +8,7 @@ export const artifacts = [
     description: 'Duis dignissim, lorem eget interdum hendrerit, erat lectus consequat libero, condimentum rhoncus urna nulla feugiat orci.',
     image: '',
     cost: 50,
-    quantity: 5
+    quantity: 0
   }),
   new Artifact({
     id: 2,
