@@ -12,6 +12,7 @@ export const classroom = {
   state: initialState,
   getters: {
     getClasses: (state) => state.classes,
+    getClassById: (state) => (_classId) => state.classes.filter(_class => _class.id === parseInt(_classId))
   },
   mutations: {
     [ADD_CLASS] : (state, payload) => state.classes.push(payload),

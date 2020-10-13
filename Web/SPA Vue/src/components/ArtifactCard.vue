@@ -5,11 +5,11 @@
       {{ artifact.name }}
     </v-card-title>
 
-    <v-card-subtitle>
+    <v-card-subtitle :class="{ 'red--text': noQuantityLeft }">
       {{ artifact.quantity }} left
     </v-card-subtitle>
 
-    <div class="d-flex flex-column align-center pb-5">
+    <div class="d-flex flex-column align-center pb-5 text-h6">
       <p class="ma-0 font-weight-bold ">COST</p>
       <p class="ma-0">{{ artifact.cost }} COINS</p>
       <v-btn

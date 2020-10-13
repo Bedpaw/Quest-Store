@@ -38,6 +38,7 @@ export const users = [
     coins: 0,
     artifacts: []
   }),
+
   new User({
     id: 4,
     name: "Janek",
@@ -46,6 +47,16 @@ export const users = [
     role: ROLES.STUDENT,
     image: '',
     coins:1000,
+    artifacts: []
+  }),
+  new User({
+    id: 5,
+    name: "Jackie",
+    surname: "Chan",
+    email: "Chan@gmail.com",
+    role: ROLES.MENTOR,
+    image: '',
+    coins: 0,
     artifacts: []
   }),
 ]

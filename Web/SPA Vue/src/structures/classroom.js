@@ -11,7 +11,7 @@ export class Classroom extends Basic {
     }) {
     super(id, name, description);
     this.image = image
-    this.mentor = mentors
+    this.mentors = mentors
     this.students = students
   }
 }

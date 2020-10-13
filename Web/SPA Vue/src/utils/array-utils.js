@@ -9,5 +9,8 @@ export const arrayUtils = {
   updateItem(array, newItem) {
     const indexToReplace = array.indexOf(newItem);
     return array.splice(indexToReplace, 1, newItem)
+  },
+  isEmptyArray(array) {
+    return (Array.isArray(array) && array.length === 0)
   }
 };

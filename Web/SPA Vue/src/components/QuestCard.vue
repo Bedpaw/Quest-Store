@@ -9,7 +9,7 @@
       {{ quest.type }}
     </v-card-subtitle>
 
-    <div class="d-flex flex-column align-center font-weight-bold pb-5">
+    <div class="d-flex flex-column align-center font-weight-bold pb-5 text-h6">
       <p class="ma-0">REWARD</p>
       {{ quest.reward }}
     </div>

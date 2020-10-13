@@ -1,6 +1,8 @@
 <template>
-  <v-dialog v-model="dialog" max-width="500px">
-
+  <v-dialog
+      v-model="dialog"
+      max-width="500px"
+  >
     <!--Button activator-->
     <template v-slot:activator="{ on, attrs }">
       <v-btn color="primary" dark class="mb-2"
@@ -71,6 +73,7 @@ export default {
   name: "UserDataDialog",
   props: {
     dialog: {
+      type: Boolean,
       default: false
     },
     currentItem: {}

@@ -22,6 +22,5 @@ export class User extends Basic{
     this.surname = surname
     this.artifacts = artifacts;
   };
-  getFullName = () => this.name + " " + this.surname
 }
 

@@ -19,6 +19,7 @@
           :rules="[v => !!v || 'Mentor is required']"
           label="Mentor"
           required
+          multiple
       ></v-select>
 
 
@@ -43,9 +44,9 @@
 </template>
 
 <script>
-import {mapMutations} from 'vuex'
-import {ADD_CLASS} from "../../utils/macros/mutation-types";
-import {Classroom} from "../../structures/classroom";
+import {mapGetters, mapMutations} from 'vuex'
+import {ADD_CLASS} from "@/utils/macros/mutation-types";
+import {Classroom} from "@/structures/classroom";
 export default {
   name: "",
   props: {
@@ -55,8 +56,11 @@ export default {
     },
   },
   computed: {
+    ...mapGetters('user', [
+      'getListOfFullNames'
+    ]),
     mentorsNames() {
-      return this.mentors.map(mentor => mentor.getFullName())
+      return this.getListOfFullNames(this.mentors)
     },
     selectedMentor() {
       return this.mentors.find(mentor => mentor.getFullName() === this.select)
