@@ -15,6 +15,6 @@ export const classrooms = [
     name: "Web Development 2",
     description: "We love code",
     mentors: users.filter(user => user.role === ROLES.MENTOR),
-    students: [users.filter(user => user.role === ROLES.STUDENT).pop()]
+    students: [users.filter(user => user.role === ROLES.STUDENT).pop(), users[0]]
   })
 ]

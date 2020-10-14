@@ -1,5 +1,6 @@
 import {User} from "../structures/user";
 import {ROLES} from "../utils/macros/roles";
+import {artifacts} from "@/mock/artifacts-mock";
 
 export const user = {
   name: "Paweł Bednarczyk",
@@ -13,10 +14,14 @@ export const users = [
     name: "Paweł",
     surname: "Bednarczyk",
     email: "bedpaw@test.com",
+    description: "Hi, I'm Paweł and i want to be full stack developer, my favorite technologies are C#, ASP NET Core and Vue.js",
     role: ROLES.ADMIN,
     image: '',
     coins: 100,
-    artifacts: []
+    artifacts: [
+      artifacts[0],
+      artifacts[1]
+    ]
   }),
   new User({
     id: 2,
