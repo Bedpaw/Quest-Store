@@ -4,14 +4,14 @@
     <v-text-field v-model="search" label="Search" single-line clearable class="px-4" />
 
     <v-data-table
-        :items="classrooms"
+        :items="getClasses"
         :headers="headers"
         :search="search"
     >
 
       <!--Concat mentor fullName -->
-      <template v-slot:item.mentor="{ item }">
-        {{ item.mentors.map(mentor => mentor.getFullName().toString())}}
+      <template v-slot:item.mentors="{ item }">
+        {{ getMentorsFullNamesAsString(item) }}
       </template>
 
       <!--Number of students column -->
@@ -21,6 +21,9 @@
 
       <!--Add editing/deleting buttons -->
       <template v-slot:item.actions="{ item }">
+        <v-icon small class="mr-2" @click="openClassDetails(item.id)">
+          mdi-eye
+        </v-icon>
         <v-icon small class="mr-2" @click="editItem(item)">
           mdi-pencil
         </v-icon>
@@ -53,49 +56,32 @@
 </template>
 
 <script>
-import {mapMutations} from "vuex";
-import {ADD_CLASS} from "../../utils/macros/mutation-types";
+import {mapGetters, mapMutations} from "vuex";
+import {ADD_CLASS} from "@/utils/macros/mutation-types";
 import ClassDataDialog from "./dialogs/ClassDataDialog";
+import {classroomTableHeaders} from "@/components/data-tables/table-headers";
+import {ROUTES} from "@/utils/macros/routes";
 
 export default {
 name: "ClassroomsTable",
 
   components: {ClassDataDialog},
-  props: {
-    classrooms: {
-      type: Array
-    }
-  },
   data: () => ({
     search: "",
     dialog: false,
     currentItem: {},
-    headers: [
-      {
-        text: 'Name',
-        value: 'name',
-        sortable: true,
-        filterable: true
-      },
-      {
-        text: 'Mentors',
-        value: 'mentors',
-        sortable: true,
-        filterable: true
-      },
-      {
-        text: 'Number of students',
-        value: 'students',
-        sortable: true,
-        filterable: true
-      },
-      {
-        text: 'Actions',
-        value: 'actions',
-        sortable: false
-      },
-    ],
+    headers: classroomTableHeaders
   }),
+    computed: {
+      ...mapGetters('classroom', [
+        'getClasses'
+      ]),
+      ...mapGetters('user', [
+        'getFullName',  'getUsersFullNameAsString'
+      ]),
+    },
+  created() {
+  },
   methods: {
     ...mapMutations('user', [
       ADD_CLASS
@@ -113,6 +99,12 @@ name: "ClassroomsTable",
     },
     saveChange(changedItem) {
       console.log(changedItem)
+    },
+    getMentorsFullNamesAsString(_class) {
+     return this.getUsersFullNameAsString(_class.mentors)
+    },
+    openClassDetails(_classId) {
+      this.$router.push(ROUTES.classroom.name + '/' + _classId )
     }
   }
 }

@@ -10,7 +10,7 @@
     >
       <!--Join name + surname in first column -->
       <template v-slot:item.name="{item}">
-        {{item.getFullName()}}
+        {{getFullName(item)}}
       </template>
 
       <!--Styling role column -->
@@ -65,58 +65,26 @@
 </template>
 
 <script>
-import {ROLES} from "../../utils/macros/roles";
+import {ROLES} from "@/utils/macros/roles";
 import UserDataDialog from "./dialogs/UserDataDialog";
-import {User} from "../../structures/user";
+import {User} from "@/structures/user";
 import {mapGetters, mapMutations} from "vuex";
-import {ADD_USER, DELETE_USER, UPDATE_USER} from "../../utils/macros/mutation-types";
+import {ADD_USER, DELETE_USER, UPDATE_USER} from "@/utils/macros/mutation-types";
+import {userTableHeaders} from "@/components/data-tables/table-headers";
 
 export default {
   name: "TestTable",
-  components: {UserDataDialog},
+  components: { UserDataDialog },
   data: () => ({
     search: "",
     dialog: false,
     currentItem: {},
-    headers: [
-      {
-        text: 'Full name',
-        value: 'name',
-        sortable: true,
-        filterable: true
-      },
-      {
-        text: 'Role',
-        value: 'role',
-        sortable: true,
-        filterable: true
-      },
-      {
-        text: 'E-mail',
-        value: 'email',
-        sortable: true,
-        filterable: true
-      },
-      {
-        text: 'Cool coins',
-        value: 'coins',
-        sortable: true,
-        filterable: true
-      },
-      {
-        text: 'Actions',
-        value: 'actions',
-        sortable: false
-      },
-    ],
+    headers: userTableHeaders
   }),
   computed: {
     ...mapGetters('user', [
-      'getUsers'
+      'getUsers', 'getFullName', 'getUserById'
     ]),
-    items() {
-      return this.getUsers
-    }
   },
   methods: {
     ...mapMutations('user', [
@@ -130,6 +98,7 @@ export default {
         [ROLES.GUEST]: 'gray'
       }[role]
     },
+
     editItem (item) {
       this.currentItem = {...item}
       this.dialog = true
@@ -142,12 +111,15 @@ export default {
       this.currentItem = {}
     },
     saveChange(changedItem) {
-      let user = this.items.find(item => item.id === changedItem.id)
+      // Try to find user
+      let user = this.getUserById(changedItem.id)
 
+      // User exist, so update him
       if (user) {
         user = Object.assign(user, changedItem)
         this.UPDATE_USER(user)
       }
+      // User not found, so create
       else {
         user = new User({...changedItem })
         this.ADD_USER(user)

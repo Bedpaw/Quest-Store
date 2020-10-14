@@ -4,7 +4,7 @@
       <v-card-title>CLASSSES</v-card-title>
       <v-card-text>
         <p v-for="_class in getClasses" :key="_class.id">
-          {{_class}}
+          {{ _class }}
         </p>
       </v-card-text>
     </v-card>
@@ -12,7 +12,7 @@
       <v-card-title>USERS</v-card-title>
       <v-card-text>
         <p v-for="user in getUsers" :key="user.id">
-          {{user}}
+          {{ user }}
         </p>
       </v-card-text>
     </v-card>
@@ -20,7 +20,7 @@
       <v-card-title>QUESTS</v-card-title>
       <v-card-text>
         <p v-for="quest in getQuests" :key="quest.id">
-          {{quest}}
+          {{ quest }}
         </p>
       </v-card-text>
     </v-card>
@@ -28,8 +28,14 @@
       <v-card-title>ARTIFACTS</v-card-title>
       <v-card-text>
         <p v-for="artifact in getArtifacts" :key="artifact.id">
-          {{artifact}}
+          {{ artifact }}
         </p>
+      </v-card-text>
+    </v-card>
+    <v-card>
+      <v-card-title>Logged User</v-card-title>
+      <v-card-text>
+        {{ getLoggedUser }}
       </v-card-text>
     </v-card>
   </v-container>
@@ -46,7 +52,7 @@ export default {
       'getClasses',
     ]),
     ...mapGetters('user', [
-      'getUsers',
+      'getUsers', 'getLoggedUser'
     ]),
     ...mapGetters('artifact', [
       'getArtifacts',
