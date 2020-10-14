@@ -6,7 +6,6 @@
           <users-table></users-table>
         </v-card>
       </v-col>
-
     </v-row>
 
     <v-row>

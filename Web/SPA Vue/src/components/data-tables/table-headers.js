@@ -55,3 +55,54 @@ export const classroomTableHeaders = [
     sortable: false
   },
 ]
+
+export const artifactTableHeaders = [
+  {
+    text: 'Name',
+    value: 'name',
+    sortable: true,
+    filterable: true
+  },
+  {
+    text: 'Cost',
+    value: 'cost',
+    sortable: true,
+    filterable: true
+  },
+  {
+    text: 'Quantity',
+    value: 'quantity',
+    sortable: true,
+    filterable: true
+  },
+  {
+    text: 'Actions',
+    value: 'actions',
+    sortable: false
+  },
+]
+export const questTableHeaders = [
+  {
+    text: 'Name',
+    value: 'name',
+    sortable: true,
+    filterable: true
+  },
+  {
+    text: 'Reward',
+    value: 'reward',
+    sortable: true,
+    filterable: true
+  },
+  {
+    text: 'Type',
+    value: 'type',
+    sortable: true,
+    filterable: true
+  },
+  {
+    text: 'Actions',
+    value: 'actions',
+    sortable: false
+  },
+]

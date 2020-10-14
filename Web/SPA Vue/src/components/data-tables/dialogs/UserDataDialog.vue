@@ -6,7 +6,7 @@
     <!--Button activator-->
     <template v-slot:activator="{ on, attrs }">
       <v-btn color="primary" dark class="mb-2"
-             v-bind="attrs" @click="open">
+             v-bind="attrs" @click="$emit('toggleDialog')">
         Add User
       </v-btn>
     </template>
@@ -21,20 +21,20 @@
         <v-container>
           <v-row>
             <v-col cols="12" sm="12" md="6">
-              <v-text-field v-model="editedUser.name" label="Name"/>
+              <v-text-field v-model="editedItem.name" label="Name"/>
             </v-col>
 
             <v-col cols="12" sm="6" md="6">
-              <v-text-field v-model="editedUser.surname" label="Surname"/>
+              <v-text-field v-model="editedItem.surname" label="Surname"/>
             </v-col>
 
             <v-col cols="12" sm="6" md="6">
-              <v-select :items="roles" v-model="editedUser.role" label="Role"/>
+              <v-select :items="roles" v-model="editedItem.role" label="Role"/>
             </v-col>
 
             <v-col cols="12" sm="6" md="6">
               <v-text-field
-                  v-model="editedUser.coins"
+                  v-model="editedItem.coins"
                   label="Account Balance"
                   type="number"
                   step="10"
@@ -49,7 +49,7 @@
         <v-btn
             color="blue darken-1"
             text
-            @click="close"
+            @click="$emit('toggleDialog')"
         >
           Cancel
         </v-btn>
@@ -66,45 +66,31 @@
 </template>
 
 <script>
-import {ROLES} from "../../../utils/macros/roles";
-import {objectUtils} from "../../../utils/object-utils";
+import {ROLES} from "@/utils/macros/roles";
+import {objectUtils} from "@/utils/object-utils";
+import {dataTableDialogMixin} from "@/mixins/dataTablesMixin";
 
 export default {
   name: "UserDataDialog",
-  props: {
-    dialog: {
-      type: Boolean,
-      default: false
-    },
-    currentItem: {}
+  mixins: [dataTableDialogMixin],
+  data() {
+    return {
+      emptyItemTemplate: {
+        name: '',
+        surname: '',
+        coins: '',
+        email: '',
+        role: '',
+      },
+      roles: Object.values(ROLES),
+    }
   },
-  data: () => ({
-    emptyUserTemplate: {
-      name:'',
-      surname: '',
-      coins: '',
-      email: '',
-      role:''
-    },
-    roles: Object.values(ROLES)
-  }),
-  computed:{
-    formTitle () {
-      if ( objectUtils.isEmptyObject(this.currentItem) ) return 'New User'
+  computed: {
+    formTitle() {
+      if (objectUtils.isEmptyObject(this.currentItem)) return 'New User'
       return 'Edit User'
     },
-    editedUser()  {
-      return {...this.emptyUserTemplate, ...this.currentItem }
-    },
   },
-  methods: {
-    save() {this.$emit('itemChanged', this.editedUser)},
-    close () { this.$emit('dialogClosed') },
-    open () { this.$emit('dialogOpened') }
-  }
 }
 </script>
 
-<style scoped>
-
-</style>
