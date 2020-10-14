@@ -11,6 +11,7 @@ export const artifact = {
   state: initialState,
   getters: {
     getArtifacts: (state) => state.artifacts,
+    getArtifactById: (state) => (artifactId) => state.artifacts.find(artifact => artifact.id === parseInt(artifactId)),
   },
   mutations: {
     [ADD_ARTIFACT]: (state, payload) => state.artifacts.push(payload),

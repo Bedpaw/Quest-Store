@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--Search -->
-    <v-text-field v-model="search" label="Search" single-line clearable class="px-4" />
+    <v-text-field v-model="search" label="Search" single-line clearable class="px-4"/>
 
     <v-data-table
         :items="getClasses"
@@ -16,7 +16,7 @@
 
       <!--Number of students column -->
       <template v-slot:item.students="{ item }">
-        {{ item.students.length}}
+        {{ item.students.length }}
       </template>
 
       <!--Add editing/deleting buttons -->
@@ -42,7 +42,9 @@
 
           <class-data-dialog
               :dialog="dialog"
-              :current-item="currentItem"/>
+              :current-item="currentItem"
+              @toggleDialog="dialog = !dialog"
+              @itemChanged="saveChange"/>
         </v-toolbar>
       </template>
 
@@ -57,54 +59,60 @@
 
 <script>
 import {mapGetters, mapMutations} from "vuex";
-import {ADD_CLASS} from "@/utils/macros/mutation-types";
+import {ADD_CLASS, DELETE_CLASS, UPDATE_CLASS} from "@/utils/macros/mutation-types";
 import ClassDataDialog from "./dialogs/ClassDataDialog";
 import {classroomTableHeaders} from "@/components/data-tables/table-headers";
 import {ROUTES} from "@/utils/macros/routes";
+import {Classroom} from "@/structures/classroom";
+import {dataTableMixin} from "@/mixins/dataTablesMixin";
 
 export default {
-name: "ClassroomsTable",
+  name: "ClassroomsTable",
 
   components: {ClassDataDialog},
   data: () => ({
     search: "",
-    dialog: false,
-    currentItem: {},
     headers: classroomTableHeaders
   }),
-    computed: {
-      ...mapGetters('classroom', [
-        'getClasses'
-      ]),
-      ...mapGetters('user', [
-        'getFullName',  'getUsersFullNameAsString'
-      ]),
-    },
-  created() {
-  },
-  methods: {
-    ...mapMutations('user', [
-      ADD_CLASS
+  mixins: [dataTableMixin],
+  computed: {
+    ...mapGetters('classroom', [
+      'getClasses', 'getClassById'
     ]),
-    editItem (item) {
-      this.currentItem = {...item}
-      this.dialog = true
-    },
-    deleteItem (user) {
-      if(confirm('Are you sure you want to delete this user?')) {console.log(user)}
-    },
-    clearEditedUser() {
-      this.dialog = false
-      this.currentItem = {}
+    ...mapGetters('user', [
+      'getUsersFullNameAsString'
+    ]),
+  },
+
+  methods: {
+    ...mapMutations('classroom', [
+      ADD_CLASS, DELETE_CLASS, UPDATE_CLASS
+    ]),
+
+    deleteItem(classroom) {
+      if (confirm('Are you sure you want to delete this classroom?')) this.DELETE_CLASS(classroom)
     },
     saveChange(changedItem) {
-      console.log(changedItem)
+      // Try to find class
+      let _class = this.getClassById(changedItem.id)
+
+      // Class exist, so update him
+      if (_class) {
+        _class = Object.assign(_class, changedItem)
+        this.UPDATE_USER(_class)
+      }
+      // Class not found, so create
+      else {
+        _class = new Classroom({...changedItem})
+        this.ADD_USER(_class)
+      }
+      this.clearEditedItem()
     },
     getMentorsFullNamesAsString(_class) {
-     return this.getUsersFullNameAsString(_class.mentors)
+      return this.getUsersFullNameAsString(_class.mentors)
     },
     openClassDetails(_classId) {
-      this.$router.push(ROUTES.classroom.name + '/' + _classId )
+      this.$router.push(ROUTES.classroom.name + '/' + _classId)
     }
   }
 }

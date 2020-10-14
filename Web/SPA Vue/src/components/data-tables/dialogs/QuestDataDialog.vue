@@ -7,7 +7,7 @@
     <template v-slot:activator="{ on, attrs }">
       <v-btn color="primary" dark class="mb-2"
              v-bind="attrs" @click="$emit('toggleDialog')">
-        Add Classroom
+        Add Quest
       </v-btn>
     </template>
 
@@ -23,15 +23,6 @@
             <v-col cols="12" sm="12" md="6">
               <v-text-field v-model="editedItem.name" label="Name"/>
             </v-col>
-
-            <v-col cols="12" sm="6" md="6">
-              <v-text-field v-model="editedItem.students" label="Students"/>
-            </v-col>
-
-            <v-col cols="12" sm="6" md="6">
-              <v-text-field v-model="editedItem.mentors" label="Mentors"/>
-            </v-col>
-
           </v-row>
         </v-container>
       </v-card-text>
@@ -63,22 +54,20 @@ import {objectUtils} from "@/utils/object-utils";
 import {dataTableDialogMixin} from "@/mixins/dataTablesMixin";
 
 export default {
-  name: "ClassDataDialog",
-  mixins:[dataTableDialogMixin],
+  name: "QuestDataDialog",
+  mixins: [dataTableDialogMixin],
   data() {
     return {
       emptyItemTemplate: {
         name: '',
-        mentors: '',
-        students: '',
       },
       roles: Object.values(ROLES),
     }
   },
-  computed:{
-    formTitle () {
-      if ( objectUtils.isEmptyObject(this.currentItem) ) return 'New Class'
-      return 'Edit Class'
+  computed: {
+    formTitle() {
+      if (objectUtils.isEmptyObject(this.currentItem)) return 'New User'
+      return 'Edit User'
     },
   },
 }

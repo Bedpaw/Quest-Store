@@ -22,7 +22,7 @@ export const user = {
     getUsersFullNameAsString: (state, getters) => (usersArray) => getters.getListOfFullNames(usersArray).join(', '),
 
     // Filtered Data
-    getUserById: (state) => (userId) => state.users.find(user => user.id === userId),
+    getUserById: (state) => (userId) => state.users.find(user => user.id === parseInt(userId)),
     getUsers: (state) => state.users,
     getStudents: (state) => state.users.map( user => user.role === ROLES.STUDENT),
     getMentors: (state) => state.users.map( user => user.role === ROLES.MENTOR),

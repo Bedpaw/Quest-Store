@@ -48,8 +48,7 @@
           <user-data-dialog
               :dialog="dialog"
               :current-item="currentItem"
-              @dialogClosed="clearEditedUser"
-              @dialogOpened="dialog=true"
+              @toggleDialog="dialog = !dialog"
               @itemChanged="saveChange"
           />
         </v-toolbar>
@@ -71,16 +70,16 @@ import {User} from "@/structures/user";
 import {mapGetters, mapMutations} from "vuex";
 import {ADD_USER, DELETE_USER, UPDATE_USER} from "@/utils/macros/mutation-types";
 import {userTableHeaders} from "@/components/data-tables/table-headers";
+import {dataTableMixin} from "@/mixins/dataTablesMixin";
 
 export default {
   name: "TestTable",
   components: { UserDataDialog },
   data: () => ({
     search: "",
-    dialog: false,
-    currentItem: {},
     headers: userTableHeaders
   }),
+  mixins: [dataTableMixin],
   computed: {
     ...mapGetters('user', [
       'getUsers', 'getFullName', 'getUserById'
@@ -90,25 +89,8 @@ export default {
     ...mapMutations('user', [
       ADD_USER, UPDATE_USER, DELETE_USER
     ]),
-    setRoleChipColor(role) {
-      return {
-        [ROLES.ADMIN]: 'orange',
-        [ROLES.MENTOR]: 'blue',
-        [ROLES.STUDENT]: 'green',
-        [ROLES.GUEST]: 'gray'
-      }[role]
-    },
-
-    editItem (item) {
-      this.currentItem = {...item}
-      this.dialog = true
-    },
     deleteItem (user) {
-      if(confirm('Are you sure you want to delete this user?'))  this.DELETE_USER(user)
-    },
-    clearEditedUser() {
-      this.dialog = false
-      this.currentItem = {}
+      if(confirm('Are you sure you want to delete this user?')) this.DELETE_USER(user)
     },
     saveChange(changedItem) {
       // Try to find user
@@ -124,8 +106,16 @@ export default {
         user = new User({...changedItem })
         this.ADD_USER(user)
       }
-      this.clearEditedUser()
-    }
+      this.clearEditedItem()
+    },
+    setRoleChipColor(role) {
+      return {
+        [ROLES.ADMIN]: 'orange',
+        [ROLES.MENTOR]: 'blue',
+        [ROLES.STUDENT]: 'green',
+        [ROLES.GUEST]: 'gray'
+      }[role]
+    },
   }
 }
 </script>

@@ -12,6 +12,7 @@ export const quest = {
   state: initialState,
   getters: {
     getQuests: (state) => state.quests,
+    getQuestById: (state) => (questId) => state.quests.find(quest => quest.id === parseInt(questId)),
     getBasicQuests: (state) => state.quests.filter(quest => quest.type === QUEST_TYPES.BASIC),
     getExtraQuests: (state) => state.quests.filter(quest => quest.type === QUEST_TYPES.EXTRA),
   },
