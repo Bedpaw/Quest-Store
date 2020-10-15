@@ -67,7 +67,6 @@
 
 <script>
 import {ROLES} from "@/utils/macros/roles";
-import {objectUtils} from "@/utils/object-utils";
 import {dataTableDialogMixin} from "@/mixins/dataTablesMixin";
 
 export default {
@@ -82,14 +81,9 @@ export default {
         email: '',
         role: '',
       },
+      formName: 'User',
       roles: Object.values(ROLES),
     }
-  },
-  computed: {
-    formTitle() {
-      if (objectUtils.isEmptyObject(this.currentItem)) return 'New User'
-      return 'Edit User'
-    },
   },
 }
 </script>

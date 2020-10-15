@@ -34,7 +34,6 @@
                   hint="Pick students for your class"
                   persistent-hint
               ></v-select>
-              {{editedItem.students}}
             </v-col>
 
             <v-col cols="12" sm="6" md="6">
@@ -75,7 +74,6 @@
 </template>
 
 <script>
-import {ROLES} from "@/utils/macros/roles";
 import {dataTableDialogMixin} from "@/mixins/dataTablesMixin";
 import {mapGetters} from "vuex";
 
@@ -89,7 +87,7 @@ export default {
         mentors: [],
         students: [],
       },
-      roles: Object.values(ROLES),
+      formName: 'Class',
       studentsSelectList: {},
       mentorsSelectList: {}
     }
@@ -112,10 +110,6 @@ export default {
     ...mapGetters('user', [
       'getStudents', 'getFullName', 'getMentors'
     ]),
-    formTitle() {
-      if (this.isEditMode()) return 'New Class'
-      return 'Edit Class'
-    },
   },
 }
 </script>

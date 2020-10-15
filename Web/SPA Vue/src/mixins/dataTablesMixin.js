@@ -21,7 +21,8 @@ export const dataTableDialogMixin = {
   data() {
     return {
       editedItem: {},
-      emptyItemTemplate: {}
+      emptyItemTemplate: {},
+      formName: "Item"
     }
   },
   props: {
@@ -32,6 +33,12 @@ export const dataTableDialogMixin = {
     currentItem: {
       type: Object
     }
+  },
+  computed: {
+    formTitle() {
+      if (this.isEditMode()) return 'New ' + this.formName
+      return 'Edit ' + this.formName
+    },
   },
   watch:{
     dialog: function () {

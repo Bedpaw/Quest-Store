@@ -23,6 +23,25 @@
             <v-col cols="12" sm="12" md="6">
               <v-text-field v-model="editedItem.name" label="Name"/>
             </v-col>
+            <v-col cols="12" sm="12" md="6">
+              <v-text-field v-model="editedItem.description" label="Description"/>
+            </v-col>
+            <v-col cols="12" sm="12" md="6">
+              <v-text-field
+                  v-model="editedItem.cost"
+                  label="Cost"
+                  type="number"
+                  step="10"
+                  min="0"/>
+            </v-col>
+            <v-col cols="12" sm="12" md="6">
+              <v-text-field
+                  v-model="editedItem.quantity"
+                  label="Quantity"
+                  type="number"
+                  step="10"
+                  min="0"/>
+            </v-col>
           </v-row>
         </v-container>
       </v-card-text>
@@ -49,8 +68,6 @@
 </template>
 
 <script>
-import {ROLES} from "@/utils/macros/roles";
-import {objectUtils} from "@/utils/object-utils";
 import {dataTableDialogMixin} from "@/mixins/dataTablesMixin";
 
 export default {
@@ -60,15 +77,12 @@ export default {
     return {
       emptyItemTemplate: {
         name: '',
+        description: '',
+        cost: '',
+        quantity: ''
       },
-      roles: Object.values(ROLES),
+      formName: 'Artifact'
     }
-  },
-  computed: {
-    formTitle() {
-      if (objectUtils.isEmptyObject(this.currentItem)) return 'New Artifact'
-      return 'Edit Artifact'
-    },
   },
 }
 </script>
