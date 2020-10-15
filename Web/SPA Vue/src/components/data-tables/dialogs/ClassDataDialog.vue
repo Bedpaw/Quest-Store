@@ -25,11 +25,28 @@
             </v-col>
 
             <v-col cols="12" sm="6" md="6">
-              <v-text-field v-model="editedItem.students" label="Students"/>
+              <v-select
+                  v-model="editedItem.students"
+                  :items="studentsSelectList"
+                  :menu-props="{ maxHeight: '400' }"
+                  label="Students"
+                  multiple
+                  hint="Pick students for your class"
+                  persistent-hint
+              ></v-select>
+              {{editedItem.students}}
             </v-col>
 
             <v-col cols="12" sm="6" md="6">
-              <v-text-field v-model="editedItem.mentors" label="Mentors"/>
+              <v-select
+                  v-model="editedItem.mentors"
+                  :items="mentorsSelectList"
+                  :menu-props="{ maxHeight: '400' }"
+                  label="Mentors"
+                  multiple
+                  hint="Pick mentors"
+                  persistent-hint
+              ></v-select>
             </v-col>
 
           </v-row>
@@ -59,25 +76,44 @@
 
 <script>
 import {ROLES} from "@/utils/macros/roles";
-import {objectUtils} from "@/utils/object-utils";
 import {dataTableDialogMixin} from "@/mixins/dataTablesMixin";
+import {mapGetters} from "vuex";
 
 export default {
   name: "ClassDataDialog",
-  mixins:[dataTableDialogMixin],
+  mixins: [dataTableDialogMixin],
   data() {
     return {
       emptyItemTemplate: {
         name: '',
-        mentors: '',
-        students: '',
+        mentors: [],
+        students: [],
       },
       roles: Object.values(ROLES),
+      studentsSelectList: {},
+      mentorsSelectList: {}
     }
   },
-  computed:{
-    formTitle () {
-      if ( objectUtils.isEmptyObject(this.currentItem) ) return 'New Class'
+  created() {
+    this.studentsSelectList = this.getStudents.map(student => {
+      return {
+        text: this.getFullName(student),
+        value: student
+      }
+    })
+    this.mentorsSelectList = this.getMentors.map(student => {
+      return {
+        text: this.getFullName(student),
+        value: student
+      }
+    })
+  },
+  computed: {
+    ...mapGetters('user', [
+      'getStudents', 'getFullName', 'getMentors'
+    ]),
+    formTitle() {
+      if (this.isEditMode()) return 'New Class'
       return 'Edit Class'
     },
   },

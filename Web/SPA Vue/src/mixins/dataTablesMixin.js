@@ -1,3 +1,5 @@
+import {objectUtils} from "@/utils/object-utils";
+
 export const dataTableMixin = {
   data: () => ({
     dialog: false,
@@ -18,7 +20,8 @@ export const dataTableMixin = {
 export const dataTableDialogMixin = {
   data() {
     return {
-      editedItem: {}
+      editedItem: {},
+      emptyItemTemplate: {}
     }
   },
   props: {
@@ -32,10 +35,15 @@ export const dataTableDialogMixin = {
   },
   watch:{
     dialog: function () {
-      this.editedItem = {...this.currentItem}
+      this.editedItem = {...this.emptyItemTemplate, ...this.currentItem}
     }
   },
   methods: {
-    save() {this.$emit('itemChanged', this.editedItem)},
+    save() {
+      this.$emit('itemChanged', this.editedItem)
+    },
+    isEditMode() {
+      return objectUtils.isEmptyObject(this.currentItem)
+    }
   }
 }

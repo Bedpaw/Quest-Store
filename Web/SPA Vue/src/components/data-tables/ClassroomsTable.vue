@@ -97,14 +97,14 @@ export default {
       let _class = this.getClassById(changedItem.id)
 
       // Class exist, so update him
-      if (_class) {
-        _class = Object.assign(_class, changedItem)
-        this.UPDATE_USER(_class)
+      if (_class.length === 1) {
+        _class = Object.assign(_class[0], changedItem)
+        this.UPDATE_CLASS(_class)
       }
       // Class not found, so create
       else {
         _class = new Classroom({...changedItem})
-        this.ADD_USER(_class)
+        this.ADD_CLASS(_class)
       }
       this.clearEditedItem()
     },

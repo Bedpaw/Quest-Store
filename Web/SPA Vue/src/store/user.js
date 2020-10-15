@@ -24,10 +24,10 @@ export const user = {
     // Filtered Data
     getUserById: (state) => (userId) => state.users.find(user => user.id === parseInt(userId)),
     getUsers: (state) => state.users,
-    getStudents: (state) => state.users.map( user => user.role === ROLES.STUDENT),
-    getMentors: (state) => state.users.map( user => user.role === ROLES.MENTOR),
-    getAdmins: (state) => state.users.map( user => user.role === ROLES.ADMIN),
-    getGuests: (state) => state.users.map( user => user.role === ROLES.GUEST),
+    getStudents: (state) => state.users.filter( user => user.role === ROLES.STUDENT),
+    getMentors: (state) => state.users.filter( user => user.role === ROLES.MENTOR),
+    getAdmins: (state) => state.users.filter( user => user.role === ROLES.ADMIN),
+    getGuests: (state) => state.users.filter( user => user.role === ROLES.GUEST),
   },
   mutations: {
     [ADD_USER] : (state, payload) => state.users.push(payload),
