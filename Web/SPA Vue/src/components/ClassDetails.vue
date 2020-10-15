@@ -1,8 +1,6 @@
 <template>
   <div>
-    <v-card v-for="_class in getClassById($route.params.id)"
-            :key="_class.id"
-    >
+    <v-card>
         <v-card-title>
           {{_class.name}}
         </v-card-title>
@@ -36,6 +34,9 @@ export default {
     ...mapGetters('user', [
       'getUsersFullNameAsString', 'getFullName'
     ]),
+    _class() {
+      return this.getClassById(this.$route.params.id)
+    }
   },
 }
 </script>

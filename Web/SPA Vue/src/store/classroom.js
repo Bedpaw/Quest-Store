@@ -12,7 +12,7 @@ export const classroom = {
   state: initialState,
   getters: {
     getClasses: (state) => state.classes,
-    getClassById: (state) => (_classId) => state.classes.filter(_class => _class.id === parseInt(_classId)),
+    getClassById: (state) => (_classId) => state.classes.find(_class => _class.id === parseInt(_classId)),
     getClassesByUserId: (state) => (userId) => state.classes.filter(_class => _class.students.find(user => user.id === userId))
   },
   mutations: {
