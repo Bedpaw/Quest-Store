@@ -19,11 +19,45 @@
 
       <v-card-text>
         <v-container>
-          <v-row>
-            <v-col cols="12" sm="12" md="6">
-              <v-text-field v-model="editedItem.name" label="Name"/>
-            </v-col>
-          </v-row>
+          <v-form
+              ref="form"
+              v-model="valid"
+              lazy-validation
+          >
+            <v-row>
+              <v-col cols="12" sm="12" md="6">
+                <v-text-field
+                    v-model="editedItem.name"
+                    label="Name"
+                    :rules="nameRules"
+                />
+              </v-col>
+              <v-col cols="12" sm="12" md="6">
+                <v-text-field
+                    v-model="editedItem.description"
+                    label="Description"
+                    :rules="descriptionRules"
+                />
+              </v-col>
+              <v-col cols="12" sm="12" md="6">
+                <v-text-field
+                    v-model="editedItem.reward"
+                    label="Reward"
+                    type="number"
+                    step="10"
+                    min="0"
+                    :rules="positive"
+                />
+              </v-col>
+              <v-col cols="12" sm="12" md="6">
+                <v-select
+                    :items="questTypes"
+                    v-model="editedItem.type"
+                    label="Type"
+                />
+              </v-col>
+            </v-row>
+          </v-form>
         </v-container>
       </v-card-text>
 
@@ -49,9 +83,10 @@
 </template>
 
 <script>
-import {ROLES} from "@/utils/macros/roles";
-import {objectUtils} from "@/utils/object-utils";
 import {dataTableDialogMixin} from "@/mixins/dataTablesMixin";
+import {QUEST_TYPES} from "@/utils/macros/quest-types";
+import {nameRules, descriptionRules, positive} from "@/components/data-tables/validators";
+
 
 export default {
   name: "QuestDataDialog",
@@ -60,15 +95,16 @@ export default {
     return {
       emptyItemTemplate: {
         name: '',
+        description: '',
+        reward: 100,
+        type: QUEST_TYPES.BASIC
       },
-      roles: Object.values(ROLES),
+      nameRules,
+      descriptionRules,
+      positive,
+      formName: 'Quest',
+      questTypes: [QUEST_TYPES.BASIC, QUEST_TYPES.EXTRA]
     }
-  },
-  computed: {
-    formTitle() {
-      if (objectUtils.isEmptyObject(this.currentItem)) return 'New User'
-      return 'Edit User'
-    },
   },
 }
 </script>

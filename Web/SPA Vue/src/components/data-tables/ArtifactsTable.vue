@@ -8,6 +8,21 @@
         :headers="headers"
         :search="search"
     >
+
+      <!--Styling cost column -->
+      <template v-slot:item.cost="{ item }">
+        <v-chip small color="yellow" style="font-weight: bold">
+          {{ item.cost }}
+        </v-chip>
+      </template>
+
+      <!--Styling quantity column -->
+      <template v-slot:item.quantity="{ item }">
+        <v-chip small :color=quantityChipColor(item.quantity) style="font-weight: bold">
+          {{ item.quantity }}
+        </v-chip>
+      </template>
+
       <!--Add editing/deleting buttons -->
       <template v-slot:item.actions="{ item }">
         <v-icon small class="mr-2" @click="editItem(item)">
@@ -88,6 +103,9 @@ export default {
       }
       this.clearEditedItem()
     },
+    quantityChipColor(quantity) {
+      return quantity === 0 ? 'red' : 'green'
+    }
   }
 }
 </script>
