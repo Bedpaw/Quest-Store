@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DirectedGraph GraphDirection="LeftToRight" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="Artifact" Category="EntityType" Annotations="ConstructorBinding: Microsoft.EntityFrameworkCore.Metadata.ConstructorBinding" BaseClass="" Bounds="643.149978841145,287.577549932939,298.813357747396,197.8804" ChangeTrackingStrategy="ChangeTrackingStrategy.Snapshot" Group="Expanded" IsAbstract="False" Label="Artifact" Name="Artifact" />
+    <Node Id="Artifact.Cost" Category="Property Required" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="663.150003255207,327.577649932939,50,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="False" IsIndexed="False" IsPrimaryKey="False" IsRequired="True" IsShadow="False" IsUnicode="True" Label="Cost" MaxLength="None" Name="Cost" PropertyAccessMode="PropertyAccessMode.Default" Type="int" ValueGenerated="None" />
+    <Node Id="Artifact.Description" Category="Property Optional" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="TypeMapping: Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerStringTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="841.71,383.537757867509,80.2533333333333,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="False" IsIndexed="False" IsPrimaryKey="False" IsRequired="False" IsShadow="False" IsUnicode="True" Label="Description" MaxLength="None" Name="Description" PropertyAccessMode="PropertyAccessMode.Default" Type="string" ValueGenerated="None" />
+    <Node Id="Artifact.Id" Category="Property Primary" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="SqlServer:ValueGenerationStrategy: IdentityColumn TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="743.150003255207,327.577649932939,50,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="False" IsIndexed="False" IsPrimaryKey="True" IsRequired="True" IsShadow="False" IsUnicode="True" Label="Id" MaxLength="None" Name="Id" PropertyAccessMode="PropertyAccessMode.Default" Type="int" ValueGenerated="ValueGenerated.OnAdd" />
+    <Node Id="Artifact.Image" Category="Property Optional" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="TypeMapping: Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerByteArrayTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="663.15,383.537749932939,52.98,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="False" IsIndexed="False" IsPrimaryKey="False" IsRequired="False" IsShadow="False" IsUnicode="True" Label="Image" MaxLength="None" Name="Image" PropertyAccessMode="PropertyAccessMode.Default" Type="byte[]" ValueGenerated="None" />
+    <Node Id="Artifact.Name" Category="Property Optional" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="TypeMapping: Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerStringTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="823.150003255207,327.577657867509,51.6966666666667,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="False" IsIndexed="False" IsPrimaryKey="False" IsRequired="False" IsShadow="False" IsUnicode="True" Label="Name" MaxLength="None" Name="Name" PropertyAccessMode="PropertyAccessMode.Default" Type="string" ValueGenerated="None" />
+    <Node Id="Artifact.Quantity" Category="Property Optional" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="746.13,383.537749932939,65.5799999999999,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="False" IsIndexed="False" IsPrimaryKey="False" IsRequired="False" IsShadow="False" IsUnicode="True" Label="Quantity" MaxLength="None" Name="Quantity" PropertyAccessMode="PropertyAccessMode.Default" Type="Nullable&lt;int&gt;" ValueGenerated="None" />
+    <Node Id="Artifact.Students" Category="Navigation Collection" Bounds="663.15,439.497849932939,81.6666666666665,25.96" Dependent="StudentArtifact" Field="" Inverse="Artifact" Label="Students (*)" Name="Students" Principal="" PropertyAccessMode="PropertyAccessMode.Default" Type="ICollection&lt;StudentArtifact&gt;" />
+    <Node Id="Classroom" Category="EntityType" Annotations="ConstructorBinding: Microsoft.EntityFrameworkCore.Metadata.ConstructorBinding" BaseClass="" Bounds="129.218333333333,283.84,254.676666666667,197.88" ChangeTrackingStrategy="ChangeTrackingStrategy.Snapshot" Group="Expanded" IsAbstract="False" Label="Classroom" Name="Classroom" />
+    <Node Id="Classroom.Description" Category="Property Optional" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="TypeMapping: Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerStringTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="258.955,379.8,80.2533333333333,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="False" IsIndexed="False" IsPrimaryKey="False" IsRequired="False" IsShadow="False" IsUnicode="True" Label="Description" MaxLength="None" Name="Description" PropertyAccessMode="PropertyAccessMode.Default" Type="string" ValueGenerated="None" />
+    <Node Id="Classroom.Id" Category="Property Primary" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="SqlServer:ValueGenerationStrategy: IdentityColumn TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="149.218333333333,323.84,50,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="False" IsIndexed="False" IsPrimaryKey="True" IsRequired="True" IsShadow="False" IsUnicode="True" Label="Id" MaxLength="None" Name="Id" PropertyAccessMode="PropertyAccessMode.Default" Type="int" ValueGenerated="ValueGenerated.OnAdd" />
+    <Node Id="Classroom.Image" Category="Property Optional" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="TypeMapping: Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerByteArrayTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="310.915,323.84,52.98,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="False" IsIndexed="False" IsPrimaryKey="False" IsRequired="False" IsShadow="False" IsUnicode="True" Label="Image" MaxLength="None" Name="Image" PropertyAccessMode="PropertyAccessMode.Default" Type="byte[]" ValueGenerated="None" />
+    <Node Id="Classroom.Mentors" Category="Navigation Collection" Bounds="149.218333333333,379.8,79.7366666666667,25.96" Dependent="MentorClassroom" Field="" Inverse="Classroom" Label="Mentors (*)" Name="Mentors" Principal="" PropertyAccessMode="PropertyAccessMode.Default" Type="ICollection&lt;MentorClassroom&gt;" />
+    <Node Id="Classroom.Name" Category="Property Optional" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="TypeMapping: Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerStringTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="229.218333333333,323.84,51.6966666666667,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="False" IsIndexed="False" IsPrimaryKey="False" IsRequired="False" IsShadow="False" IsUnicode="True" Label="Name" MaxLength="None" Name="Name" PropertyAccessMode="PropertyAccessMode.Default" Type="string" ValueGenerated="None" />
+    <Node Id="Classroom.Students" Category="Navigation Collection" Bounds="149.218333333333,435.76,81.6666666666667,25.96" Dependent="StudentClassroom" Field="" Inverse="Classroom" Label="Students (*)" Name="Students" Principal="" PropertyAccessMode="PropertyAccessMode.Default" Type="ICollection&lt;StudentClassroom&gt;" />
+    <Node Id="IModel" Category="Model" Annotations="Relational:MaxIdentifierLength: 128 SqlServer:ValueGenerationStrategy: IdentityColumn" Bounds="2.11588405818475E-06,-0.000611796026646516,1187.64478678385,729.601318310547" ChangeTrackingStrategy="ChangeTrackingStrategy.Snapshot" Group="Expanded" Label="StoreDbContext" ProductVersion="3.1.9" PropertyAccessMode="PropertyAccessMode.Default" />
+    <Node Id="Mentor" Category="EntityType" Annotations="ConstructorBinding: Microsoft.EntityFrameworkCore.Metadata.ConstructorBinding DiscriminatorProperty: DiscriminatorValue: Mentor" BaseClass="User" Bounds="20,360.78,79.1133333333333,44" ChangeTrackingStrategy="ChangeTrackingStrategy.Snapshot" Group="Expanded" IsAbstract="False" Label="Mentor" Name="Mentor" />
+    <Node Id="MentorClassroom" Category="EntityType" Annotations="ConstructorBinding: Microsoft.EntityFrameworkCore.Metadata.ConstructorBinding" BaseClass="" Bounds="134.771666666667,40,231.57,197.88" ChangeTrackingStrategy="ChangeTrackingStrategy.Snapshot" Group="Expanded" IsAbstract="False" Label="MentorClassroom" Name="MentorClassroom" />
+    <Node Id="MentorClassroom.Classroom" Category="Navigation Property" Bounds="154.771666666667,191.92,92.1966666666667,25.96" Dependent="" Field="" Inverse="Mentors" Label="Classroom (1)" Name="Classroom" Principal="Classroom" PropertyAccessMode="PropertyAccessMode.Default" Type="Classroom" />
+    <Node Id="MentorClassroom.ClassroomId" Category="Property Foreign" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="260.881666666667,135.96,85.46,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="True" IsIndexed="True" IsPrimaryKey="False" IsRequired="True" IsShadow="False" IsUnicode="True" Label="ClassroomId" MaxLength="None" Name="ClassroomId" PropertyAccessMode="PropertyAccessMode.Default" Type="int" ValueGenerated="None" />
+    <Node Id="MentorClassroom.Id" Category="Property Primary" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="SqlServer:ValueGenerationStrategy: IdentityColumn TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="154.771666666667,80,50,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="False" IsIndexed="False" IsPrimaryKey="True" IsRequired="True" IsShadow="False" IsUnicode="True" Label="Id" MaxLength="None" Name="Id" PropertyAccessMode="PropertyAccessMode.Default" Type="int" ValueGenerated="ValueGenerated.OnAdd" />
+    <Node Id="MentorClassroom.Mentor" Category="Navigation Property" Bounds="154.771666666667,135.96,76.11,25.96" Dependent="" Field="" Inverse="Classrooms" Label="Mentor (1)" Name="Mentor" Principal="Mentor" PropertyAccessMode="PropertyAccessMode.Default" Type="Mentor" />
+    <Node Id="MentorClassroom.MentorId" Category="Property Foreign" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="234.771666666667,80,69.3733333333333,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="True" IsIndexed="True" IsPrimaryKey="False" IsRequired="True" IsShadow="False" IsUnicode="True" Label="MentorId" MaxLength="None" Name="MentorId" PropertyAccessMode="PropertyAccessMode.Default" Type="int" ValueGenerated="None" />
+    <Node Id="Quest" Category="EntityType" Annotations="ConstructorBinding: Microsoft.EntityFrameworkCore.Metadata.ConstructorBinding" BaseClass="" Bounds="915.948074137369,59.6970499329388,251.696714762369,197.8804" ChangeTrackingStrategy="ChangeTrackingStrategy.Snapshot" Group="Expanded" IsAbstract="False" Label="Quest" Name="Quest" UseManualLocation="True" />
+    <Node Id="Quest.Description" Category="Property Optional" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="TypeMapping: Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerStringTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="935.948070882162,211.617349932939,80.2533333333331,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="False" IsIndexed="False" IsPrimaryKey="False" IsRequired="False" IsShadow="False" IsUnicode="True" Label="Description" MaxLength="None" Name="Description" PropertyAccessMode="PropertyAccessMode.Default" Type="string" ValueGenerated="None" />
+    <Node Id="Quest.Id" Category="Property Primary" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="SqlServer:ValueGenerationStrategy: IdentityColumn TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="935.948091715494,99.6971499329388,50,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="False" IsIndexed="False" IsPrimaryKey="True" IsRequired="True" IsShadow="False" IsUnicode="True" Label="Id" MaxLength="None" Name="Id" PropertyAccessMode="PropertyAccessMode.Default" Type="int" ValueGenerated="ValueGenerated.OnAdd" />
+    <Node Id="Quest.Image" Category="Property Optional" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="TypeMapping: Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerByteArrayTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="935.948079630534,155.657249932939,52.98,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="False" IsIndexed="False" IsPrimaryKey="False" IsRequired="False" IsShadow="False" IsUnicode="True" Label="Image" MaxLength="None" Name="Image" PropertyAccessMode="PropertyAccessMode.Default" Type="byte[]" ValueGenerated="None" />
+    <Node Id="Quest.Name" Category="Property Optional" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="TypeMapping: Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerStringTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="1095.94812223307,99.6971499329388,51.6966666666667,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="False" IsIndexed="False" IsPrimaryKey="False" IsRequired="False" IsShadow="False" IsUnicode="True" Label="Name" MaxLength="None" Name="Name" PropertyAccessMode="PropertyAccessMode.Default" Type="string" ValueGenerated="None" />
+    <Node Id="Quest.Reward" Category="Property Required" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="1018.92807963053,155.657249932939,59.1233333333334,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="False" IsIndexed="False" IsPrimaryKey="False" IsRequired="True" IsShadow="False" IsUnicode="True" Label="Reward" MaxLength="None" Name="Reward" PropertyAccessMode="PropertyAccessMode.Default" Type="int" ValueGenerated="None" />
+    <Node Id="Quest.Type" Category="Property Required" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="ProviderClrType: System.String TypeMapping: Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerStringTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="1015.94812223307,99.6971499329388,50,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="False" IsIndexed="False" IsPrimaryKey="False" IsRequired="True" IsShadow="False" IsUnicode="True" Label="Type" MaxLength="None" Name="Type" PropertyAccessMode="PropertyAccessMode.Default" Type="QuestType" ValueGenerated="None" />
+    <Node Id="Student" Category="EntityType" Annotations="ConstructorBinding: Microsoft.EntityFrameworkCore.Metadata.ConstructorBinding DiscriminatorProperty: DiscriminatorValue: Student" BaseClass="User" Bounds="414.065,311.82,198.983333333333,141.92" ChangeTrackingStrategy="ChangeTrackingStrategy.Snapshot" Group="Expanded" IsAbstract="False" Label="Student" Name="Student" />
+    <Node Id="Student.Artifacts" Category="Navigation Collection" Bounds="514.065,351.82,78.9833333333333,25.96" Dependent="StudentArtifact" Field="" Inverse="Student" Label="Artifacts (*)" Name="Artifacts" Principal="" PropertyAccessMode="PropertyAccessMode.Default" Type="ICollection&lt;StudentArtifact&gt;" />
+    <Node Id="Student.Classrooms" Category="Navigation Collection" Bounds="434.065,407.78,95.8233333333333,25.96" Dependent="StudentClassroom" Field="" Inverse="Student" Label="Classrooms (*)" Name="Classrooms" Principal="" PropertyAccessMode="PropertyAccessMode.Default" Type="ICollection&lt;StudentClassroom&gt;" />
+    <Node Id="Student.Coins" Category="Property Required" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="434.065,351.82,50,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="False" IsIndexed="False" IsPrimaryKey="False" IsRequired="True" IsShadow="False" IsUnicode="True" Label="Coins" MaxLength="None" Name="Coins" PropertyAccessMode="PropertyAccessMode.Default" Type="int" ValueGenerated="None" />
+    <Node Id="StudentArtifact" Category="EntityType" Annotations="ConstructorBinding: Microsoft.EntityFrameworkCore.Metadata.ConstructorBinding" BaseClass="" Bounds="661.226666666666,40,216.66,197.88" ChangeTrackingStrategy="ChangeTrackingStrategy.Snapshot" Group="Expanded" IsAbstract="False" Label="StudentArtifact" Name="StudentArtifact" />
+    <Node Id="StudentArtifact.Artifact" Category="Navigation Property" Bounds="782.53,135.96,75.3566666666668,25.96" Dependent="" Field="" Inverse="Students" Label="Artifact (1)" Name="Artifact" Principal="Artifact" PropertyAccessMode="PropertyAccessMode.Default" Type="Artifact" />
+    <Node Id="StudentArtifact.ArtifactId" Category="Property Foreign" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="761.226666666666,80,68.62,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="True" IsIndexed="True" IsPrimaryKey="False" IsRequired="True" IsShadow="False" IsUnicode="True" Label="ArtifactId" MaxLength="None" Name="ArtifactId" PropertyAccessMode="PropertyAccessMode.Default" Type="int" ValueGenerated="None" />
+    <Node Id="StudentArtifact.Id" Category="Property Primary" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="SqlServer:ValueGenerationStrategy: IdentityColumn TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="681.226666666666,80,50,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="False" IsIndexed="False" IsPrimaryKey="True" IsRequired="True" IsShadow="False" IsUnicode="True" Label="Id" MaxLength="None" Name="Id" PropertyAccessMode="PropertyAccessMode.Default" Type="int" ValueGenerated="ValueGenerated.OnAdd" />
+    <Node Id="StudentArtifact.Student" Category="Navigation Property" Bounds="681.226666666666,191.92,78.04,25.96" Dependent="" Field="" Inverse="Artifacts" Label="Student (1)" Name="Student" Principal="Student" PropertyAccessMode="PropertyAccessMode.Default" Type="Student" />
+    <Node Id="StudentArtifact.StudentId" Category="Property Foreign" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="681.226666666666,135.96,71.3033333333333,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="True" IsIndexed="True" IsPrimaryKey="False" IsRequired="True" IsShadow="False" IsUnicode="True" Label="StudentId" MaxLength="None" Name="StudentId" PropertyAccessMode="PropertyAccessMode.Default" Type="int" ValueGenerated="None" />
+    <Node Id="StudentClassroom" Category="EntityType" Annotations="ConstructorBinding: Microsoft.EntityFrameworkCore.Metadata.ConstructorBinding" BaseClass="" Bounds="396.806666666667,40,233.5,197.88" ChangeTrackingStrategy="ChangeTrackingStrategy.Snapshot" Group="Expanded" IsAbstract="False" Label="StudentClassroom" Name="StudentClassroom" />
+    <Node Id="StudentClassroom.Classroom" Category="Navigation Property" Bounds="416.806666666667,191.92,92.1966666666666,25.96" Dependent="" Field="" Inverse="Students" Label="Classroom (1)" Name="Classroom" Principal="Classroom" PropertyAccessMode="PropertyAccessMode.Default" Type="Classroom" />
+    <Node Id="StudentClassroom.ClassroomId" Category="Property Foreign" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="524.846666666667,135.96,85.46,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="True" IsIndexed="True" IsPrimaryKey="False" IsRequired="True" IsShadow="False" IsUnicode="True" Label="ClassroomId" MaxLength="None" Name="ClassroomId" PropertyAccessMode="PropertyAccessMode.Default" Type="int" ValueGenerated="None" />
+    <Node Id="StudentClassroom.Id" Category="Property Primary" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="SqlServer:ValueGenerationStrategy: IdentityColumn TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="416.806666666667,80,50,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="False" IsIndexed="False" IsPrimaryKey="True" IsRequired="True" IsShadow="False" IsUnicode="True" Label="Id" MaxLength="None" Name="Id" PropertyAccessMode="PropertyAccessMode.Default" Type="int" ValueGenerated="ValueGenerated.OnAdd" />
+    <Node Id="StudentClassroom.Student" Category="Navigation Property" Bounds="416.806666666667,135.96,78.04,25.96" Dependent="" Field="" Inverse="Classrooms" Label="Student (1)" Name="Student" Principal="Student" PropertyAccessMode="PropertyAccessMode.Default" Type="Student" />
+    <Node Id="StudentClassroom.StudentId" Category="Property Foreign" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="496.806666666667,80,71.3033333333334,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="True" IsIndexed="True" IsPrimaryKey="False" IsRequired="True" IsShadow="False" IsUnicode="True" Label="StudentId" MaxLength="None" Name="StudentId" PropertyAccessMode="PropertyAccessMode.Default" Type="int" ValueGenerated="None" />
+    <Node Id="User" Category="EntityType" Annotations="" BaseClass="" Bounds="20,511.72,260.323333333333,197.88" ChangeTrackingStrategy="ChangeTrackingStrategy.Snapshot" Group="Expanded" IsAbstract="False" Label="User" Name="User" />
+    <Node Id="User.AuthId" Category="Property Optional" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="TypeMapping: Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerStringTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="204.676666666667,607.68,55.6466666666667,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="False" IsIndexed="False" IsPrimaryKey="False" IsRequired="False" IsShadow="False" IsUnicode="True" Label="AuthId" MaxLength="None" Name="AuthId" PropertyAccessMode="PropertyAccessMode.Default" Type="string" ValueGenerated="None" />
+    <Node Id="User.Description" Category="Property Optional" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="TypeMapping: Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerStringTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="136.846666666667,663.64,80.2533333333333,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="False" IsIndexed="False" IsPrimaryKey="False" IsRequired="False" IsShadow="False" IsUnicode="True" Label="Description" MaxLength="None" Name="Description" PropertyAccessMode="PropertyAccessMode.Default" Type="string" ValueGenerated="None" />
+    <Node Id="User.Email" Category="Property Optional" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="TypeMapping: Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerStringTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="40,551.72,50,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="False" IsIndexed="False" IsPrimaryKey="False" IsRequired="False" IsShadow="False" IsUnicode="True" Label="Email" MaxLength="None" Name="Email" PropertyAccessMode="PropertyAccessMode.Default" Type="string" ValueGenerated="None" />
+    <Node Id="User.Id" Category="Property Primary" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="SqlServer:ValueGenerationStrategy: IdentityColumn TypeMapping: Microsoft.EntityFrameworkCore.Storage.IntTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="120,551.72,50,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="False" IsIndexed="False" IsPrimaryKey="True" IsRequired="True" IsShadow="False" IsUnicode="True" Label="Id" MaxLength="None" Name="Id" PropertyAccessMode="PropertyAccessMode.Default" Type="int" ValueGenerated="ValueGenerated.OnAdd" />
+    <Node Id="User.Image" Category="Property Optional" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="TypeMapping: Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerByteArrayTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="121.696666666667,607.68,52.98,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="False" IsIndexed="False" IsPrimaryKey="False" IsRequired="False" IsShadow="False" IsUnicode="True" Label="Image" MaxLength="None" Name="Image" PropertyAccessMode="PropertyAccessMode.Default" Type="byte[]" ValueGenerated="None" />
+    <Node Id="User.Name" Category="Property Optional" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="TypeMapping: Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerStringTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="40,607.68,51.6966666666667,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="False" IsIndexed="False" IsPrimaryKey="False" IsRequired="False" IsShadow="False" IsUnicode="True" Label="Name" MaxLength="None" Name="Name" PropertyAccessMode="PropertyAccessMode.Default" Type="string" ValueGenerated="None" />
+    <Node Id="User.Role" Category="Property Required" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="TypeMapping: Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerStringTypeMapping ValueGeneratorFactory: System.Func`3[Microsoft.EntityFrameworkCore.Metadata.IProperty,Microsoft.EntityFrameworkCore.Metadata.IEntityType,Microsoft.EntityFrameworkCore.ValueGeneration.ValueGenerator]" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="200,551.72,50,25.96" Field="nofield" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="False" IsIndexed="False" IsPrimaryKey="False" IsRequired="True" IsShadow="True" IsUnicode="True" Label="Role" MaxLength="None" Name="Role" PropertyAccessMode="PropertyAccessMode.Default" Type="string" ValueGenerated="None" />
+    <Node Id="User.Surname" Category="Property Optional" AfterSaveBehavior="PropertySaveBehavior.Save" Annotations="TypeMapping: Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerStringTypeMapping" BeforeSaveBehavior="PropertySaveBehavior.Save" Bounds="40,663.64,66.8466666666667,25.96" Field="" IsAlternateKey="False" IsConcurrencyToken="False" IsForeignKey="False" IsIndexed="False" IsPrimaryKey="False" IsRequired="False" IsShadow="False" IsUnicode="True" Label="Surname" MaxLength="None" Name="Surname" PropertyAccessMode="PropertyAccessMode.Default" Type="string" ValueGenerated="None" />
+  </Nodes>
+  <Links>
+    <Link Source="Artifact" Target="Artifact.Cost" Category="Contains" />
+    <Link Source="Artifact" Target="Artifact.Description" Category="Contains" />
+    <Link Source="Artifact" Target="Artifact.Id" Category="Contains" />
+    <Link Source="Artifact" Target="Artifact.Image" Category="Contains" />
+    <Link Source="Artifact" Target="Artifact.Name" Category="Contains" />
+    <Link Source="Artifact" Target="Artifact.Quantity" Category="Contains" />
+    <Link Source="Artifact" Target="Artifact.Students" Category="Contains" />
+    <Link Source="Classroom" Target="Classroom.Description" Category="Contains" />
+    <Link Source="Classroom" Target="Classroom.Id" Category="Contains" />
+    <Link Source="Classroom" Target="Classroom.Image" Category="Contains" />
+    <Link Source="Classroom" Target="Classroom.Mentors" Category="Contains" />
+    <Link Source="Classroom" Target="Classroom.Name" Category="Contains" />
+    <Link Source="Classroom" Target="Classroom.Students" Category="Contains" />
+    <Link Source="IModel" Target="Artifact" Category="Contains" />
+    <Link Source="IModel" Target="Classroom" Category="Contains" />
+    <Link Source="IModel" Target="Mentor" Category="Contains" />
+    <Link Source="IModel" Target="MentorClassroom" Category="Contains" />
+    <Link Source="IModel" Target="Quest" Category="Contains" />
+    <Link Source="IModel" Target="Student" Category="Contains" />
+    <Link Source="IModel" Target="StudentArtifact" Category="Contains" />
+    <Link Source="IModel" Target="StudentClassroom" Category="Contains" />
+    <Link Source="IModel" Target="User" Category="Contains" />
+    <Link Source="MentorClassroom" Target="Classroom" Category="Foreign Key" Annotations="" Bounds="252.991213910761,237.88,0.909515831156284,36.9627233781938" From="MentorClassroom.ClassroomId" IsUnique="False" Label="1:*" LabelBounds="257.445972009525,248.332163982285,14.0733333333333,15.96" Name="MentorClassroom -&gt; Classroom" To="Classroom.Id" />
+    <Link Source="MentorClassroom" Target="Mentor" Category="Foreign Key" Annotations="" Bounds="74.031608581543,237.880004882813,87.6599655151367,114.788543701172" From="MentorClassroom.MentorId" IsUnique="False" Label="1:*" LabelBounds="114.852390382053,293.867940951134,14.0733333333333,15.96" Name="MentorClassroom -&gt; Mentor" To="Mentor.Id" />
+    <Link Source="MentorClassroom" Target="MentorClassroom.Classroom" Category="Contains" />
+    <Link Source="MentorClassroom" Target="MentorClassroom.ClassroomId" Category="Contains" />
+    <Link Source="MentorClassroom" Target="MentorClassroom.Id" Category="Contains" />
+    <Link Source="MentorClassroom" Target="MentorClassroom.Mentor" Category="Contains" />
+    <Link Source="MentorClassroom" Target="MentorClassroom.MentorId" Category="Contains" />
+    <Link Source="Quest" Target="Quest.Description" Category="Contains" />
+    <Link Source="Quest" Target="Quest.Id" Category="Contains" />
+    <Link Source="Quest" Target="Quest.Image" Category="Contains" />
+    <Link Source="Quest" Target="Quest.Name" Category="Contains" />
+    <Link Source="Quest" Target="Quest.Reward" Category="Contains" />
+    <Link Source="Quest" Target="Quest.Type" Category="Contains" />
+    <Link Source="Student" Target="Student.Artifacts" Category="Contains" />
+    <Link Source="Student" Target="Student.Classrooms" Category="Contains" />
+    <Link Source="Student" Target="Student.Coins" Category="Contains" />
+    <Link Source="StudentArtifact" Target="Artifact" Category="Foreign Key" Annotations="" Bounds="778.748199891776,237.88,3.78439012521346,40.7361372491956" From="StudentArtifact.ArtifactId" IsUnique="False" Label="1:*" LabelBounds="784.640431877653,250.08306509288,14.0733333333334,15.96" Name="StudentArtifact -&gt; Artifact" To="Artifact.Id" />
+    <Link Source="StudentArtifact" Target="Student" Category="Foreign Key" Annotations="" Bounds="594.572208250596,237.853304293885,71.1384696560862,67.7593923474221" From="StudentArtifact.StudentId" IsUnique="False" Label="1:*" LabelBounds="614.68870899893,254.32481070762,14.0733333333334,15.96" Name="StudentArtifact -&gt; Student" To="Student.Id" />
+    <Link Source="StudentArtifact" Target="StudentArtifact.Artifact" Category="Contains" />
+    <Link Source="StudentArtifact" Target="StudentArtifact.ArtifactId" Category="Contains" />
+    <Link Source="StudentArtifact" Target="StudentArtifact.Id" Category="Contains" />
+    <Link Source="StudentArtifact" Target="StudentArtifact.Student" Category="Contains" />
+    <Link Source="StudentArtifact" Target="StudentArtifact.StudentId" Category="Contains" />
+    <Link Source="StudentClassroom" Target="Classroom" Category="Foreign Key" Annotations="" Bounds="367.365366382827,237.88,41.9115266617922,39.7653955689159" From="StudentClassroom.ClassroomId" IsUnique="False" Label="1:*" LabelBounds="389.697708476187,259.213570249816,14.0733333333334,15.96" Name="StudentClassroom -&gt; Classroom" To="Classroom.Id" />
+    <Link Source="StudentClassroom" Target="Student" Category="Foreign Key" Annotations="" Bounds="513.556666666667,237.88,2.27373675443232E-13,64.9399999999999" From="StudentClassroom.StudentId" IsUnique="False" Label="1:*" LabelBounds="517.556666666667,262.37,14.0733333333333,15.96" Name="StudentClassroom -&gt; Student" To="Student.Id" />
+    <Link Source="StudentClassroom" Target="StudentClassroom.Classroom" Category="Contains" />
+    <Link Source="StudentClassroom" Target="StudentClassroom.ClassroomId" Category="Contains" />
+    <Link Source="StudentClassroom" Target="StudentClassroom.Id" Category="Contains" />
+    <Link Source="StudentClassroom" Target="StudentClassroom.Student" Category="Contains" />
+    <Link Source="StudentClassroom" Target="StudentClassroom.StudentId" Category="Contains" />
+    <Link Source="User" Target="User.AuthId" Category="Contains" />
+    <Link Source="User" Target="User.Description" Category="Contains" />
+    <Link Source="User" Target="User.Email" Category="Contains" />
+    <Link Source="User" Target="User.Id" Category="Contains" />
+    <Link Source="User" Target="User.Image" Category="Contains" />
+    <Link Source="User" Target="User.Name" Category="Contains" />
+    <Link Source="User" Target="User.Role" Category="Contains" />
+    <Link Source="User" Target="User.Surname" Category="Contains" />
+  </Links>
+  <Categories>
+    <Category Id="Contains" Label="Contains" Description="Whether the source of the link contains the target object" CanBeDataDriven="False" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Contained By" IsContainment="True" OutgoingActionLabel="Contains" />
+    <Category Id="EntityType" />
+    <Category Id="Foreign Key" />
+    <Category Id="Model" />
+    <Category Id="Navigation Collection" />
+    <Category Id="Navigation Property" />
+    <Category Id="Property Foreign" />
+    <Category Id="Property Optional" />
+    <Category Id="Property Primary" />
+    <Category Id="Property Required" />
+  </Categories>
+  <Properties>
+    <Property Id="AfterSaveBehavior" Group="Property Flags" DataType="System.String" />
+    <Property Id="Annotations" Description="Annotations" Group="Model Properties" DataType="System.String" />
+    <Property Id="BaseClass" Description="Base class" Group="Model Properties" DataType="System.String" />
+    <Property Id="BeforeSaveBehavior" Group="Property Flags" DataType="System.String" />
+    <Property Id="Bounds" DataType="System.Windows.Rect" />
+    <Property Id="CanBeDataDriven" Label="CanBeDataDriven" Description="CanBeDataDriven" DataType="System.Boolean" />
+    <Property Id="CanLinkedNodesBeDataDriven" Label="CanLinkedNodesBeDataDriven" Description="CanLinkedNodesBeDataDriven" DataType="System.Boolean" />
+    <Property Id="ChangeTrackingStrategy" Description="Change tracking strategy" Group="Model Properties" DataType="System.String" />
+    <Property Id="Dependent" Description="Dependent entity" Group="Model Properties" DataType="System.String" />
+    <Property Id="Expression" DataType="System.String" />
+    <Property Id="Field" Description="Backing field" Group="Model Properties" DataType="System.String" />
+    <Property Id="From" Description="Target property" Group="Model Properties" DataType="System.String" />
+    <Property Id="GraphDirection" DataType="Microsoft.VisualStudio.Diagrams.Layout.LayoutOrientation" />
+    <Property Id="Group" Label="Group" Description="Display the node as a group" DataType="Microsoft.VisualStudio.GraphModel.GraphGroupStyle" />
+    <Property Id="GroupLabel" DataType="System.String" />
+    <Property Id="IncomingActionLabel" Label="IncomingActionLabel" Description="IncomingActionLabel" DataType="System.String" />
+    <Property Id="Inverse" Description="Inverse entity" Group="Model Properties" DataType="System.String" />
+    <Property Id="IsAbstract" Label="IsAbstract" Description="IsAbstract" Group="Model Properties" DataType="System.Boolean" />
+    <Property Id="IsAlternateKey" Group="Property Flags" DataType="System.Boolean" />
+    <Property Id="IsConcurrencyToken" Group="Property Flags" DataType="System.Boolean" />
+    <Property Id="IsContainment" DataType="System.Boolean" />
+    <Property Id="IsEnabled" DataType="System.Boolean" />
+    <Property Id="IsForeignKey" Group="Property Flags" DataType="System.Boolean" />
+    <Property Id="IsIndexed" Group="Property Flags" DataType="System.Boolean" />
+    <Property Id="IsPrimaryKey" Group="Property Flags" DataType="System.Boolean" />
+    <Property Id="IsRequired" Group="Property Flags" DataType="System.Boolean" />
+    <Property Id="IsShadow" Group="Property Flags" DataType="System.Boolean" />
+    <Property Id="IsUnicode" Group="Property Flags" DataType="System.Boolean" />
+    <Property Id="IsUnique" Group="Model Properties" DataType="System.Boolean" />
+    <Property Id="Label" Label="Label" Description="Displayable label of an Annotatable object" DataType="System.String" />
+    <Property Id="LabelBounds" DataType="System.Windows.Rect" />
+    <Property Id="MaxLength" DataType="System.String" />
+    <Property Id="Name" Group="Model Properties" DataType="System.String" />
+    <Property Id="OutgoingActionLabel" Label="OutgoingActionLabel" Description="OutgoingActionLabel" DataType="System.String" />
+    <Property Id="Principal" Description="Principal entity" Group="Model Properties" DataType="System.String" />
+    <Property Id="ProductVersion" Label="Product Version" Description="EF Core product version" Group="Model Properties" DataType="System.String" />
+    <Property Id="PropertyAccessMode" Group="Property Flags" DataType="System.String" />
+    <Property Id="TargetType" DataType="System.Type" />
+    <Property Id="To" Description="Source property" Group="Model Properties" DataType="System.String" />
+    <Property Id="Type" Description="CLR data type" Group="Model Properties" DataType="System.String" />
+    <Property Id="UseManualLocation" DataType="System.Boolean" />
+    <Property Id="Value" DataType="System.String" />
+    <Property Id="ValueGenerated" Group="Property Flags" DataType="System.String" />
+    <Property Id="ValueLabel" DataType="System.String" />
+  </Properties>
+  <Styles>
+    <Style TargetType="Node" GroupLabel="EntityType" ValueLabel="True">
+      <Condition Expression="HasCategory('EntityType')" />
+      <Setter Property="Background" Value="#FFC0C0C0" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Property Primary" ValueLabel="True">
+      <Condition Expression="HasCategory('Property Primary')" />
+      <Setter Property="Background" Value="#FF008000" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Property Optional" ValueLabel="True">
+      <Condition Expression="HasCategory('Property Optional')" />
+      <Setter Property="Background" Value="#FF808040" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Property Foreign" ValueLabel="True">
+      <Condition Expression="HasCategory('Property Foreign')" />
+      <Setter Property="Background" Value="#FF8080FF" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Property Required" ValueLabel="True">
+      <Condition Expression="HasCategory('Property Required')" />
+      <Setter Property="Background" Value="#FFC0A000" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Navigation Property" ValueLabel="True">
+      <Condition Expression="HasCategory('Navigation Property')" />
+      <Setter Property="Background" Value="#FF990000" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Navigation Collection" ValueLabel="True">
+      <Condition Expression="HasCategory('Navigation Collection')" />
+      <Setter Property="Background" Value="#FFFF3232" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Model" ValueLabel="True">
+      <Condition Expression="HasCategory('Model')" />
+      <Setter Property="Background" Value="#FFFFFFFF" />
+    </Style>
+  </Styles>
+</DirectedGraph>
