@@ -1,6 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuestStore.API", "QuestStore.API\QuestStore.API.csproj", "{99C7E25A-D3B0-4575-8CBD-0150CB03FD59}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30225.117
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuestStore.API", "QuestStore.API\QuestStore.API.csproj", "{99C7E25A-D3B0-4575-8CBD-0150CB03FD59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuestStore.Core", "QuestStore.Core\QuestStore.Core.csproj", "{B685FD6A-3B4E-443C-9061-A7AB06B03658}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{3052F622-9E75-48C2-955A-B6FF5076081A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuestStore.Infrastructure.Data", "QuestStore.Infrastructure.Data\QuestStore.Infrastructure.Data.csproj", "{46E7F251-7607-40F4-A0EB-D1D49F3B7E93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +21,22 @@ Global
 		{99C7E25A-D3B0-4575-8CBD-0150CB03FD59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99C7E25A-D3B0-4575-8CBD-0150CB03FD59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99C7E25A-D3B0-4575-8CBD-0150CB03FD59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B685FD6A-3B4E-443C-9061-A7AB06B03658}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B685FD6A-3B4E-443C-9061-A7AB06B03658}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B685FD6A-3B4E-443C-9061-A7AB06B03658}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B685FD6A-3B4E-443C-9061-A7AB06B03658}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46E7F251-7607-40F4-A0EB-D1D49F3B7E93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46E7F251-7607-40F4-A0EB-D1D49F3B7E93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46E7F251-7607-40F4-A0EB-D1D49F3B7E93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46E7F251-7607-40F4-A0EB-D1D49F3B7E93}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{46E7F251-7607-40F4-A0EB-D1D49F3B7E93} = {3052F622-9E75-48C2-955A-B6FF5076081A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {89916EC3-7C4F-485E-8F99-D06427B7C0A7}
 	EndGlobalSection
 EndGlobal

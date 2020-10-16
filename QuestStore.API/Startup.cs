@@ -7,6 +7,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
+using QuestStore.Infrastructure.Data;
+using QuestStore.Core;
+using QuestStore.Core.Interfaces;
+using QuestStore.Infrastructure.Data.Repository;
 
 namespace QuestStore.API
 {
@@ -25,11 +30,26 @@ namespace QuestStore.API
         {
             services.AddControllers();
 
+            services.AddDbContext<StoreDbContext>(
+                options =>
+                {
+                    options.UseSqlServer(Configuration.GetConnectionString("Default"));
+
+                    if (Environment.IsDevelopment())
+                    {
+                        options.EnableSensitiveDataLogging().EnableDetailedErrors();
+                    }
+                });
+
             services.AddCors(
                 options =>
                 {
                     options.AddPolicy(
                         "CorsDevelopmentPolicy",
+                        builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
+                    options.AddPolicy(
+                        "CorsReleasePolicy",
                         builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
                 });
 
@@ -56,6 +76,8 @@ namespace QuestStore.API
                             RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
                         };
                     });
+
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         }
 
         public void Configure(IApplicationBuilder app)
@@ -63,16 +85,19 @@ namespace QuestStore.API
             if (Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
             app.UseSwagger();
-            app.UseSwaggerUI(c =>
+            app.UseSwaggerUI(options =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Quest Store API");
-                c.RoutePrefix = "";
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Quest Store API");
+                options.RoutePrefix = "";
             });
 
             app.UseHttpsRedirection();
-            app.UseCors("CorsDevelopmentPolicy");
+
+            app.UseCors(Environment.IsDevelopment() ? "CorsDevelopmentPolicy" : "CorsReleasePolicy");
+
             app.UseRouting();
 
             app.UseAuthentication();
