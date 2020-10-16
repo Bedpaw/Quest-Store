@@ -1,5 +1,5 @@
 import {users} from "@/mock/user-mock";
-import {ADD_USER, DELETE_USER, UPDATE_USER} from "@/utils/macros/mutation-types";
+import {ADD_USER, DELETE_USER, PUSH_ARTIFACT, UPDATE_USER} from "@/utils/macros/mutation-types";
 import {ROLES} from "@/utils/macros/roles";
 import {arrayUtils} from "@/utils/array-utils";
 
@@ -32,6 +32,7 @@ export const user = {
   mutations: {
     [ADD_USER] : (state, payload) => state.users.push(payload),
     [UPDATE_USER] : (state, payload) => arrayUtils.updateItem(state.users, payload),
-    [DELETE_USER] : (state, payload) => arrayUtils.removeItem(state.users, payload)
+    [DELETE_USER] : (state, payload) => arrayUtils.removeItem(state.users, payload),
+    [PUSH_ARTIFACT]: (state, {user, artifact}) => user.artifacts.push(artifact)
   }
 }

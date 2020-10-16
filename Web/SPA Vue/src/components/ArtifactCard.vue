@@ -15,6 +15,7 @@
       <v-btn
           class="my-4 success"
           :disabled="noQuantityLeft"
+          @click="buy()"
       >
         Buy artifact
       </v-btn>
@@ -45,6 +46,9 @@
 </template>
 
 <script>
+import {BUY_ARTIFACT, PUSH_ARTIFACT} from "@/utils/macros/mutation-types";
+import {mapMutations, mapGetters} from "vuex";
+
 export default {
   name: "ArtifactCard",
   data: () => ({
@@ -58,6 +62,24 @@ export default {
   computed: {
     noQuantityLeft() {
       return this.artifact.quantity === 0
+    },
+    ...mapGetters('user', [
+        'getLoggedUser'
+    ]),
+  },
+  methods: {
+    ...mapMutations('artifact', [
+        BUY_ARTIFACT
+    ]),
+    ...mapMutations('user', [
+      PUSH_ARTIFACT
+    ]),
+    buy() {
+      this.BUY_ARTIFACT(this.artifact.id)
+      this.PUSH_ARTIFACT({
+        artifact: this.artifact,
+        user: this.getLoggedUser}
+        )
     }
   }
 }

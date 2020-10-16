@@ -1,5 +1,5 @@
 import {arrayUtils} from "@/utils/array-utils";
-import {ADD_ARTIFACT, DELETE_ARTIFACT, UPDATE_ARTIFACT} from "@/utils/macros/mutation-types";
+import {ADD_ARTIFACT, BUY_ARTIFACT, DELETE_ARTIFACT, UPDATE_ARTIFACT} from "@/utils/macros/mutation-types";
 import {artifacts} from "@/mock/artifacts-mock";
 
 const initialState = {
@@ -16,7 +16,11 @@ export const artifact = {
   mutations: {
     [ADD_ARTIFACT]: (state, payload) => state.artifacts.push(payload),
     [UPDATE_ARTIFACT]: (state, payload) => arrayUtils.updateItem(state.artifacts, payload),
-    [DELETE_ARTIFACT]: (state, payload) => arrayUtils.removeItem(state.artifacts, payload)
+    [DELETE_ARTIFACT]: (state, payload) => arrayUtils.removeItem(state.artifacts, payload),
+    [BUY_ARTIFACT]: (state, artifactId) => {
+      const purchasedArtifact = state.artifacts.find(artifact => artifact.id === parseInt(artifactId))
+      purchasedArtifact.quantity--
+    }
+
   }
 }
-
