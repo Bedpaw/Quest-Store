@@ -19,28 +19,56 @@
 
       <v-card-text>
         <v-container>
-          <v-row>
-            <v-col cols="12" sm="12" md="6">
-              <v-text-field v-model="editedItem.name" label="Name"/>
-            </v-col>
+          <v-form
+              ref="form"
+              v-model="valid"
+              lazy-validation
+          >
+            <v-row>
+              <v-col cols="12" sm="12" md="6">
+                <v-text-field
+                    v-model="editedItem.name"
+                    label="Name"
+                    :rules="nameRules"
+                />
+              </v-col>
 
-            <v-col cols="12" sm="6" md="6">
-              <v-text-field v-model="editedItem.surname" label="Surname"/>
-            </v-col>
+              <v-col cols="12" sm="6" md="6">
+                <v-text-field
+                    v-model="editedItem.surname"
+                    label="Surname"
+                    :rules="surnameRules"
+                />
+              </v-col>
 
-            <v-col cols="12" sm="6" md="6">
-              <v-select :items="roles" v-model="editedItem.role" label="Role"/>
-            </v-col>
+              <v-col cols="12" sm="6" md="6">
+                <v-text-field
+                    v-model="editedItem.email"
+                    label="Email"
+                    :rules="emailRules"
+                />
+              </v-col>
 
-            <v-col cols="12" sm="6" md="6">
-              <v-text-field
-                  v-model="editedItem.coins"
-                  label="Account Balance"
-                  type="number"
-                  step="10"
-                  min="0"/>
-            </v-col>
-          </v-row>
+              <v-col cols="12" sm="6" md="6">
+                <v-select
+                    :items="roles"
+                    v-model="editedItem.role"
+                    label="Role"
+                />
+              </v-col>
+
+              <v-col cols="12" sm="6" md="6">
+                <v-text-field
+                    v-model="editedItem.coins"
+                    label="Account Balance"
+                    type="number"
+                    step="10"
+                    min="0"
+                    :rules="positive"
+                />
+              </v-col>
+            </v-row>
+          </v-form>
         </v-container>
       </v-card-text>
 
@@ -68,6 +96,8 @@
 <script>
 import {ROLES} from "@/utils/macros/roles";
 import {dataTableDialogMixin} from "@/mixins/dataTablesMixin";
+import {nameRules, surnameRules, descriptionRules, emailRules, positive} from "@/components/data-tables/validators";
+
 
 export default {
   name: "UserDataDialog",
@@ -77,10 +107,15 @@ export default {
       emptyItemTemplate: {
         name: '',
         surname: '',
-        coins: '',
+        coins: 50,
         email: '',
-        role: '',
+        role: ROLES.STUDENT,
       },
+      surnameRules,
+      nameRules,
+      descriptionRules,
+      positive,
+      emailRules,
       formName: 'User',
       roles: Object.values(ROLES),
     }

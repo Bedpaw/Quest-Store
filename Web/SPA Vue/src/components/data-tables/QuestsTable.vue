@@ -8,6 +8,20 @@
         :headers="headers"
         :search="search"
     >
+      <!--Styling reward column -->
+      <template v-slot:item.reward="{ item }">
+        <v-chip small color="yellow" style="font-weight: bold">
+          {{ item.reward }}
+        </v-chip>
+      </template>
+
+      <!--Styling type column -->
+      <template v-slot:item.type="{ item }">
+        <v-chip small :color=questTypeChipColor(item.type) style="font-weight: bold">
+          {{ item.type }}
+        </v-chip>
+      </template>
+
       <!--Add editing/deleting buttons -->
       <template v-slot:item.actions="{ item }">
         <v-icon small class="mr-2" @click="editItem(item)">
@@ -51,6 +65,7 @@ import {questTableHeaders} from "@/components/data-tables/table-headers";
 import {dataTableMixin} from "@/mixins/dataTablesMixin";
 import {Quest} from "@/structures/quest";
 import QuestDataDialog from "@/components/data-tables/dialogs/QuestDataDialog";
+import {QUEST_TYPES} from "@/utils/macros/quest-types";
 
 export default {
   name: "QuestsTable",
@@ -88,6 +103,9 @@ export default {
       }
       this.clearEditedItem()
     },
+    questTypeChipColor(questType) {
+      return questType === QUEST_TYPES.EXTRA ? 'blue' : 'green'
+    }
   }
 }
 </script>

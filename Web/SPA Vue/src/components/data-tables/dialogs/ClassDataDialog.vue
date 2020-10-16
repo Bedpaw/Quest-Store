@@ -19,36 +19,42 @@
 
       <v-card-text>
         <v-container>
-          <v-row>
-            <v-col cols="12" sm="12" md="6">
-              <v-text-field v-model="editedItem.name" label="Name"/>
-            </v-col>
+          <v-form
+              ref="form"
+              v-model="valid"
+              lazy-validation
+          >
+            <v-row>
+              <v-col cols="12" sm="12" md="6">
+                <v-text-field
+                    v-model="editedItem.name"
+                    label="Name"
+                    :rules="nameRules"
+                />
+              </v-col>
 
-            <v-col cols="12" sm="6" md="6">
-              <v-select
-                  v-model="editedItem.students"
-                  :items="studentsSelectList"
-                  :menu-props="{ maxHeight: '400' }"
-                  label="Students"
-                  multiple
-                  hint="Pick students for your class"
-                  persistent-hint
-              ></v-select>
-            </v-col>
+              <v-col cols="12" sm="6" md="6">
+                <v-select
+                    v-model="editedItem.students"
+                    :items="studentsSelectList"
+                    :menu-props="{ maxHeight: '400' }"
+                    label="Students"
+                    multiple
+                ></v-select>
+              </v-col>
 
-            <v-col cols="12" sm="6" md="6">
-              <v-select
-                  v-model="editedItem.mentors"
-                  :items="mentorsSelectList"
-                  :menu-props="{ maxHeight: '400' }"
-                  label="Mentors"
-                  multiple
-                  hint="Pick mentors"
-                  persistent-hint
-              ></v-select>
-            </v-col>
+              <v-col cols="12" sm="6" md="6">
+                <v-select
+                    v-model="editedItem.mentors"
+                    :items="mentorsSelectList"
+                    :menu-props="{ maxHeight: '400' }"
+                    label="Mentors"
+                    multiple
+                ></v-select>
+              </v-col>
 
-          </v-row>
+            </v-row>
+          </v-form>
         </v-container>
       </v-card-text>
 
@@ -76,6 +82,7 @@
 <script>
 import {dataTableDialogMixin} from "@/mixins/dataTablesMixin";
 import {mapGetters} from "vuex";
+import {nameRules} from "@/components/data-tables/validators";
 
 export default {
   name: "ClassDataDialog",
@@ -88,6 +95,7 @@ export default {
         students: [],
       },
       formName: 'Class',
+      nameRules,
       studentsSelectList: {},
       mentorsSelectList: {}
     }

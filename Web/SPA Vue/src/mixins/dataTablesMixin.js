@@ -22,7 +22,8 @@ export const dataTableDialogMixin = {
     return {
       editedItem: {},
       emptyItemTemplate: {},
-      formName: "Item"
+      formName: "Item",
+      valid: true
     }
   },
   props: {
@@ -47,7 +48,9 @@ export const dataTableDialogMixin = {
   },
   methods: {
     save() {
-      this.$emit('itemChanged', this.editedItem)
+      if(this.$refs.form.validate()){
+        this.$emit('itemChanged', this.editedItem)
+      }
     },
     isEditMode() {
       return objectUtils.isEmptyObject(this.currentItem)
