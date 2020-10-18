@@ -25,6 +25,7 @@ namespace QuestStore.Infrastructure.Data.Repository
         public virtual async Task Add(T entity)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
+
             Entities.Add(entity);
             await Context.SaveChangesAsync();
         }
@@ -32,6 +33,7 @@ namespace QuestStore.Infrastructure.Data.Repository
         public virtual async Task Update(T entity)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
+
             Entities.Update(entity);
             await Context.SaveChangesAsync();
         }
