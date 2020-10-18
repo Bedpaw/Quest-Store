@@ -32,7 +32,7 @@
             </v-col>
           </v-row>
           <v-card-title>My artifacts</v-card-title>
-            <p v-for="artifact in getLoggedUser.artifacts" :key="artifact.id">
+            <p v-for="(artifact, index) in getLoggedUser.artifacts" :key="artifact.id + index">
               {{artifact.name}}
             </p>
         </v-card>

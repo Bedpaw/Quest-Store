@@ -52,7 +52,7 @@
                     v-model="editedItem.quantity"
                     label="Quantity"
                     type="number"
-                    step="10"
+                    step="1"
                     min="0"
                     :rules="positive"
                 />

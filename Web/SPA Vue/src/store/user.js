@@ -12,6 +12,12 @@ export const user = {
   namespaced: true,
   state: initialState,
   getters: {
+    // For test only // that should be mutation
+    changeToUserWithRole: (state) => (role) => {
+     const userWithRole = users.find(user =>  user.role === role)
+      state.loggedUserId = userWithRole.id
+    },
+
     // Logged User
     getLoggedUser: (state) => state.users.find(user => user.id === state.loggedUserId),
     getLoggedUserRole: (state, getters) => getters.getLoggedUser.role,
@@ -33,6 +39,10 @@ export const user = {
     [ADD_USER] : (state, payload) => state.users.push(payload),
     [UPDATE_USER] : (state, payload) => arrayUtils.updateItem(state.users, payload),
     [DELETE_USER] : (state, payload) => arrayUtils.removeItem(state.users, payload),
-    [PUSH_ARTIFACT]: (state, {user, artifact}) => user.artifacts.push(artifact)
+    [PUSH_ARTIFACT]: (state, {user, artifact}) => {
+      user.coins -= artifact.cost
+      user.artifacts.push(artifact)
+    }
+
   }
 }

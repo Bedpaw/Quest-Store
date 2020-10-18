@@ -22,8 +22,8 @@
 
 import UsersTable from "../components/data-tables/UsersTable";
 import ClassroomsTable from "../components/data-tables/ClassroomsTable";
-export default {
 
+export default {
   name: "AdminBoard",
   components: {ClassroomsTable, UsersTable},
 };

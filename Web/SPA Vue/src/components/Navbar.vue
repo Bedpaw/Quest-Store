@@ -98,7 +98,7 @@ name: "Navbar",
         title: 'test',
         icon: '',
         route: '/test',
-        guard: [ROLES.ADMIN]
+        guard: []
       }
     ],
     color: 'primary',
