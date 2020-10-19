@@ -13,15 +13,9 @@ namespace QuestStore.API.GenericControllersFactory
     {
         public void PopulateFeature(IEnumerable<ApplicationPart> parts, ControllerFeature feature)
         {
-            // types of entities which inherit from the BaseEntity and have the GenerateController attribute.
-            var entitiesTypes = Assembly.GetAssembly(typeof(BaseEntity))
-                ?.ExportedTypes.Where(
-                    t => !t.IsAbstract && t.IsSubclassOf(typeof(BaseEntity)) && t.GetCustomAttribute<GenerateControllerAttribute>() != null);
-            if (entitiesTypes == null) return;
-
-            foreach (var type in entitiesTypes)
+            foreach (var entityType in ControllersTypes.Configurations.Keys)
             {
-                feature.Controllers.Add(typeof(GenericController<>).MakeGenericType(type).GetTypeInfo());
+                feature.Controllers.Add(typeof(GenericController<>).MakeGenericType(entityType).GetTypeInfo());
             }
         }
     }

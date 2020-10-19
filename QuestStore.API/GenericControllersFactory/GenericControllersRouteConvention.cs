@@ -6,19 +6,18 @@ namespace QuestStore.API.GenericControllersFactory
 {
     public class GenericControllersRouteConvention : IControllerModelConvention
     {
-        public void Apply(ControllerModel controller)
+        public void Apply(Microsoft.AspNetCore.Mvc.ApplicationModels.ControllerModel controller)
         {
             if (!controller.ControllerType.IsGenericType) return;
 
             var entityType = controller.ControllerType.GenericTypeArguments[0];
 
-            var generateControllerAttribute = entityType.GenericTypeArguments[0]
-                .GetCustomAttribute<GenerateControllerAttribute>();
+            controller.ControllerName =
+                ControllersTypes.Configurations[entityType].Name ?? entityType.Name + "s";
 
-            if (generateControllerAttribute == null) return;
+            controller.RouteValues["Controller"] =
+                ControllersTypes.Configurations[entityType].Route ?? entityType.Name + "s";
 
-            controller.ControllerName = entityType.Name;
-            controller.RouteValues["Controller"] = entityType.Name;
         }
     }
 }
