@@ -10,12 +10,12 @@ namespace QuestStore.API.GenericControllersFactory
         {
             if (!controller.ControllerType.IsGenericType) return;
 
-            var generateControllerAttribute = controller.ControllerType.GenericTypeArguments[0]
+            var entityType = controller.ControllerType.GenericTypeArguments[0];
+
+            var generateControllerAttribute = entityType.GenericTypeArguments[0]
                 .GetCustomAttribute<GenerateControllerAttribute>();
 
             if (generateControllerAttribute == null) return;
-
-            var entityType = controller.ControllerType.GenericTypeArguments[0];
 
             controller.ControllerName = entityType.Name;
             controller.RouteValues["Controller"] = entityType.Name;
