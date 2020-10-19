@@ -4,6 +4,7 @@ using System.Text;
 
 namespace QuestStore.Core.Entities
 {
+    [GenerateController]
     public class Quest : ResourceEntity
     {
         public int Reward { get; set; }

@@ -17,11 +17,11 @@ namespace QuestStore.Infrastructure.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            var entityTypes = Assembly.GetExecutingAssembly()
+            var entitiesTypes = Assembly.GetExecutingAssembly()
                 .GetTypes()
-                .Where(t => t.IsClass && !t.IsAbstract && t.IsSubclassOf(typeof(BaseEntity)));
+                .Where(t => !t.IsAbstract && t.IsSubclassOf(typeof(BaseEntity)));
 
-            foreach (var type in entityTypes)
+            foreach (var type in entitiesTypes)
             {
                 modelBuilder.Entity(type);
             }

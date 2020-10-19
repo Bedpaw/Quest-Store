@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
+using QuestStore.API.GenericControllersFactory;
 using QuestStore.Infrastructure.Data;
 using QuestStore.Core;
 using QuestStore.Core.Interfaces;
@@ -28,7 +29,9 @@ namespace QuestStore.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(o => o.Conventions.Add(new GenericControllersRouteConvention()))
+                .ConfigureApplicationPartManager(
+                    manager => manager.FeatureProviders.Add(new GenericControllersFeatureProvider()));
 
             services.AddDbContext<StoreDbContext>(
                 options =>
