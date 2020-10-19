@@ -26,6 +26,10 @@ export default {
     ...mapGetters('quest', [
       'getQuests', 'getExtraQuests', 'getBasicQuests'
     ]),
+  },
+  created() {
+    this.$store.dispatch('quest/fetchQuests')
+
   }
 }
 </script>

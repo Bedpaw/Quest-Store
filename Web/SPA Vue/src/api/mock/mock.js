@@ -1,5 +1,5 @@
 import axios from "axios";
-import {userController} from "@/api/real/user-controller";
+import {questController} from "@/api/mock/quest-controller";
 
 
 
@@ -24,6 +24,6 @@ async function testApi() {
 
 
 export const mockApi = {
-  ...userController,
+  questController,
   testApi
 };
