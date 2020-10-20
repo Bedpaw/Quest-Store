@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using QuestStore.Core.Entities;
+using QuestStore.Core.Enums;
 
 namespace QuestStore.Infrastructure.Data
 {

@@ -1,4 +1,7 @@
+using System.Reflection;
 using System.Security.Claims;
+using System.Text.Json.Serialization;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,7 +34,8 @@ namespace QuestStore.API
         {
             services.AddControllers(o => o.Conventions.Add(new GenericControllersRouteConvention()))
                 .ConfigureApplicationPartManager(
-                    manager => manager.FeatureProviders.Add(new GenericControllersFeatureProvider()));
+                    manager => manager.FeatureProviders.Add(new GenericControllersFeatureProvider()))
+                .AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
             services.AddDbContext<StoreDbContext>(
                 options =>
@@ -79,6 +83,8 @@ namespace QuestStore.API
                             RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
                         };
                     });
+
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         }
