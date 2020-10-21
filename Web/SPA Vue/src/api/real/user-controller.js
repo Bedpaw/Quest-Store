@@ -1,4 +1,4 @@
-/*import axios from 'axios'
+import axios from 'axios'
 
 const url = 'https://localhost:5001/QuestStore/api/users'
 
@@ -7,13 +7,13 @@ const getUsers = async () => {
   try {
     const response = await axios.get(url);
     console.log(response)
-    return response
+    return response.data
   } catch (error){
     console.log(error)
     return error
   }
 }
-/!*
+/*
 const addUser = async ({ user }) => {
   try {
     const response = await axios.post(url, {
@@ -40,12 +40,20 @@ const updateUser = async (...user) => {
     console.log(error)
     return error
   }
-}*!/
+}*/
 
+const getLoggedUser = async () => {
+  try {
+    const response = await axios.get(url + '/profile')
+    return response.data
+  } catch (error) {
+    return error
+  }
+}
 const getUser = async (id) => {
   try {
     const response = await axios.get(url + '/id')
-    return response
+    return response.data
   } catch (error) {
     return error
   }
@@ -53,7 +61,7 @@ const getUser = async (id) => {
 const deleteUser = async (id) => {
   try {
    const response = await axios.delete(url + '/id')
-    return response
+    return response.data
   } catch (error) {
     return error
   }
@@ -61,8 +69,9 @@ const deleteUser = async (id) => {
 
 export const userController = {
   getUsers,
-  addUser,
-  updateUser,
+  getLoggedUser,
+  //addUser,
+  //updateUser,
   getUser,
   deleteUser
-}*/
+}

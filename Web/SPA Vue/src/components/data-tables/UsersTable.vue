@@ -85,6 +85,9 @@ export default {
       'getUsers', 'getFullName', 'getUserById'
     ]),
   },
+  created() {
+    this.$store.dispatch('user/fetchUsers')
+    },
   methods: {
     ...mapMutations('user', [
       ADD_USER, UPDATE_USER, DELETE_USER

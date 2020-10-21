@@ -1,5 +1,5 @@
-import {User} from "../structures/user";
-import {ROLES} from "../utils/macros/roles";
+import {User} from "@/structures/user";
+import {ROLES} from "@/utils/macros/roles";
 import {artifacts} from "@/mock/artifacts-mock";
 
 export const user = {
@@ -65,3 +65,4 @@ export const users = [
     artifacts: []
   }),
 ]
+export const loggedUser = users[0]

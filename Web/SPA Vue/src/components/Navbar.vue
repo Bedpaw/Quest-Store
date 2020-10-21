@@ -17,12 +17,12 @@
           class="py-0"
       >
         <v-list-item two-line :class="miniVariant && 'px-0'" class="v-chip--clickable" @click="pushIfNotProfilePage">
-          <v-list-item-avatar >
-            <img src="../assets/avatar.svg" >
+          <v-list-item-avatar>
+            <img src="../assets/avatar.svg">
           </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title>{{ getLoggedUser.name }}  {{getLoggedUser.surname}}</v-list-item-title>
+            <v-list-item-title>{{ getLoggedUser.name }} {{ getLoggedUser.surname }}</v-list-item-title>
             <v-list-item-subtitle>{{ getLoggedUser.role }}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
@@ -43,17 +43,16 @@
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-      <v-list-item @click="logout()">
-        <v-list-item-icon>
-          <v-icon>mdi-logout</v-icon>
-        </v-list-item-icon>
+        <v-list-item @click="logout()">
+          <v-list-item-icon>
+            <v-icon>mdi-logout</v-icon>
+          </v-list-item-icon>
 
-        <v-list-item-content>
-          <v-list-item-title>Logout</v-list-item-title>
-        </v-list-item-content>
+          <v-list-item-content>
+            <v-list-item-title>Logout</v-list-item-title>
+          </v-list-item-content>
 
-      </v-list-item>
-
+        </v-list-item>
 
 
       </v-list>
@@ -63,42 +62,48 @@
 </template>
 
 <script>
-import { ROUTES } from "@/utils/macros/routes";
-import { user } from "@/mock/user-mock";
+import {ROUTES} from "@/utils/macros/routes";
+import {user} from "@/mock/user-mock";
 import {mapGetters} from 'vuex'
 import {ROLES} from "@/utils/macros/roles";
 import {arrayUtils} from "@/utils/array-utils";
+
 export default {
-name: "Navbar",
+  name: "Navbar",
   components: {},
   data: () => ({
     user: user,
     drawer: true,
     items: [
-      { title: ROUTES.home.label,
+      {
+        title: ROUTES.home.label,
         icon: 'mdi-home',
         route: ROUTES.home,
         guard: []
       },
-      { title: ROUTES.admin.label,
+      {
+        title: ROUTES.admin.label,
         icon: 'mdi-account-cog',
         route: ROUTES.admin,
         guard: [ROLES.ADMIN]
 
       },
-      { title: ROUTES.mentor.label,
+      {
+        title: ROUTES.mentor.label,
         icon: 'mdi-teach',
         route: ROUTES.mentor,
         guard: [ROLES.MENTOR]
 
       },
-      { title: ROUTES.quests.label,
+      {
+        title: ROUTES.quests.label,
         icon: 'mdi-axe',
         route: ROUTES.quests,
         guard: []
 
       },
-      { title: ROUTES.artifacts.label,
+      {
+        title: ROUTES.artifacts.label,
         icon: 'mdi-seal',
         route: ROUTES.artifacts,
         guard: []
@@ -125,23 +130,25 @@ name: "Navbar",
     background: false,
   }),
   computed: {
-  ...mapGetters('user', [
+    ...mapGetters('user', [
       'getLoggedUser'
-  ]),
-    itemsFilteredByRoles () {
+    ]),
+    itemsFilteredByRoles() {
       const user = this.getLoggedUser
-      if(user.role === ROLES.ADMIN) return this.items
+      if (user.role === ROLES.ADMIN) return this.items
 
-      return this.items.filter( route => {
-        if (arrayUtils.isEmptyArray(route.guard)) return true
-        return route.guard.includes(user.role)
-      }
+      return this.items.filter(route => {
+            if (arrayUtils.isEmptyArray(route.guard)) return true
+            return route.guard.includes(user.role)
+          }
       )
     },
-  isNotProfilePage() {
-     return this.$route.path !== ROUTES.profile.path
+    isNotProfilePage() {
+      return this.$route.path !== ROUTES.profile.path
+    },
   },
-
+  created() {
+    this.$store.dispatch('user/fetchLoggedUser')
   },
   methods: {
     pushIfNotProfilePage() {
