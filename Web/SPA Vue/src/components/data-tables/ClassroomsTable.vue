@@ -83,12 +83,13 @@ export default {
       'getUsersFullNameAsString'
     ]),
   },
-
+  created() {
+    this.$store.dispatch('classroom/fetchClasses')
+  },
   methods: {
     ...mapMutations('classroom', [
       ADD_CLASS, DELETE_CLASS, UPDATE_CLASS
     ]),
-
     deleteItem(classroom) {
       if (confirm('Are you sure you want to delete this classroom?')) this.DELETE_CLASS(classroom)
     },

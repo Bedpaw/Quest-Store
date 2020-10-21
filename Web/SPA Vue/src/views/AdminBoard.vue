@@ -26,6 +26,7 @@ import ClassroomsTable from "../components/data-tables/ClassroomsTable";
 export default {
   name: "AdminBoard",
   components: {ClassroomsTable, UsersTable},
+
 };
 </script>
 

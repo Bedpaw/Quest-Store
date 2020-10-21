@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--Search -->
-    <v-text-field v-model="search" label="Search" single-line clearable class="px-4" />
+    <v-text-field v-model="search" label="Search" single-line clearable class="px-4"/>
 
     <v-data-table
         :items="getQuests"
@@ -80,12 +80,15 @@ export default {
       'getQuests', 'getQuestById'
     ]),
   },
+  created() {
+    this.$store.dispatch('quest/fetchQuests')
+  },
   methods: {
     ...mapMutations('quest', [
       ADD_QUEST, DELETE_QUEST, UPDATE_QUEST
     ]),
-    deleteItem (quest) {
-      if(confirm('Are you sure you want to delete this quest?')) this.DELETE_QUEST(quest)
+    deleteItem(quest) {
+      if (confirm('Are you sure you want to delete this quest?')) this.DELETE_QUEST(quest)
     },
     saveChange(changedItem) {
       // Try to find quest
@@ -98,7 +101,7 @@ export default {
       }
       // Quest not found, so create
       else {
-        quest= new Quest({...changedItem })
+        quest = new Quest({...changedItem})
         this.ADD_QUEST(quest)
       }
       this.clearEditedItem()

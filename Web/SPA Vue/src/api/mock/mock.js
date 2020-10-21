@@ -1,5 +1,8 @@
 import axios from "axios";
 import {questController} from "@/api/mock/quest-controller";
+import {artifactController} from "@/api/mock/artifact-controller";
+import {classroomController} from "@/api/mock/classroom-controller";
+import {userController} from "@/api/mock/user-controller";
 
 
 
@@ -25,5 +28,8 @@ async function testApi() {
 
 export const mockApi = {
   questController,
+  artifactController,
+  classroomController,
+  userController,
   testApi
 };

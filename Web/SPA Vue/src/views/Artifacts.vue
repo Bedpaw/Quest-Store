@@ -14,12 +14,15 @@ import ArtifactCard from "@/components/ArtifactCard";
 import GridContainer from "@/components/GridContainer";
 
 export default {
-name: "Artifacts",
+  name: "Artifacts",
   components: {ArtifactCard, GridContainer},
   computed: {
     ...mapGetters('artifact', [
       'getArtifacts'
     ]),
+  },
+  created() {
+    this.$store.dispatch('artifact/fetchArtifacts')
   }
 }
 </script>

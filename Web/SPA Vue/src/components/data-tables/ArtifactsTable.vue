@@ -80,6 +80,9 @@ export default {
       'getArtifacts', 'getArtifactById'
     ]),
   },
+  created() {
+    this.$store.dispatch('artifact/fetchArtifacts')
+  },
   methods: {
     ...mapMutations('artifact', [
       ADD_ARTIFACT, DELETE_ARTIFACT, UPDATE_ARTIFACT

@@ -27,7 +27,7 @@ export default {
       const loggedIn = authService.isAuthenticated
       const notLoading = authService.loading === false
 
-      if(loggedIn && notLoading &&  authService.isGuest()) return loggedAsGuest
+      if(loggedIn && notLoading && authService.isGuest()) return loggedAsGuest
       if(loggedIn && notLoading) return loggedInMenu
       if(loggedIn === false && notLoading) return loggedOutMenu
       return loadingMenu

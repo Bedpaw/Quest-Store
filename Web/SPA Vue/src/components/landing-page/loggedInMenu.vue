@@ -1,6 +1,6 @@
 <template>
   <v-card class="d-flex flex-column justify-center align-center card">
-    <v-card class="px-10 lime lighten-5">
+    <v-card class="px-10 lime lighten-5 mt-4">
       <v-card-title class="text-h3 font-weight-bold"> QuestStore</v-card-title>
       <v-card-subtitle class="text-h5 pt-4 font-italic"> What do You want to do?</v-card-subtitle>
     </v-card>

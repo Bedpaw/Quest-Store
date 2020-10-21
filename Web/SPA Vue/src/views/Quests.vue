@@ -29,7 +29,6 @@ export default {
   },
   created() {
     this.$store.dispatch('quest/fetchQuests')
-
   }
 }
 </script>
