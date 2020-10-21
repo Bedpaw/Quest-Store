@@ -24,7 +24,7 @@ export const classroom = {
     async fetchClasses ({commit}) {
       const classrooms = await api.classroomController
         .getClassrooms()
-        .map(classroom => new Classroom(classroom))
+        .then(classrooms => classrooms.map(classroom => new Classroom(classroom)))
       commit(FETCH_CLASSES, classrooms)
     }
   }

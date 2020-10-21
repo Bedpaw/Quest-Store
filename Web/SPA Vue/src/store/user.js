@@ -22,7 +22,7 @@ export const user = {
     // For test only // that should be mutation
     changeToUserWithRole: (state) => (role) => {
       const userWithRole = users.find(user => user.role === role)
-      state.loggedUserId = userWithRole.id
+      state.loggedUser = userWithRole
     },
 
     // Logged User
@@ -55,13 +55,12 @@ export const user = {
   },
   actions: {
     async fetchUsers({commit}) {
-      const users = await api.userController
-        .getUsers()
-        .map(user => new User(user))
+      const users = await api.getUsers()
+        .then(users => users.map(user => new User(user)))
       commit(FETCH_USERS, users)
     },
     async fetchLoggedUser({commit}) {
-      const user = await api.userController.getLoggedUser()
+      const user = await api.getLoggedUser()
       commit(FETCH_LOGGED_USER, new User(user))
     }
   }

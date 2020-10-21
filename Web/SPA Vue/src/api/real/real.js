@@ -6,7 +6,7 @@ import {userController} from "@/api/real/user-controller";
 export const realApi = {
   questController,
   classroomController,
-  userController,
+  ...userController,
   artifactController
 
 };

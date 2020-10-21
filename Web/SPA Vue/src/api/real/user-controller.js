@@ -42,17 +42,17 @@ const updateUser = async (...user) => {
   }
 }*/
 
-const getLoggedUser = async () => {
+/*const getLoggedUser = async () => {
   try {
     const response = await axios.get(url + '/profile')
     return response.data
   } catch (error) {
     return error
   }
-}
+}*/
 const getUser = async (id) => {
   try {
-    const response = await axios.get(url + '/id')
+    const response = await axios.get(url + `/${id}`)
     return response.data
   } catch (error) {
     return error
@@ -60,7 +60,7 @@ const getUser = async (id) => {
 }
 const deleteUser = async (id) => {
   try {
-   const response = await axios.delete(url + '/id')
+   const response = await axios.delete(url + `/${id}`)
     return response.data
   } catch (error) {
     return error
@@ -69,7 +69,7 @@ const deleteUser = async (id) => {
 
 export const userController = {
   getUsers,
-  getLoggedUser,
+  //getLoggedUser,
   //addUser,
   //updateUser,
   getUser,

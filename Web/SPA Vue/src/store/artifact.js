@@ -10,7 +10,6 @@ import {api} from "@/api";
 import {Artifact} from "@/structures/artifact";
 
 
-
 export const artifact = {
   namespaced: true,
   state: {
@@ -31,10 +30,12 @@ export const artifact = {
     }
   },
   actions: {
-    async fetchArtifacts ({commit}) {
+    async fetchArtifacts({commit}) {
       const artifacts = await api.artifactController
         .getArtifacts()
-        .map(artifact => new Artifact(artifact))
+        .then(artifacts =>
+          artifacts.map(artifact => new Artifact(artifact))
+        )
       commit(FETCH_ARTIFACTS, artifacts)
     }
   }

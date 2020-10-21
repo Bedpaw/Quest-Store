@@ -1,4 +1,4 @@
-import axios from "axios";
+//import axios from "axios";
 import {questController} from "@/api/mock/quest-controller";
 import {artifactController} from "@/api/mock/artifact-controller";
 import {classroomController} from "@/api/mock/classroom-controller";
@@ -6,7 +6,7 @@ import {userController} from "@/api/mock/user-controller";
 
 
 
-async function testApi() {
+/*async function testApi() {
   // Get the access token from the auth wrapper
   console.log(this.$auth)
   const token = await this.$auth.getTokenSilently();
@@ -23,13 +23,12 @@ async function testApi() {
   );
   console.log(data);
   return data;
-}
+}*/
 
 
 export const mockApi = {
   questController,
   artifactController,
   classroomController,
-  userController,
-  testApi
+  ...userController,
 };

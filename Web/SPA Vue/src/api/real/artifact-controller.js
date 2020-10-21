@@ -6,7 +6,7 @@ const getArtifacts = async () => {
   try {
     const response = await axios.get(url);
     console.log(response.data)
-    response.data
+    return response.data
   } catch (error){
     console.log(error)
     return error

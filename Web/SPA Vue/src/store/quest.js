@@ -22,10 +22,10 @@ export const quest = {
     [DELETE_QUEST]: (state, payload) => arrayUtils.removeItem(state.quests, payload)
   },
   actions: {
-    async fetchQuests({commit}) {
-      const quests = await api.questController
-        .getQuests()
-        .map(quest => new Quest(quest))
+    fetchQuests: async function ({commit}) {
+      const quests = await api.questController.getQuests()
+        .then(quests => quests.map(quest => new Quest(quest)))
+
       commit(FETCH_ARTIFACTS, quests)
     }
   }
