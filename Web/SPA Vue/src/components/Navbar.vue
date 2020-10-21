@@ -43,9 +43,19 @@
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-      <v-list-item>
-        <login></login>
+      <v-list-item @click="logout()">
+        <v-list-item-icon>
+          <v-icon>mdi-logout</v-icon>
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title>Logout</v-list-item-title>
+        </v-list-item-content>
+
       </v-list-item>
+
+
+
       </v-list>
     </v-navigation-drawer>
   </nav>
@@ -55,13 +65,12 @@
 <script>
 import { ROUTES } from "@/utils/macros/routes";
 import { user } from "@/mock/user-mock";
-import Login from "@/components/Login";
 import {mapGetters} from 'vuex'
 import {ROLES} from "@/utils/macros/roles";
 import {arrayUtils} from "@/utils/array-utils";
 export default {
 name: "Navbar",
-  components: {Login},
+  components: {},
   data: () => ({
     user: user,
     drawer: true,
@@ -137,9 +146,13 @@ name: "Navbar",
   methods: {
     pushIfNotProfilePage() {
       if (this.isNotProfilePage) this.$router.push(ROUTES.profile.path)
+    },
+    logout() {
+      this.$auth.logout({
+        returnTo: window.location.origin
+      });
     }
   }
-
 }
 </script>
 

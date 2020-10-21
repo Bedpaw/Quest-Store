@@ -2,12 +2,13 @@ import { ROUTES } from "@/utils/macros/routes.js";
 import Home from "@/views/Home.vue";
 import AdminBoard from "../views/AdminBoard";
 import MentorBoard from "../views/MentorBoard";
-import ClassDetails from "../components/ClassDetails";
+import ClassDetails from "../views/ClassDetails";
 import {authGuard} from "@/auth/authGuard";
 import Profile from "@/views/Profile";
 import test from "@/views/test";
 import Artifacts from "@/views/Artifacts";
 import Quests from "@/views/Quests";
+import MyClasses from "@/views/MyClasses";
 
 
 export const routes = [
@@ -48,6 +49,11 @@ export const routes = [
     path: ROUTES.quests.path,
     name: ROUTES.quests.name,
     component: Quests
+  },
+  {
+    path: ROUTES.myClasses.path,
+    name: ROUTES.myClasses.name,
+    component: MyClasses
   },
   {
     path: '/test',

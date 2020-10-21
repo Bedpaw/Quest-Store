@@ -51,7 +51,7 @@
 
       <!--No data view-->
       <template v-slot:no-data>
-        <p>No artifacts available</p>
+        <p>No quests available</p>
       </template>
 
     </v-data-table>

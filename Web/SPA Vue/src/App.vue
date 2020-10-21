@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <navbar/>
+      <navbar v-if="$auth.isAuthenticated && $auth.isGuest() === false"/>
        <router-view class="pl-16"></router-view>
     </v-main>
   </v-app>

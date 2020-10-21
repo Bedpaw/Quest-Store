@@ -27,7 +27,7 @@ export const useAuth0 = ({
         user: {},
         auth0Client: null,
         popupOpen: false,
-        error: null
+        error: null,
       };
     },
     methods: {
@@ -80,7 +80,11 @@ export const useAuth0 = ({
       /** Logs the user out and removes their session on the authorization server */
       logout(o) {
         return this.auth0Client.logout(o);
-      }
+      },
+      isGuest() {
+        const key = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+        return this.user && {}.hasOwnProperty.call(this.user, key) && this.user[key][0] === "Guest"
+      },
     },
     /** Use this lifecycle method to instantiate the SDK client */
     async created() {
@@ -99,7 +103,7 @@ export const useAuth0 = ({
           window.location.search.includes("state=")
         ) {
           // handle the redirect and retrieve tokens
-          const { appState } = await this.auth0Client.handleRedirectCallback();
+          const {appState} = await this.auth0Client.handleRedirectCallback();
 
           // Notify subscribers that the redirect callback has happened, passing the appState
           // (useful for retrieving any pre-authentication state)
