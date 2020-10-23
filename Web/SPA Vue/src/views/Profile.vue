@@ -38,7 +38,9 @@
         </v-card>
       </v-col>
     </v-row>
-
+    <template>
+    <upload-file></upload-file>
+    </template>
   </v-container>
 
 
@@ -46,9 +48,11 @@
 
 <script>
 import {mapGetters} from 'vuex'
+import UploadFile from "@/components/uploadFile";
 
 export default {
   name: "Profile",
+  components: {UploadFile},
   computed: {
     ...mapGetters('classroom',
         ['getClassesByUserId']),
