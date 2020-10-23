@@ -65,7 +65,7 @@ namespace QuestStore.Infrastructure.Data
         {
             if (length > first.Count * second.Count)
             {
-                throw new ArgumentException("The length of return list must be smaller or equal to the product of the lengths of the lists used for the drawing");
+                throw new ArgumentOutOfRangeException(nameof(length), "The length of return list must be smaller or equal to the product of the lengths of the lists used for the drawing");
             }
 
             var result = new HashSet<(T1, T2)>();

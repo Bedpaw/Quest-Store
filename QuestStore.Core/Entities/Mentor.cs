@@ -6,6 +6,6 @@ namespace QuestStore.Core.Entities
 {
     public class Mentor : User
     {
-        public ICollection<MentorClassroom> Classrooms { get; set; }
+        public ICollection<MentorClassroom> MentorClassrooms { get; set; }
     }
 }

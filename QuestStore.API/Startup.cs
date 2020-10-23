@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using QuestStore.API.GenericControllersFactory;
 using QuestStore.Infrastructure.Data;
 using QuestStore.Core;
@@ -35,6 +36,8 @@ namespace QuestStore.API
             services.AddControllers(o => o.Conventions.Add(new GenericControllersRouteConvention()))
                 .ConfigureApplicationPartManager(
                     manager => manager.FeatureProviders.Add(new GenericControllersFeatureProvider()))
+                .AddNewtonsoftJson(
+                    o => o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore)
                 .AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
             services.AddDbContext<StoreDbContext>(

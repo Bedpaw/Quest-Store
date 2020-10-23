@@ -29,7 +29,7 @@ namespace QuestStore.API.Controllers
         {
             try
             {
-                var result = await Repository.GetAll();
+                var result = await Repository.GetAll(true);
                 return Ok(result.ToList());
             }
             catch (DbException)
@@ -43,7 +43,7 @@ namespace QuestStore.API.Controllers
         {
             try
             {
-                var result = await Repository.GetById(id);
+                var result = await Repository.GetById(id, true);
 
                 if (result == null) return NotFound();
 

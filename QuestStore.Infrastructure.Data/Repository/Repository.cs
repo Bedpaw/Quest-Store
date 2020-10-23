@@ -19,8 +19,27 @@ namespace QuestStore.Infrastructure.Data.Repository
             Entities = context.Set<T>();
         }
 
-        public virtual async Task<IEnumerable<T>> GetAll() => await Entities.ToListAsync();
-        public virtual async Task<T> GetById(int id) => await Entities.FindAsync(id);
+        public virtual async Task<IEnumerable<T>> GetAll(bool includePaths = false)
+        {
+            if (includePaths)
+            {
+                //Cycles are not allowed in no-tracking queries. Add AsTracking to a dbSet or uncomment FindInverse() in the GetAllPaths
+                return await Entities.Include(Context.GetAllPaths(typeof(T))).ToListAsync(); 
+            }
+            
+            return await Entities.ToListAsync();
+        }
+
+        public virtual async Task<T> GetById(int id, bool includePaths = false)
+        {
+            if (includePaths)
+            {
+                return await Entities.Include(Context.GetAllPaths(typeof(T)))
+                    .FirstOrDefaultAsync(e => e.Id == id);
+            }
+
+            return await Entities.FindAsync(id);
+        }
 
         public virtual async Task Add(T entity)
         {
