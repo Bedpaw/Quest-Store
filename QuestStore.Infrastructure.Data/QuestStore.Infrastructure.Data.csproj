@@ -5,6 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20201020203555_NewFakeDataTest.cs" />
+    <Compile Remove="Migrations\20201020203555_NewFakeDataTest.Designer.cs" />
+    <Compile Remove="Migrations\20201021150251_FakeDataTest.cs" />
+    <Compile Remove="Migrations\20201021150251_FakeDataTest.Designer.cs" />
+    <Compile Remove="Migrations\20201021151002_FakeDataTest.cs" />
+    <Compile Remove="Migrations\20201021151002_FakeDataTest.Designer.cs" />
+    <Compile Remove="Migrations\20201022140817_FakeData.cs" />
+    <Compile Remove="Migrations\20201022140817_FakeData.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bogus" Version="31.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.9">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

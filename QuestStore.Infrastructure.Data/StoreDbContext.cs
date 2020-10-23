@@ -17,19 +17,22 @@ namespace QuestStore.Infrastructure.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            var entitiesTypes = Assembly.GetExecutingAssembly()
-                .GetTypes()
+            var entitiesTypes = Assembly.GetAssembly(typeof(BaseEntity))
+                ?.GetTypes()
                 .Where(t => !t.IsAbstract && t.IsSubclassOf(typeof(BaseEntity)));
 
-            foreach (var type in entitiesTypes)
+            if (entitiesTypes != null)
             {
-                modelBuilder.Entity(type);
+                foreach (var type in entitiesTypes)
+                {
+                    modelBuilder.Entity(type);
+                }
             }
 
             modelBuilder.Entity<Quest>().Property(q => q.Type).HasConversion<string>();
             modelBuilder.Entity<User>().HasDiscriminator<string>("Role").HasValue<User>("Admin");
 
-            modelBuilder.SeedData();
+            modelBuilder.Seed();
         }
 
 //#if DEBUG
