@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using QuestStore.API.Dtos;
 using QuestStore.Core.Entities;
 using QuestStore.Core.Interfaces;
 
@@ -14,23 +16,25 @@ namespace QuestStore.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [ApiConventionType(typeof(DefaultApiConventions))]
-    public class GenericController<T> : ControllerBase where T : BaseEntity, new()
+    public class GenericController<T, TR> : ControllerBase where T : BaseEntity, new()
     {
         protected readonly IRepository<T> Repository;
+        private readonly IMapper _mapper;
         private readonly string _errorMessage = "Database error";
 
-        public GenericController(IRepository<T> repository)
+        public GenericController(IRepository<T> repository, IMapper mapper)
         {
             Repository = repository;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public virtual async Task<ActionResult<List<T>>> GetAllResources()
+        public virtual async Task<ActionResult<List<TR>>> GetAllResources()
         {
             try
             {
                 var result = await Repository.GetAll(true);
-                return Ok(result.ToList());
+                return Ok(_mapper.Map<List<TR>>(result.ToList()));
             }
             catch (DbException)
             {
@@ -39,7 +43,7 @@ namespace QuestStore.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public virtual async Task<ActionResult<T>> GetResource(int id)
+        public virtual async Task<ActionResult<TR>> GetResource(int id)
         {
             try
             {
@@ -47,7 +51,7 @@ namespace QuestStore.API.Controllers
 
                 if (result == null) return NotFound();
 
-                return Ok(result);
+                return Ok(_mapper.Map<TR>(result));
             }
             catch (DbException)
             {

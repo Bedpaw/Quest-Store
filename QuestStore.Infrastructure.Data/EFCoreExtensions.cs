@@ -33,6 +33,7 @@ namespace QuestStore.Infrastructure.Data
                 {
                     path.Push(navigation.Name);
                     NavigationsDfs(navigation, path, allPaths, includedNavigations, maxDepth - 1);
+                    path.Pop();
                 }
             }
 
@@ -55,7 +56,6 @@ namespace QuestStore.Infrastructure.Data
                 depth <= 0)
             {
                 allPaths.Add(string.Join(".", path.Reverse()));
-                path.Pop();
                 return;
             }
 
@@ -65,6 +65,7 @@ namespace QuestStore.Infrastructure.Data
                 {
                     path.Push(navigation.Name);
                     NavigationsDfs(navigation, path, allPaths, includedNavigations, depth-1);
+                    path.Pop();
                 }
             }
         }

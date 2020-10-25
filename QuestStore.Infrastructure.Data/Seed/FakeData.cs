@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using Bogus;
 using Bogus.Extensions;
 using QuestStore.Core.Entities;
 using QuestStore.Core.Enums;
 
-namespace QuestStore.Infrastructure.Data
+namespace QuestStore.Infrastructure.Data.Seed
 {
     public class FakeData
     {
@@ -46,7 +45,8 @@ namespace QuestStore.Infrastructure.Data
                 .RuleFor(s => s.Name, f => f.Person.FirstName)
                 .RuleFor(s => s.Description, f => f.Hacker.Phrase())
                 .RuleFor(s => s.Surname, f => f.Person.LastName)
-                .RuleFor(s => s.Email, f => f.Person.Email);
+                .RuleFor(s => s.Email, f => f.Person.Email)
+                .RuleFor(s => s.Coins, f => f.Random.Number(1000));
             FakeStudents = studentFaker.Generate(FakesNumber);
 
             var studentArtifactId = 1;

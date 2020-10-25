@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using QuestStore.Core.Entities;
+using QuestStore.Infrastructure.Data.Seed;
 
 namespace QuestStore.Infrastructure.Data
 {
