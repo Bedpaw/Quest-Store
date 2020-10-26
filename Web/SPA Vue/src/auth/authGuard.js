@@ -1,4 +1,4 @@
-import { getInstance } from "./index";
+import { getInstance } from './index';
 
 export const authGuard = (to, from, next) => {
   const authService = getInstance();
@@ -7,7 +7,7 @@ export const authGuard = (to, from, next) => {
     if (authService.isAuthenticated) {
       return next();
     }
-    next('/')
+    next('/');
     // authService.loginWithRedirect({ appState: { targetUrl: to.fullPath } });
   };
 
@@ -15,7 +15,7 @@ export const authGuard = (to, from, next) => {
     return fn();
   }
 
-  authService.$watch("loading", loading => {
+  authService.$watch('loading', loading => {
     if (loading === false) {
       return fn();
     }

@@ -1,12 +1,14 @@
 <template>
-  <v-dialog
-      v-model="dialog"
-      max-width="500px"
-  >
+  <v-dialog v-model="dialog" max-width="500px">
     <!--Button activator-->
     <template v-slot:activator="{ on, attrs }">
-      <v-btn color="primary" dark class="mb-2"
-             v-bind="attrs" @click="$emit('toggleDialog')">
+      <v-btn
+        color="primary"
+        dark
+        class="mb-2"
+        v-bind="attrs"
+        @click="$emit('toggleDialog')"
+      >
         Add User
       </v-btn>
     </template>
@@ -19,52 +21,48 @@
 
       <v-card-text>
         <v-container>
-          <v-form
-              ref="form"
-              v-model="valid"
-              lazy-validation
-          >
+          <v-form ref="form" v-model="valid" lazy-validation>
             <v-row>
               <v-col cols="12" sm="12" md="6">
                 <v-text-field
-                    v-model="editedItem.name"
-                    label="Name"
-                    :rules="nameRules"
+                  v-model="editedItem.name"
+                  label="Name"
+                  :rules="nameRules"
                 />
               </v-col>
 
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
-                    v-model="editedItem.surname"
-                    label="Surname"
-                    :rules="surnameRules"
+                  v-model="editedItem.surname"
+                  label="Surname"
+                  :rules="surnameRules"
                 />
               </v-col>
 
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
-                    v-model="editedItem.email"
-                    label="Email"
-                    :rules="emailRules"
+                  v-model="editedItem.email"
+                  label="Email"
+                  :rules="emailRules"
                 />
               </v-col>
 
               <v-col cols="12" sm="6" md="6">
                 <v-select
-                    :items="roles"
-                    v-model="editedItem.role"
-                    label="Role"
+                  :items="roles"
+                  v-model="editedItem.role"
+                  label="Role"
                 />
               </v-col>
 
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
-                    v-model="editedItem.coins"
-                    label="Account Balance"
-                    type="number"
-                    step="10"
-                    min="0"
-                    :rules="positive"
+                  v-model="editedItem.coins"
+                  label="Account Balance"
+                  type="number"
+                  step="10"
+                  min="0"
+                  :rules="positive"
                 />
               </v-col>
             </v-row>
@@ -74,18 +72,10 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn
-            color="blue darken-1"
-            text
-            @click="$emit('toggleDialog')"
-        >
+        <v-btn color="blue darken-1" text @click="$emit('toggleDialog')">
           Cancel
         </v-btn>
-        <v-btn
-            color="blue darken-1"
-            text
-            @click="save"
-        >
+        <v-btn color="blue darken-1" text @click="save">
           Save
         </v-btn>
       </v-card-actions>
@@ -94,13 +84,18 @@
 </template>
 
 <script>
-import {ROLES} from "@/utils/macros/roles";
-import {dataTableDialogMixin} from "@/mixins/dataTablesMixin";
-import {nameRules, surnameRules, descriptionRules, emailRules, positive} from "@/components/data-tables/validators";
-
+import { ROLES } from '@/utils/macros/roles';
+import { dataTableDialogMixin } from '@/mixins/dataTablesMixin';
+import {
+  nameRules,
+  surnameRules,
+  descriptionRules,
+  emailRules,
+  positive
+} from '@/components/data-tables/validators';
 
 export default {
-  name: "UserDataDialog",
+  name: 'UserDataDialog',
   mixins: [dataTableDialogMixin],
   data() {
     return {
@@ -109,7 +104,7 @@ export default {
         surname: '',
         coins: 50,
         email: '',
-        role: ROLES.STUDENT,
+        role: ROLES.STUDENT
       },
       surnameRules,
       nameRules,
@@ -117,9 +112,8 @@ export default {
       positive,
       emailRules,
       formName: 'User',
-      roles: Object.values(ROLES),
-    }
-  },
-}
+      roles: Object.values(ROLES)
+    };
+  }
+};
 </script>
-

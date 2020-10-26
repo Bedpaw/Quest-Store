@@ -1,6 +1,16 @@
 <template>
   <v-container>
     <v-card>
+      <v-card-title>Role changer</v-card-title>
+      <v-btn
+        v-for="role in ROLES"
+        @click="changeToUserWithRole(role)"
+        :key="role"
+      >
+        {{ role }}
+      </v-btn>
+    </v-card>
+    <v-card>
       <v-card-title>CLASSSES</v-card-title>
       <v-card-text>
         <p v-for="_class in getClasses" :key="_class.id">
@@ -41,25 +51,26 @@
   </v-container>
 </template>
 
-
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex';
+import { ROLES } from '@/utils/macros/roles';
 
 export default {
   name: 'test',
+  data() {
+    return {
+      ROLES
+    };
+  },
   computed: {
-    ...mapGetters('classroom', [
-      'getClasses',
-    ]),
+    ...mapGetters('classroom', ['getClasses']),
     ...mapGetters('user', [
-      'getUsers', 'getLoggedUser'
+      'getUsers',
+      'getLoggedUser',
+      'changeToUserWithRole'
     ]),
-    ...mapGetters('artifact', [
-      'getArtifacts',
-    ]),
-    ...mapGetters('quest', [
-      'getQuests',
-    ]),
+    ...mapGetters('artifact', ['getArtifacts']),
+    ...mapGetters('quest', ['getQuests'])
   },
   methods: {
     showObjectDetails(object) {
@@ -68,5 +79,5 @@ export default {
       }
     }
   }
-}
+};
 </script>

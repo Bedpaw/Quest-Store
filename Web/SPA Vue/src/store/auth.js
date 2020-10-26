@@ -1,6 +1,5 @@
 import AuthService from '../services/auth.service';
 
-
 // Check if user is sign in
 const user = JSON.parse(localStorage.getItem('user'));
 
@@ -64,5 +63,5 @@ export const auth = {
         }
       );
     }
-  },
+  }
 };

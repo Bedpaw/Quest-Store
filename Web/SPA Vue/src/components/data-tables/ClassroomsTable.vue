@@ -1,14 +1,15 @@
 <template>
   <div>
     <!--Search -->
-    <v-text-field v-model="search" label="Search" single-line clearable class="px-4"/>
+    <v-text-field
+      v-model="search"
+      label="Search"
+      single-line
+      clearable
+      class="px-4"
+    />
 
-    <v-data-table
-        :items="getClasses"
-        :headers="headers"
-        :search="search"
-    >
-
+    <v-data-table :items="getClasses" :headers="headers" :search="search">
       <!--Concat mentor fullName -->
       <template v-slot:item.mentors="{ item }">
         {{ getMentorsFullNamesAsString(item) }}
@@ -38,13 +39,14 @@
           <v-toolbar-title>Class Manager</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
 
-          <v-spacer/>
+          <v-spacer />
 
           <class-data-dialog
-              :dialog="dialog"
-              :current-item="currentItem"
-              @toggleDialog="dialog = !dialog"
-              @itemChanged="saveChange"/>
+            :dialog="dialog"
+            :current-item="currentItem"
+            @toggleDialog="dialog = !dialog"
+            @itemChanged="saveChange"
+          />
         </v-toolbar>
       </template>
 
@@ -52,72 +54,71 @@
       <template v-slot:no-data>
         <p>No classrooms available</p>
       </template>
-
     </v-data-table>
   </div>
 </template>
 
 <script>
-import {mapGetters, mapMutations} from "vuex";
-import {ADD_CLASS, DELETE_CLASS, UPDATE_CLASS} from "@/utils/macros/mutation-types";
-import ClassDataDialog from "./dialogs/ClassDataDialog";
-import {classroomTableHeaders} from "@/components/data-tables/table-headers";
-import {ROUTES} from "@/utils/macros/routes";
-import {Classroom} from "@/structures/classroom";
-import {dataTableMixin} from "@/mixins/dataTablesMixin";
+import { mapGetters, mapMutations } from 'vuex';
+import {
+  ADD_CLASS,
+  DELETE_CLASS,
+  UPDATE_CLASS
+} from '@/utils/macros/mutation-types';
+import ClassDataDialog from './dialogs/ClassDataDialog';
+import { classroomTableHeaders } from '@/components/data-tables/table-headers';
+import { ROUTES } from '@/utils/macros/routes';
+import { Classroom } from '@/structures/classroom';
+import { dataTableMixin } from '@/mixins/dataTablesMixin';
 
 export default {
-  name: "ClassroomsTable",
+  name: 'ClassroomsTable',
 
-  components: {ClassDataDialog},
+  components: { ClassDataDialog },
   data: () => ({
-    search: "",
+    search: '',
     headers: classroomTableHeaders
   }),
   mixins: [dataTableMixin],
   computed: {
-    ...mapGetters('classroom', [
-      'getClasses', 'getClassById'
-    ]),
-    ...mapGetters('user', [
-      'getUsersFullNameAsString'
-    ]),
+    ...mapGetters('classroom', ['getClasses', 'getClassById']),
+    ...mapGetters('user', ['getUsersFullNameAsString'])
   },
-
+  created() {
+    this.$store.dispatch('classroom/fetchClasses');
+    console.log(this.getClasses);
+  },
   methods: {
-    ...mapMutations('classroom', [
-      ADD_CLASS, DELETE_CLASS, UPDATE_CLASS
-    ]),
-
+    ...mapMutations('classroom', [ADD_CLASS, DELETE_CLASS, UPDATE_CLASS]),
     deleteItem(classroom) {
-      if (confirm('Are you sure you want to delete this classroom?')) this.DELETE_CLASS(classroom)
+      if (confirm('Are you sure you want to delete this classroom?')) {
+        this.$store.dispatch('classroom/deleteClassroom', classroom);
+      }
     },
     saveChange(changedItem) {
       // Try to find class
-      let _class = this.getClassById(changedItem.id)
+      let _class = this.getClassById(changedItem.id);
 
       // Class exist, so update him
       if (_class) {
-        _class = Object.assign(_class, changedItem)
-        this.UPDATE_CLASS(_class)
+        _class = Object.assign(_class, changedItem);
+        this.$store.dispatch('classroom/updateClassroom', _class);
       }
       // Class not found, so create
       else {
-        _class = new Classroom({...changedItem})
-        this.ADD_CLASS(_class)
+        _class = new Classroom({ ...changedItem });
+        this.$store.dispatch('classroom/addClassroom', _class);
       }
-      this.clearEditedItem()
+      this.clearEditedItem();
     },
     getMentorsFullNamesAsString(_class) {
-      return this.getUsersFullNameAsString(_class.mentors)
+      return this.getUsersFullNameAsString(_class.mentors);
     },
     openClassDetails(_classId) {
-      this.$router.push(ROUTES.classroom.name + '/' + _classId)
+      this.$router.push(ROUTES.classroom.name + '/' + _classId);
     }
   }
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

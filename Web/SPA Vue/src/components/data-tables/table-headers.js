@@ -27,8 +27,8 @@ export const userTableHeaders = [
     text: 'Actions',
     value: 'actions',
     sortable: false
-  },
-]
+  }
+];
 
 export const classroomTableHeaders = [
   {
@@ -53,8 +53,8 @@ export const classroomTableHeaders = [
     text: 'Actions',
     value: 'actions',
     sortable: false
-  },
-]
+  }
+];
 
 export const artifactTableHeaders = [
   {
@@ -79,8 +79,8 @@ export const artifactTableHeaders = [
     text: 'Actions',
     value: 'actions',
     sortable: false
-  },
-]
+  }
+];
 export const questTableHeaders = [
   {
     text: 'Name',
@@ -104,5 +104,5 @@ export const questTableHeaders = [
     text: 'Actions',
     value: 'actions',
     sortable: false
-  },
-]
+  }
+];

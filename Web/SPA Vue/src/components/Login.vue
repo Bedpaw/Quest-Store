@@ -1,21 +1,19 @@
 <template>
   <div class="home">
-
     <div v-if="!$auth.loading">
-      <button v-if="!$auth.isAuthenticated" @click="login">Log in</button>
-      <button v-if="$auth.isAuthenticated" @click="logout">Log out</button>
+      <v-btn v-if="!$auth.isAuthenticated" @click="login">Log in</v-btn>
+      <v-btn v-if="$auth.isAuthenticated" @click="logout">Log out</v-btn>
     </div>
   </div>
-
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations } from 'vuex';
 
 export default {
-  name: "login",
+  name: 'login',
   computed: {
-    ...mapMutations("profile", ["setUser"])
+    ...mapMutations('profile', ['setUser'])
   },
   methods: {
     // Log the user in

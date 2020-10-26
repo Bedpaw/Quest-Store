@@ -1,4 +1,4 @@
-import {objectUtils} from "@/utils/object-utils";
+import { objectUtils } from '@/utils/object-utils';
 
 export const dataTableMixin = {
   data: () => ({
@@ -6,25 +6,25 @@ export const dataTableMixin = {
     currentItem: {}
   }),
   methods: {
-    editItem (item) {
-      this.currentItem = {...item}
-      this.dialog = true
+    editItem(item) {
+      this.currentItem = { ...item };
+      this.dialog = true;
     },
     clearEditedItem() {
-      this.dialog = false
-      this.currentItem = {}
-    },
+      this.dialog = false;
+      this.currentItem = {};
+    }
   }
-}
+};
 
 export const dataTableDialogMixin = {
   data() {
     return {
       editedItem: {},
       emptyItemTemplate: {},
-      formName: "Item",
+      formName: 'Item',
       valid: true
-    }
+    };
   },
   props: {
     dialog: {
@@ -37,23 +37,23 @@ export const dataTableDialogMixin = {
   },
   computed: {
     formTitle() {
-      if (this.isEditMode()) return 'New ' + this.formName
-      return 'Edit ' + this.formName
-    },
+      if (this.isEditMode()) return 'New ' + this.formName;
+      return 'Edit ' + this.formName;
+    }
   },
-  watch:{
-    dialog: function () {
-      this.editedItem = {...this.emptyItemTemplate, ...this.currentItem}
+  watch: {
+    dialog: function() {
+      this.editedItem = { ...this.emptyItemTemplate, ...this.currentItem };
     }
   },
   methods: {
     save() {
-      if(this.$refs.form.validate()){
-        this.$emit('itemChanged', this.editedItem)
+      if (this.$refs.form.validate()) {
+        this.$emit('itemChanged', this.editedItem);
       }
     },
     isEditMode() {
-      return objectUtils.isEmptyObject(this.currentItem)
+      return objectUtils.isEmptyObject(this.currentItem);
     }
   }
-}
+};

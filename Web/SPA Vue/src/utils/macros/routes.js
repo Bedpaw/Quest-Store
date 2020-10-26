@@ -2,7 +2,7 @@ export const ROUTES = {
   home: {
     path: '/',
     name: 'home',
-    label: "Home page"
+    label: 'Home page'
   },
   admin: {
     path: '/admin',
@@ -33,6 +33,10 @@ export const ROUTES = {
     path: '/class/:id',
     name: 'class',
     label: 'Classrooms'
+  },
+  myClasses: {
+    path: '/my-classes',
+    name: 'my-classes',
+    label: 'My classes'
   }
-}
-
+};

@@ -9,21 +9,20 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
-import ArtifactCard from "@/components/ArtifactCard";
-import GridContainer from "@/components/GridContainer";
+import { mapGetters } from 'vuex';
+import ArtifactCard from '@/components/ArtifactCard';
+import GridContainer from '@/components/GridContainer';
 
 export default {
-name: "Artifacts",
-  components: {ArtifactCard, GridContainer},
+  name: 'Artifacts',
+  components: { ArtifactCard, GridContainer },
   computed: {
-    ...mapGetters('artifact', [
-      'getArtifacts'
-    ]),
+    ...mapGetters('artifact', ['getArtifacts'])
+  },
+  created() {
+    this.$store.dispatch('artifact/fetchArtifacts');
   }
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
