@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using QuestStore.Core.Entities;
 
-namespace QuestStore.API.Dtos
+namespace QuestStore.API.Dtos.OutDtos
 {
     public class ClassroomDetailedDto : ResourceEntity
     {

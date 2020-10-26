@@ -4,14 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using QuestStore.Core.Entities;
 
-namespace QuestStore.API.Dtos
+namespace QuestStore.API.Dtos.InDtos
 {
-    public class StudentDetailedDto : ResourceEntity
+    public class StudentRequestDto : ResourceEntity
     {
         public string Surname { get; set; }
         public string Email { get; set; }
         public int Coins { get; set; }
-        public ICollection<ArtifactBriefDto> Artifacts { get; set; }
-        public ICollection<ClassroomBriefDto> Classrooms { get; set; }
+        public ICollection<int> ArtifactsIds { get; set; }
+        public ICollection<int> ClassroomsIds { get; set; }
     }
 }

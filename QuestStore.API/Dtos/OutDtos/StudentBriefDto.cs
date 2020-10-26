@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using QuestStore.Core.Entities;
-
-namespace QuestStore.API.Dtos
+﻿namespace QuestStore.API.Dtos.OutDtos
 {
     public class StudentBriefDto 
     {

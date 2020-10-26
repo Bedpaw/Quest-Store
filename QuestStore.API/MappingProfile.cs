@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using AutoMapper;
 using QuestStore.API.Dtos;
+using QuestStore.API.Dtos.InDtos;
+using QuestStore.API.Dtos.OutDtos;
 using QuestStore.Core.Entities;
 
 namespace QuestStore.API
@@ -9,6 +11,19 @@ namespace QuestStore.API
     {
         public MappingProfile()
         {
+            //RequestDtos
+            CreateMap<ArtifactRequestDto, Artifact>();
+
+            CreateMap<StudentRequestDto, Student>()
+                .ForMember(s => s.StudentArtifacts.Select(sa => sa.StudentId),
+                    opt => 
+                        opt.MapFrom(sr => sr.Id))
+                .ForMember(s => s.StudentArtifacts.Select(sa => sa.ArtifactId),
+                    opt => 
+                        opt.MapFrom(sr => sr.ArtifactsIds.Select(a => a)));
+
+
+            //Response Dtos
             CreateMap<Student, StudentBriefDto>();
             CreateMap<Artifact, ArtifactBriefDto>();
             CreateMap<Mentor, MentorBriefDto>();

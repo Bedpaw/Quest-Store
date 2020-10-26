@@ -7,7 +7,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using QuestStore.API.Dtos;
 using QuestStore.Core.Entities;
 using QuestStore.Core.Interfaces;
 
@@ -16,7 +15,10 @@ namespace QuestStore.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [ApiConventionType(typeof(DefaultApiConventions))]
-    public class GenericController<T, TR> : ControllerBase where T : BaseEntity, new()
+    public class GenericController<T, TOut, TIn> : ControllerBase 
+        where T : BaseEntity, new()
+        where TOut : class, new()
+        where TIn : BaseEntity, new()
     {
         protected readonly IRepository<T> Repository;
         private readonly IMapper _mapper;
@@ -29,21 +31,21 @@ namespace QuestStore.API.Controllers
         }
 
         [HttpGet]
-        public virtual async Task<ActionResult<List<TR>>> GetAllResources()
+        public virtual async Task<ActionResult<List<TOut>>> GetAllResources()
         {
             try
             {
                 var result = await Repository.GetAll(true);
-                return Ok(_mapper.Map<List<TR>>(result.ToList()));
+                return Ok(_mapper.Map<List<TOut>>(result.ToList()));
             }
-            catch (DbException)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, _errorMessage);
             }
         }
 
         [HttpGet("{id}")]
-        public virtual async Task<ActionResult<TR>> GetResource(int id)
+        public virtual async Task<ActionResult<TOut>> GetResource(int id)
         {
             try
             {
@@ -51,42 +53,51 @@ namespace QuestStore.API.Controllers
 
                 if (result == null) return NotFound();
 
-                return Ok(_mapper.Map<TR>(result));
+                return Ok(_mapper.Map<TOut>(result));
             }
-            catch (DbException)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, _errorMessage);
             }
         }
 
         [HttpPost]
-        public virtual async Task<ActionResult<T>> CreateResource(T resource)
+        public virtual async Task<ActionResult<T>> CreateResource(TIn resourceDto)
         {
             try
             {
+                var resource = _mapper.Map<T>(resourceDto);
                 await Repository.Add(resource);
-                return CreatedAtAction(nameof(GetResource), new {id = resource.Id}, resource);
+                return CreatedAtAction(
+                    nameof(GetResource),
+                    new {id = resource.Id},
+                    _mapper.Map<TOut>(resource));
             }
-            catch (DbUpdateException)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, _errorMessage);
             }
         }
 
         [HttpPut("{id}")]
-        public virtual async Task<ActionResult<T>> UpdateResource(int id, T resource)
+        public virtual async Task<ActionResult<T>> UpdateResource(int id, TIn resourceDto)
         {
             try
             {
-                if (id != resource.Id) return BadRequest();
+                if (id != resourceDto.Id) return BadRequest();
 
-                await Repository.Update(resource);
+                await Repository.Update(_mapper.Map<T>(resourceDto));
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (await Repository.GetById(id) == null) return NotFound();
+                if (await Repository.GetById(id) == null)
+                {
+                    return NotFound();
+                }
+
+                throw;
             }
-            catch (DbException)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, _errorMessage);
             }
@@ -106,7 +117,7 @@ namespace QuestStore.API.Controllers
                 await Repository.DeleteById(id);
                 return Ok();
             }
-            catch (DbException)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, _errorMessage);
             }

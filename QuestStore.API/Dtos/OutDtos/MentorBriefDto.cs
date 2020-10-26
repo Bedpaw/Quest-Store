@@ -1,4 +1,4 @@
-﻿namespace QuestStore.API.Dtos
+﻿namespace QuestStore.API.Dtos.OutDtos
 {
     public class MentorBriefDto
     {
