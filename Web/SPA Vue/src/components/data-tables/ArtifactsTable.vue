@@ -88,7 +88,9 @@ export default {
       ADD_ARTIFACT, DELETE_ARTIFACT, UPDATE_ARTIFACT
     ]),
     deleteItem (artifact) {
-      if(confirm('Are you sure you want to delete this artifact?')) this.DELETE_ARTIFACT(artifact)
+      if(confirm('Are you sure you want to delete this artifact?')) {
+        this.$store.dispatch('artifact/deleteArtifact', artifact)
+      }
     },
     saveChange(changedItem) {
       // Try to find artifact
@@ -97,12 +99,12 @@ export default {
       // Artifact exist, so update him
       if (artifact) {
         artifact = Object.assign(artifact, changedItem)
-        this.UPDATE_ARTIFACT(artifact)
+        this.$store.dispatch('artifact/updateArtifact', artifact)
       }
       // Artifact not found, so create
       else {
         artifact= new Artifact({...changedItem })
-        this.ADD_ARTIFACT(artifact)
+        this.$store.dispatch('artifact/addArtifact', artifact)
       }
       this.clearEditedItem()
     },

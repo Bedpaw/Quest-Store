@@ -71,7 +71,6 @@ import {mapGetters, mapMutations} from "vuex";
 import {ADD_USER, DELETE_USER, UPDATE_USER} from "@/utils/macros/mutation-types";
 import {userTableHeaders} from "@/components/data-tables/table-headers";
 import {dataTableMixin} from "@/mixins/dataTablesMixin";
-import {api} from "@/api";
 
 export default {
   name: "TestTable",
@@ -95,8 +94,7 @@ export default {
     ]),
     deleteItem (user) {
       if(confirm('Are you sure you want to delete this user?')) {
-        api.deleteUser(user.id)
-          .then(this.DELETE_USER(user))
+        this.$store.dispatch('user/deleteUser', user)
 
       }
     },
@@ -107,8 +105,7 @@ export default {
       // User exist, so update him
       if (user) {
         user = Object.assign(user, changedItem)
-        api.updateUser(user)
-        .then(user => this.UPDATE_USER(new User(user)))
+        this.$store.dispatch('user/updateUser', user)
       }
       // User not found, so create
       else {

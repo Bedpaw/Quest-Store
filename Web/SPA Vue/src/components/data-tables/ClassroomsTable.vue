@@ -85,13 +85,16 @@ export default {
   },
   created() {
     this.$store.dispatch('classroom/fetchClasses')
+    console.log(this.getClasses)
   },
   methods: {
     ...mapMutations('classroom', [
       ADD_CLASS, DELETE_CLASS, UPDATE_CLASS
     ]),
     deleteItem(classroom) {
-      if (confirm('Are you sure you want to delete this classroom?')) this.DELETE_CLASS(classroom)
+      if (confirm('Are you sure you want to delete this classroom?')) {
+        this.$store.dispatch('classroom/deleteClassroom', classroom)
+      }
     },
     saveChange(changedItem) {
       // Try to find class
@@ -100,12 +103,12 @@ export default {
       // Class exist, so update him
       if (_class) {
         _class = Object.assign(_class, changedItem)
-        this.UPDATE_CLASS(_class)
+        this.$store.dispatch('classroom/updateClassroom', _class);
       }
       // Class not found, so create
       else {
         _class = new Classroom({...changedItem})
-        this.ADD_CLASS(_class)
+        this.$store.dispatch('classroom/addClassroom', _class);
       }
       this.clearEditedItem()
     },

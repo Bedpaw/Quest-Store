@@ -4,10 +4,11 @@ import {
   BUY_ARTIFACT,
   DELETE_ARTIFACT,
   FETCH_ARTIFACTS,
-  UPDATE_ARTIFACT
+  UPDATE_ARTIFACT,
 } from "@/utils/macros/mutation-types";
 import {api} from "@/api";
 import {Artifact} from "@/structures/artifact";
+import {storeActions} from "@/utils/store-utils";
 
 
 export const artifact = {
@@ -30,13 +31,9 @@ export const artifact = {
     }
   },
   actions: {
-    async fetchArtifacts({commit}) {
-      const artifacts = await api.artifactController
-        .getArtifacts()
-        .then(artifacts =>
-          artifacts.map(artifact => new Artifact(artifact))
-        )
-      commit(FETCH_ARTIFACTS, artifacts)
-    }
+    fetchArtifacts: storeActions.fetchResources(api.artifactController.getArtifacts, FETCH_ARTIFACTS, Artifact),
+    addArtifact: storeActions.addResource(api.artifactController.addArtifact, ADD_ARTIFACT, Artifact),
+    updateArtifact: storeActions.updateResource(api.artifactController.updateArtifact, UPDATE_ARTIFACT, Artifact),
+    deleteArtifact: storeActions.deleteResource(api.artifactController.deleteArtifact, DELETE_ARTIFACT),
   }
 }

@@ -75,7 +75,7 @@ const getUser = async (id) => {
 }
 const deleteUser = async (id) => {
   try {
-   const response = await axios.delete(url + `/${id}`)
+    const response = await axios.delete(url + `/${id}`)
     return response.data
   } catch (error) {
     return error

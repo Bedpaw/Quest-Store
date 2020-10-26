@@ -11,6 +11,7 @@ import {ROLES} from "@/utils/macros/roles";
 import {arrayUtils} from "@/utils/array-utils";
 import {api} from "@/api";
 import {User} from "@/structures/user";
+import {storeActions} from "@/utils/store-utils";
 
 export const user = {
   namespaced: true,
@@ -33,6 +34,12 @@ export const user = {
     getFullName: () => (user) => user.name + ' ' + user.surname,
     getListOfFullNames: (state, getters) => (usersArray) => usersArray.map(mentor => getters.getFullName(mentor)),
     getUsersFullNameAsString: (state, getters) => (usersArray) => getters.getListOfFullNames(usersArray).join(', '),
+    getUsersAsFullNameAndDataFormat: (state, getters) => (usersArray) => usersArray.map(user => {
+      return {
+        text: getters.getFullName(user),
+        value: user
+      }
+    }),
 
     // Filtered Data
     getUserById: (state) => (userId) => state.users.find(user => user.id === parseInt(userId)),
@@ -54,20 +61,14 @@ export const user = {
     },
   },
   actions: {
-    async fetchUsers({commit}) {
-      const users = await api.getUsers()
-        .then(users => users.map(user => new User(user)))
-      commit(FETCH_USERS, users)
-    },
+    fetchUsers: storeActions.fetchResources(api.getUsers, FETCH_USERS, User),
+    addUser: storeActions.addResource(api.addUser, ADD_USER, User),
+    updateUser: storeActions.updateResource(api.updateUser, UPDATE_USER, User),
+    deleteUser: storeActions.deleteResource(api.deleteUser, DELETE_USER),
+
     async fetchLoggedUser({commit}) {
       const user = await api.getLoggedUser()
       commit(FETCH_LOGGED_USER, new User(user))
     },
-    async addUser({commit}, newUser) {
-      await api.addUser(newUser)
-        .then( user => commit(ADD_USER, new User(user))
-        )
-    }
   }
-
 }

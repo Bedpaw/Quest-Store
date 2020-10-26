@@ -96,28 +96,20 @@ export default {
       },
       formName: 'Class',
       nameRules,
-      studentsSelectList: {},
-      mentorsSelectList: {}
     }
-  },
-  created() {
-    this.studentsSelectList = this.getStudents.map(student => {
-      return {
-        text: this.getFullName(student),
-        value: student
-      }
-    })
-    this.mentorsSelectList = this.getMentors.map(student => {
-      return {
-        text: this.getFullName(student),
-        value: student
-      }
-    })
   },
   computed: {
     ...mapGetters('user', [
-      'getStudents', 'getFullName', 'getMentors'
+      'getStudents', 'getFullName', 'getMentors', 'getUsersAsFullNameAndDataFormat'
     ]),
+    studentsSelectList() {
+      // data in proper form for v-select
+      return this.getUsersAsFullNameAndDataFormat(this.getStudents)
+    },
+    mentorsSelectList() {
+      // data in proper form for v-select
+      return this.getUsersAsFullNameAndDataFormat(this.getMentors)
+    }
   },
 }
 </script>

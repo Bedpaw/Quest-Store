@@ -88,7 +88,9 @@ export default {
       ADD_QUEST, DELETE_QUEST, UPDATE_QUEST
     ]),
     deleteItem(quest) {
-      if (confirm('Are you sure you want to delete this quest?')) this.DELETE_QUEST(quest)
+      if (confirm('Are you sure you want to delete this quest?')) {
+        this.$store.dispatch('quest/deleteQuest', quest)
+      }
     },
     saveChange(changedItem) {
       // Try to find quest
@@ -97,12 +99,12 @@ export default {
       // Quest exist, so update him
       if (quest) {
         quest = Object.assign(quest, changedItem)
-        this.UPDATE_QUEST(quest)
+        this.$store.dispatch('quest/updateQuest', quest)
       }
       // Quest not found, so create
       else {
         quest = new Quest({...changedItem})
-        this.ADD_QUEST(quest)
+        this.$store.dispatch('quest/addQuest', quest)
       }
       this.clearEditedItem()
     },
