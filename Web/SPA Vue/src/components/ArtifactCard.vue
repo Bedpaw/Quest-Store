@@ -13,21 +13,17 @@
       <p class="ma-0 font-weight-bold ">COST</p>
       <p class="ma-0">{{ artifact.cost }} COINS</p>
       <v-btn
-          class="my-4 success"
-          :disabled="noQuantityLeft"
-          @click="buy()"
-          v-if="getLoggedUser.role === ROLES.STUDENT"
+        class="my-4 success"
+        :disabled="noQuantityLeft"
+        @click="buy()"
+        v-if="getLoggedUser.role === ROLES.STUDENT"
       >
         Buy artifact
       </v-btn>
-      <v-btn v-else
-        class="my-4 success"
-        :disabled="noQuantityLeft"
-      > Class payment
+      <v-btn v-else class="my-4 success" :disabled="noQuantityLeft">
+        Class payment
       </v-btn>
-
     </div>
-
 
     <v-card-actions>
       <v-btn color="orange lighten-2" text>
@@ -53,12 +49,12 @@
 </template>
 
 <script>
-import {BUY_ARTIFACT, PUSH_ARTIFACT} from "@/utils/macros/mutation-types";
-import {mapMutations, mapGetters} from "vuex";
-import {ROLES} from "@/utils/macros/roles";
+import { BUY_ARTIFACT, PUSH_ARTIFACT } from '@/utils/macros/mutation-types';
+import { mapMutations, mapGetters } from 'vuex';
+import { ROLES } from '@/utils/macros/roles';
 
 export default {
-  name: "ArtifactCard",
+  name: 'ArtifactCard',
   data: () => ({
     show: false,
     ROLES
@@ -66,37 +62,29 @@ export default {
   props: {
     artifact: {
       type: Object
-    },
+    }
   },
   computed: {
     noQuantityLeft() {
-      return this.artifact.quantity === 0
+      return this.artifact.quantity === 0;
     },
-    ...mapGetters('user', [
-        'getLoggedUser'
-    ]),
+    ...mapGetters('user', ['getLoggedUser'])
   },
   methods: {
-    ...mapMutations('artifact', [
-        BUY_ARTIFACT
-    ]),
-    ...mapMutations('user', [
-      PUSH_ARTIFACT
-    ]),
+    ...mapMutations('artifact', [BUY_ARTIFACT]),
+    ...mapMutations('user', [PUSH_ARTIFACT]),
     buy() {
-      console.log(this.getLoggedUser.coins)
-      if(this.getLoggedUser.coins >= this.artifact.cost) {
-        this.BUY_ARTIFACT(this.artifact.id)
+      console.log(this.getLoggedUser.coins);
+      if (this.getLoggedUser.coins >= this.artifact.cost) {
+        this.BUY_ARTIFACT(this.artifact.id);
         this.PUSH_ARTIFACT({
-              artifact: this.artifact,
-              user: this.getLoggedUser
-            })
+          artifact: this.artifact,
+          user: this.getLoggedUser
+        });
       }
     }
   }
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

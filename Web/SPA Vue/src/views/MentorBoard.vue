@@ -19,15 +19,12 @@
 </template>
 
 <script>
-import QuestsTable from "@/components/data-tables/QuestsTable";
-import ArtifactsTable from "@/components/data-tables/ArtifactsTable";
+import QuestsTable from '@/components/data-tables/QuestsTable';
+import ArtifactsTable from '@/components/data-tables/ArtifactsTable';
 export default {
-  name: "MentorBoard",
-  components: {ArtifactsTable, QuestsTable}
-}
-
+  name: 'MentorBoard',
+  components: { ArtifactsTable, QuestsTable }
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,8 +1,7 @@
-import {classrooms} from "@/mock/classroom-mock";
+import { classrooms } from '@/mock/classroom-mock';
 
-
-const getClassrooms = () => new Promise((resolve => resolve(classrooms) ))
+const getClassrooms = () => new Promise(resolve => resolve(classrooms));
 
 export const classroomController = {
   getClassrooms
-}
+};

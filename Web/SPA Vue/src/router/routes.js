@@ -1,21 +1,20 @@
-import { ROUTES } from "@/utils/macros/routes.js";
-import Home from "@/views/Home.vue";
-import AdminBoard from "../views/AdminBoard";
-import MentorBoard from "../views/MentorBoard";
-import ClassDetails from "../views/ClassDetails";
-import {authGuard} from "@/auth/authGuard";
-import Profile from "@/views/Profile";
-import test from "@/views/test";
-import Artifacts from "@/views/Artifacts";
-import Quests from "@/views/Quests";
-import MyClasses from "@/views/MyClasses";
-
+import { ROUTES } from '@/utils/macros/routes.js';
+import Home from '@/views/Home.vue';
+import AdminBoard from '../views/AdminBoard';
+import MentorBoard from '../views/MentorBoard';
+import ClassDetails from '../views/ClassDetails';
+import { authGuard } from '@/auth/authGuard';
+import Profile from '@/views/Profile';
+import test from '@/views/test';
+import Artifacts from '@/views/Artifacts';
+import Quests from '@/views/Quests';
+import MyClasses from '@/views/MyClasses';
 
 export const routes = [
   {
     path: ROUTES.home.path,
     name: ROUTES.home.name,
-    component: Home,
+    component: Home
   },
 
   {
@@ -60,4 +59,4 @@ export const routes = [
     name: 'test',
     component: test
   }
-  ]
+];

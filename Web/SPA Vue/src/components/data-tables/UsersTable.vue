@@ -1,16 +1,18 @@
 <template>
   <div>
     <!--Search -->
-    <v-text-field v-model="search" label="Search" single-line clearable class="px-4" />
+    <v-text-field
+      v-model="search"
+      label="Search"
+      single-line
+      clearable
+      class="px-4"
+    />
 
-    <v-data-table
-        :items="getUsers"
-        :headers="headers"
-        :search="search"
-    >
+    <v-data-table :items="getUsers" :headers="headers" :search="search">
       <!--Join name + surname in first column -->
-      <template v-slot:item.name="{item}">
-        {{getFullName(item)}}
+      <template v-slot:item.name="{ item }">
+        {{ getFullName(item) }}
       </template>
 
       <!--Styling role column -->
@@ -43,13 +45,13 @@
           <v-toolbar-title>Users Manager</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
 
-          <v-spacer/>
+          <v-spacer />
 
           <user-data-dialog
-              :dialog="dialog"
-              :current-item="currentItem"
-              @toggleDialog="dialog = !dialog"
-              @itemChanged="saveChange"
+            :dialog="dialog"
+            :current-item="currentItem"
+            @toggleDialog="dialog = !dialog"
+            @itemChanged="saveChange"
           />
         </v-toolbar>
       </template>
@@ -58,61 +60,59 @@
       <template v-slot:no-data>
         <p>No users available</p>
       </template>
-
     </v-data-table>
   </div>
 </template>
 
 <script>
-import {ROLES} from "@/utils/macros/roles";
-import UserDataDialog from "./dialogs/UserDataDialog";
-import {User} from "@/structures/user";
-import {mapGetters, mapMutations} from "vuex";
-import {ADD_USER, DELETE_USER, UPDATE_USER} from "@/utils/macros/mutation-types";
-import {userTableHeaders} from "@/components/data-tables/table-headers";
-import {dataTableMixin} from "@/mixins/dataTablesMixin";
+import { ROLES } from '@/utils/macros/roles';
+import UserDataDialog from './dialogs/UserDataDialog';
+import { User } from '@/structures/user';
+import { mapGetters, mapMutations } from 'vuex';
+import {
+  ADD_USER,
+  DELETE_USER,
+  UPDATE_USER
+} from '@/utils/macros/mutation-types';
+import { userTableHeaders } from '@/components/data-tables/table-headers';
+import { dataTableMixin } from '@/mixins/dataTablesMixin';
 
 export default {
-  name: "TestTable",
+  name: 'TestTable',
   components: { UserDataDialog },
   data: () => ({
-    search: "",
+    search: '',
     headers: userTableHeaders
   }),
   mixins: [dataTableMixin],
   computed: {
-    ...mapGetters('user', [
-      'getUsers', 'getFullName', 'getUserById'
-    ]),
+    ...mapGetters('user', ['getUsers', 'getFullName', 'getUserById'])
   },
   created() {
-    this.$store.dispatch('user/fetchUsers')
-    },
+    this.$store.dispatch('user/fetchUsers');
+  },
   methods: {
-    ...mapMutations('user', [
-      ADD_USER, UPDATE_USER, DELETE_USER
-    ]),
-    deleteItem (user) {
-      if(confirm('Are you sure you want to delete this user?')) {
-        this.$store.dispatch('user/deleteUser', user)
-
+    ...mapMutations('user', [ADD_USER, UPDATE_USER, DELETE_USER]),
+    deleteItem(user) {
+      if (confirm('Are you sure you want to delete this user?')) {
+        this.$store.dispatch('user/deleteUser', user);
       }
     },
     saveChange(changedItem) {
       // Try to find user
-      let user = this.getUserById(changedItem.id)
+      let user = this.getUserById(changedItem.id);
 
       // User exist, so update him
       if (user) {
-        user = Object.assign(user, changedItem)
-        this.$store.dispatch('user/updateUser', user)
+        user = Object.assign(user, changedItem);
+        this.$store.dispatch('user/updateUser', user);
       }
       // User not found, so create
       else {
-        user = new User({...changedItem })
-        this.$store.dispatch('user/addUser', user)
+        user = new User({ ...changedItem });
+        this.$store.dispatch('user/addUser', user);
       }
-      this.clearEditedItem()
+      this.clearEditedItem();
     },
     setRoleChipColor(role) {
       return {
@@ -120,12 +120,10 @@ export default {
         [ROLES.MENTOR]: 'blue',
         [ROLES.STUDENT]: 'green',
         [ROLES.GUEST]: 'gray'
-      }[role]
-    },
+      }[role];
+    }
   }
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

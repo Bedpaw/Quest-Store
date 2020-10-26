@@ -7,16 +7,13 @@
       Please contact with administrator
     </v-card-subtitle>
     <v-btn
-        class="px-12 py-4 mt-8"
-        @click="window.location.reload(false)"
-        color="yellow"
+      class="px-12 py-4 mt-8"
+      @click="window.location.reload(false)"
+      color="yellow"
     >
       Refresh page
     </v-btn>
-    <v-btn
-        class="px-12 py-4 mt-8 warning"
-        @click="$auth.logout()"
-    >
+    <v-btn class="px-12 py-4 mt-8 warning" @click="$auth.logout()">
       Log out
     </v-btn>
   </v-card>
@@ -24,12 +21,12 @@
 
 <script>
 export default {
-  name: "loggedAsGuest"
-}
+  name: 'loggedAsGuest'
+};
 </script>
 
 <style scoped>
 .card {
-  background: rgba(255,255,255,0.9);
+  background: rgba(255, 255, 255, 0.9);
 }
 </style>

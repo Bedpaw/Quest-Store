@@ -1,8 +1,7 @@
-import {quests} from "@/mock/quests-mock";
+import { quests } from '@/mock/quests-mock';
 
-
-const getQuests = () => new Promise((resolve => resolve(quests) ))
+const getQuests = () => new Promise(resolve => resolve(quests));
 
 export const questController = {
   getQuests
-}
+};

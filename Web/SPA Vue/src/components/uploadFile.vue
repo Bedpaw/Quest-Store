@@ -3,10 +3,10 @@
     <div v-if="currentFile">
       <div>
         <v-progress-linear
-            v-model="progress"
-            color="light-blue"
-            height="25"
-            reactive
+          v-model="progress"
+          color="light-blue"
+          height="25"
+          reactive
         >
           <strong>{{ progress }} %</strong>
         </v-progress-linear>
@@ -16,9 +16,9 @@
     <v-row no-gutters justify="center" align="center">
       <v-col cols="8">
         <v-file-input
-            show-size
-            label="File input"
-            @change="selectFile"
+          show-size
+          label="File input"
+          @change="selectFile"
         ></v-file-input>
       </v-col>
 
@@ -37,14 +37,13 @@
 </template>
 
 <script>
-
 export default {
-  name: "uploadFile",
+  name: 'uploadFile',
   data() {
     return {
       currentFile: undefined,
       progress: 0,
-      message: "",
+      message: '',
 
       fileInfos: []
     };
@@ -56,14 +55,13 @@ export default {
     },
     upload() {
       if (!this.currentFile) {
-        this.message = "Please select a file!";
+        this.message = 'Please select a file!';
         return;
       }
-      const base64Image = this.getBase64(this.currentFile)
-      console.log(base64Image)
+      const base64Image = this.getBase64(this.currentFile);
+      console.log(base64Image);
 
-
-/*
+      /*
       this.message = "";
 
       UploadService.upload(this.currentFile, (event) => {
@@ -83,15 +81,15 @@ export default {
           });*/
     },
     getBase64(file) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = function () {
-          return reader.result
-        };
-        reader.onerror = function (error) {
-          console.log('Error: ', error);
-        };
-      }
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = function() {
+        return reader.result;
+      };
+      reader.onerror = function(error) {
+        console.log('Error: ', error);
+      };
     }
+  }
 };
 </script>

@@ -1,18 +1,21 @@
 <template>
   <v-col cols="12" md="6">
-    <v-card class="d-flex flex-column align-center py-sm-6 lime lighten-5" @click="$router.push(path)">
-      <v-icon class="flex justify-center" size="108px">{{icon}}</v-icon>
-      <v-card-title>{{title}}</v-card-title>
+    <v-card
+      class="d-flex flex-column align-center py-sm-6 lime lighten-5"
+      @click="$router.push(path)"
+    >
+      <v-icon class="flex justify-center" size="108px">{{ icon }}</v-icon>
+      <v-card-title>{{ title }}</v-card-title>
     </v-card>
   </v-col>
 </template>
 
 <script>
 export default {
-  name: "menuItem",
+  name: 'menuItem',
   props: {
     title: {
-      required:true,
+      required: true,
       type: String
     },
     path: {
@@ -20,13 +23,11 @@ export default {
       type: String
     },
     icon: {
-      required:true,
-      type:String
+      required: true,
+      type: String
     }
   }
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,21 +1,21 @@
-import axios from 'axios'
+import axios from 'axios';
 
-const url = 'https://localhost:5001/api/users'
+const url = 'https://localhost:5001/api/users';
 
 const getUsers = async () => {
   try {
     const response = await axios.get(url);
-    console.log(response)
-    return response.data
-  } catch (error){
-    console.log(error)
-    return error
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
   }
-}
+};
 
-const addUser = async ( user ) => {
+const addUser = async user => {
   try {
-    const response = await axios.post(url, ({
+    const response = await axios.post(url, {
       name: user.name,
       surname: user.surname,
       description: user.description,
@@ -24,17 +24,13 @@ const addUser = async ( user ) => {
       image: user.image,
       coins: user.coins,
       artifacts: user.artifacts
-    }))
-    console.log(response)
-    return response.data
-
-
-  } catch(error) {
-    console.log(error)
+    });
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.log(error);
   }
-}
-
-
+};
 
 /*const getLoggedUser = async () => {
   try {
@@ -45,9 +41,9 @@ const addUser = async ( user ) => {
   }
 }*/
 
-const updateUser = async (user) => {
+const updateUser = async user => {
   try {
-    const response = await axios.put(url +`/${user.id}`, ({
+    const response = await axios.put(url + `/${user.id}`, {
       id: user.id,
       name: user.name,
       surname: user.surname,
@@ -57,30 +53,30 @@ const updateUser = async (user) => {
       image: user.image,
       coins: user.coins,
       artifacts: user.artifacts
-    }))
-    console.log(response)
-    return response.data
+    });
+    console.log(response);
+    return response.data;
   } catch (error) {
-    console.log(error)
-    return error
+    console.log(error);
+    return error;
   }
-}
-const getUser = async (id) => {
+};
+const getUser = async id => {
   try {
-    const response = await axios.get(url + `/${id}`)
-    return response.data
+    const response = await axios.get(url + `/${id}`);
+    return response.data;
   } catch (error) {
-    return error
+    return error;
   }
-}
-const deleteUser = async (id) => {
+};
+const deleteUser = async id => {
   try {
-    const response = await axios.delete(url + `/${id}`)
-    return response.data
+    const response = await axios.delete(url + `/${id}`);
+    return response.data;
   } catch (error) {
-    return error
+    return error;
   }
-}
+};
 
 export const userController = {
   getUsers,
@@ -89,4 +85,4 @@ export const userController = {
   updateUser,
   getUser,
   deleteUser
-}
+};

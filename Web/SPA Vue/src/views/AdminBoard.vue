@@ -19,17 +19,13 @@
 </template>
 
 <script>
-
-import UsersTable from "../components/data-tables/UsersTable";
-import ClassroomsTable from "../components/data-tables/ClassroomsTable";
+import UsersTable from '../components/data-tables/UsersTable';
+import ClassroomsTable from '../components/data-tables/ClassroomsTable';
 
 export default {
-  name: "AdminBoard",
-  components: {ClassroomsTable, UsersTable},
-
+  name: 'AdminBoard',
+  components: { ClassroomsTable, UsersTable }
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
