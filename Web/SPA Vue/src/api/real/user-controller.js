@@ -1,7 +1,6 @@
 import axios from 'axios'
 
-const url = 'https://localhost:5001/QuestStore/api/users'
-
+const url = 'https://localhost:5001/api/users'
 
 const getUsers = async () => {
   try {
@@ -13,34 +12,29 @@ const getUsers = async () => {
     return error
   }
 }
-/*
-const addUser = async ({ user }) => {
+
+const addUser = async ( user ) => {
   try {
-    const response = await axios.post(url, {
-      name, surname, description,
-      email, role, image,
-      coins, artifacts
-    })
+    const response = await axios.post(url, ({
+      name: user.name,
+      surname: user.surname,
+      description: user.description,
+      email: user.email,
+      role: user.role,
+      image: user.image,
+      coins: user.coins,
+      artifacts: user.artifacts
+    }))
     console.log(response)
-    return response
+    return response.data
 
 
   } catch(error) {
-
+    console.log(error)
   }
 }
-const updateUser = async (...user) => {
-  try {
-    const response = await axios.put(url, {
-      id, name, surname, description, email, role, image, coins, artifacts
-    })
-    console.log(response)
-    return response
-  } catch (error) {
-    console.log(error)
-    return error
-  }
-}*/
+
+
 
 /*const getLoggedUser = async () => {
   try {
@@ -50,6 +44,27 @@ const updateUser = async (...user) => {
     return error
   }
 }*/
+
+const updateUser = async (user) => {
+  try {
+    const response = await axios.put(url +`/${user.id}`, ({
+      id: user.id,
+      name: user.name,
+      surname: user.surname,
+      description: user.description,
+      email: user.email,
+      role: user.role,
+      image: user.image,
+      coins: user.coins,
+      artifacts: user.artifacts
+    }))
+    console.log(response)
+    return response.data
+  } catch (error) {
+    console.log(error)
+    return error
+  }
+}
 const getUser = async (id) => {
   try {
     const response = await axios.get(url + `/${id}`)
@@ -70,8 +85,8 @@ const deleteUser = async (id) => {
 export const userController = {
   getUsers,
   //getLoggedUser,
-  //addUser,
-  //updateUser,
+  addUser,
+  updateUser,
   getUser,
   deleteUser
 }

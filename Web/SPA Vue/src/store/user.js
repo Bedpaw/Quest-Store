@@ -62,6 +62,11 @@ export const user = {
     async fetchLoggedUser({commit}) {
       const user = await api.getLoggedUser()
       commit(FETCH_LOGGED_USER, new User(user))
+    },
+    async addUser({commit}, newUser) {
+      await api.addUser(newUser)
+        .then( user => commit(ADD_USER, new User(user))
+        )
     }
   }
 
