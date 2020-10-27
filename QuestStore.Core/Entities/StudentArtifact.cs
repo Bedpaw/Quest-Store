@@ -4,7 +4,7 @@ using System.Text;
 
 namespace QuestStore.Core.Entities
 {
-    public class StudentArtifact : BaseEntity
+    public class StudentArtifact 
     {
         public int StudentId { get; set; }
         public Student Student { get; set; }

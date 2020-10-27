@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using QuestStore.Core.Entities;
+using QuestStore.Infrastructure.Data.Seed;
 
 namespace QuestStore.Infrastructure.Data
 {
@@ -28,6 +29,10 @@ namespace QuestStore.Infrastructure.Data
                     modelBuilder.Entity(type);
                 }
             }
+
+            modelBuilder.Entity<StudentArtifact>().HasKey(sa => new {sa.StudentId, sa.ArtifactId});
+            modelBuilder.Entity<StudentClassroom>().HasKey(sc => new {sc.StudentId, sc.ClassroomId});
+            modelBuilder.Entity<MentorClassroom>().HasKey(mc => new {mc.MentorId, mc.ClassroomId});
 
             modelBuilder.Entity<Quest>().Property(q => q.Type).HasConversion<string>();
             modelBuilder.Entity<User>().HasDiscriminator<string>("Role").HasValue<User>("Admin");

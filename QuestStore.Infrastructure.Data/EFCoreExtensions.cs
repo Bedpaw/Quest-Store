@@ -22,7 +22,7 @@ namespace QuestStore.Infrastructure.Data
             }
 
             var allPaths = new List<string>();
-            var path = new Stack<string>(); //Because string is reference type we must use stack to build path by recursion;
+            var path = new Stack<string>(); //Because string is reference type we must use stack to build path by recursion.
 
             var entityType =  context.Model.FindEntityType(clrType);
             var includedNavigations = new HashSet<string>(); //It marks visited nodes.
@@ -33,6 +33,7 @@ namespace QuestStore.Infrastructure.Data
                 {
                     path.Push(navigation.Name);
                     NavigationsDfs(navigation, path, allPaths, includedNavigations, maxDepth - 1);
+                    path.Pop();
                 }
             }
 
@@ -42,18 +43,19 @@ namespace QuestStore.Infrastructure.Data
         private static void NavigationsDfs(INavigation initial, Stack<string> path,
             List<string> allPaths, HashSet<string> includedNavigations, int depth)
         {
+            // We exclude inverse navigation properties. 
             var inverseNavigation = initial.FindInverse();
             if (inverseNavigation != null)
             {
                 includedNavigations.Add(inverseNavigation.Name);
             }
 
+            //Recursion termination condition
             var navigations = initial.GetTargetType().GetNavigations().ToList();
             if (navigations == null || navigations.All(n => includedNavigations.Contains(n.Name)) ||
                 depth <= 0)
             {
                 allPaths.Add(string.Join(".", path.Reverse()));
-                path.Pop();
                 return;
             }
 
@@ -63,6 +65,7 @@ namespace QuestStore.Infrastructure.Data
                 {
                     path.Push(navigation.Name);
                     NavigationsDfs(navigation, path, allPaths, includedNavigations, depth-1);
+                    path.Pop();
                 }
             }
         }

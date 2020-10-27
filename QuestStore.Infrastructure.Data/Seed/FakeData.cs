@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using Bogus;
 using Bogus.Extensions;
 using QuestStore.Core.Entities;
 using QuestStore.Core.Enums;
 
-namespace QuestStore.Infrastructure.Data
+namespace QuestStore.Infrastructure.Data.Seed
 {
     public class FakeData
     {
@@ -46,18 +45,19 @@ namespace QuestStore.Infrastructure.Data
                 .RuleFor(s => s.Name, f => f.Person.FirstName)
                 .RuleFor(s => s.Description, f => f.Hacker.Phrase())
                 .RuleFor(s => s.Surname, f => f.Person.LastName)
-                .RuleFor(s => s.Email, f => f.Person.Email);
+                .RuleFor(s => s.Email, f => f.Person.Email)
+                .RuleFor(s => s.Coins, f => f.Random.Number(1000));
             FakeStudents = studentFaker.Generate(FakesNumber);
 
-            var studentArtifactId = 1;
+            var studentArtifactId = 2;
             var studentArtifactPairs = GenerateRandomPairs(
                 FakeStudents.Select(fs => fs.Id).ToList(),
                 FakeArtifacts.Select(fa => fa.Id).ToList(), FakesNumber);
             var studentArtifactFaker = new Faker<StudentArtifact>()
                 .StrictMode(false)
-                .RuleFor(sa => sa.Id, f => studentArtifactId++)
                 .RuleFor(sa => sa.StudentId, f => studentArtifactPairs[studentArtifactId - 2].Item1)
-                .RuleFor(sa => sa.ArtifactId, f => studentArtifactPairs[studentArtifactId - 2].Item2);
+                .RuleFor(sa => sa.ArtifactId, f => studentArtifactPairs[studentArtifactId - 2].Item2)
+                .FinishWith((f, sa) => studentArtifactId++);
             FakeStudentArtifacts = studentArtifactFaker.Generate(FakesNumber);
         }
 
