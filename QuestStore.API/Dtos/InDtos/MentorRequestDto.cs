@@ -10,6 +10,5 @@ namespace QuestStore.API.Dtos.InDtos
     {
         public string Surname { get; set; }
         public string Email { get; set; }
-        public ICollection<int> ClassroomsIds { get; set; }
     }
 }

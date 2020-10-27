@@ -25,9 +25,5 @@
       <ProjectReference Include="..\QuestStore.Infrastructure.Data\QuestStore.Infrastructure.Data.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Dtos\Duplex\" />
-    </ItemGroup>
-
 
 </Project>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using QuestStore.API.Dtos;
+using QuestStore.API.Dtos.Duplex;
 using QuestStore.API.Dtos.InDtos;
 using QuestStore.API.Dtos.OutDtos;
 using QuestStore.Core.Entities;
@@ -22,12 +23,34 @@ namespace QuestStore.API.GenericControllersFactory
                 },
                 {
                     typeof(Artifact),
-                    new ControllerConfiguration 
-                        {ResponseType = typeof(ArtifactDetailedDto), RequestType = typeof(ArtifactRequestDto)}
+                    new ControllerConfiguration
+                    {
+                        ResponseType = typeof(ArtifactDetailedDto),
+                        RequestType = typeof(ArtifactDetailedDto)
+                    }
+                },
+                {
+                    typeof(Classroom),
+                    new ControllerConfiguration
+                    {
+                        ResponseType = typeof(ClassroomDetailedDto),
+                        RequestType = typeof(ClassroomRequestDto)
+                    }
+                },
+                {
+                    typeof(Student),
+                    new ControllerConfiguration
+                    {
+                        ResponseType = typeof(StudentDetailedDto), RequestType = typeof(StudentRequestDto)
+                    }
+                },
+                {
+                    typeof(Mentor),
+                    new ControllerConfiguration
+                    {
+                        ResponseType = typeof(MentorDetailedDto), RequestType = typeof(MentorRequestDto)
+                    }
                 }
-                //{typeof(Classroom), new ControllerConfiguration {ResponseType = typeof(ClassroomDetailedDto)}},
-                //{typeof(Student), new ControllerConfiguration {ResponseType = typeof(StudentDetailedDto)}},
-                //{typeof(Mentor), new ControllerConfiguration {ResponseType = typeof(MentorDetailedDto)}}
             };
     }
 }

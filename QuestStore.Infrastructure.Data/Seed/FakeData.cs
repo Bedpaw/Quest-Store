@@ -49,15 +49,15 @@ namespace QuestStore.Infrastructure.Data.Seed
                 .RuleFor(s => s.Coins, f => f.Random.Number(1000));
             FakeStudents = studentFaker.Generate(FakesNumber);
 
-            var studentArtifactId = 1;
+            var studentArtifactId = 2;
             var studentArtifactPairs = GenerateRandomPairs(
                 FakeStudents.Select(fs => fs.Id).ToList(),
                 FakeArtifacts.Select(fa => fa.Id).ToList(), FakesNumber);
             var studentArtifactFaker = new Faker<StudentArtifact>()
                 .StrictMode(false)
-                .RuleFor(sa => sa.Id, f => studentArtifactId++)
                 .RuleFor(sa => sa.StudentId, f => studentArtifactPairs[studentArtifactId - 2].Item1)
-                .RuleFor(sa => sa.ArtifactId, f => studentArtifactPairs[studentArtifactId - 2].Item2);
+                .RuleFor(sa => sa.ArtifactId, f => studentArtifactPairs[studentArtifactId - 2].Item2)
+                .FinishWith((f, sa) => studentArtifactId++);
             FakeStudentArtifacts = studentArtifactFaker.Generate(FakesNumber);
         }
 

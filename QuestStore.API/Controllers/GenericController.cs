@@ -17,17 +17,16 @@ namespace QuestStore.API.Controllers
     [ApiConventionType(typeof(DefaultApiConventions))]
     public class GenericController<T, TOut, TIn> : ControllerBase 
         where T : BaseEntity, new()
-        where TOut : class, new()
         where TIn : BaseEntity, new()
     {
         protected readonly IRepository<T> Repository;
-        private readonly IMapper _mapper;
+        protected readonly IMapper Mapper;
         private readonly string _errorMessage = "Database error";
 
         public GenericController(IRepository<T> repository, IMapper mapper)
         {
             Repository = repository;
-            _mapper = mapper;
+            Mapper = mapper;
         }
 
         [HttpGet]
@@ -36,7 +35,7 @@ namespace QuestStore.API.Controllers
             try
             {
                 var result = await Repository.GetAll(true);
-                return Ok(_mapper.Map<List<TOut>>(result.ToList()));
+                return Ok(Mapper.Map<List<TOut>>(result.ToList()));
             }
             catch (Exception)
             {
@@ -53,7 +52,7 @@ namespace QuestStore.API.Controllers
 
                 if (result == null) return NotFound();
 
-                return Ok(_mapper.Map<TOut>(result));
+                return Ok(Mapper.Map<TOut>(result));
             }
             catch (Exception)
             {
@@ -66,12 +65,12 @@ namespace QuestStore.API.Controllers
         {
             try
             {
-                var resource = _mapper.Map<T>(resourceDto);
+                var resource = Mapper.Map<T>(resourceDto);
                 await Repository.Add(resource);
                 return CreatedAtAction(
                     nameof(GetResource),
                     new {id = resource.Id},
-                    _mapper.Map<TOut>(resource));
+                    Mapper.Map<TOut>(resource));
             }
             catch (Exception)
             {
@@ -86,7 +85,7 @@ namespace QuestStore.API.Controllers
             {
                 if (id != resourceDto.Id) return BadRequest();
 
-                await Repository.Update(_mapper.Map<T>(resourceDto));
+                await Repository.Update(Mapper.Map<T>(resourceDto));
             }
             catch (DbUpdateConcurrencyException)
             {

@@ -11,7 +11,5 @@ namespace QuestStore.API.Dtos.InDtos
         public string Surname { get; set; }
         public string Email { get; set; }
         public int Coins { get; set; }
-        public ICollection<int> ArtifactsIds { get; set; }
-        public ICollection<int> ClassroomsIds { get; set; }
     }
 }
