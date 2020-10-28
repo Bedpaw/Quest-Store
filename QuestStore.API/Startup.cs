@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using QuestStore.API.GenericControllersFactory;
 using QuestStore.Infrastructure.Data;
 using QuestStore.Core;
@@ -37,7 +38,12 @@ namespace QuestStore.API
                 .ConfigureApplicationPartManager(
                     manager => manager.FeatureProviders.Add(new GenericControllersFeatureProvider()))
                 .AddNewtonsoftJson(
-                    o => o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore)
+                    o =>
+                    {
+                        o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                        o.SerializerSettings.Converters.Add(new StringEnumConverter());
+                    })
+                // Adds proper QuestType to swagger docs.
                 .AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
             services.AddDbContext<StoreDbContext>(
