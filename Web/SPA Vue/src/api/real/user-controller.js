@@ -1,10 +1,12 @@
 import axios from 'axios';
 
-const url = 'https://localhost:5001/api/users';
+const url = 'https://localhost:5001/api';
+const usersUrl = url + '/users';
+const studentsUrl = url + '/students'
 
 const getUsers = async () => {
   try {
-    const response = await axios.get(url);
+    const response = await axios.get(usersUrl);
     console.log(response);
     return response.data;
   } catch (error) {
@@ -12,10 +14,9 @@ const getUsers = async () => {
     return error;
   }
 };
-
 const addUser = async user => {
   try {
-    const response = await axios.post(url, {
+    const response = await axios.post(usersUrl, {
       name: user.name,
       surname: user.surname,
       description: user.description,
@@ -43,7 +44,7 @@ const addUser = async user => {
 
 const updateUser = async user => {
   try {
-    const response = await axios.put(url + `/${user.id}`, {
+    const response = await axios.put(usersUrl + `/${user.id}`, {
       id: user.id,
       name: user.name,
       surname: user.surname,
@@ -63,7 +64,7 @@ const updateUser = async user => {
 };
 const getUser = async id => {
   try {
-    const response = await axios.get(url + `/${id}`);
+    const response = await axios.get(usersUrl + `/${id}`);
     return response.data;
   } catch (error) {
     return error;
@@ -71,12 +72,27 @@ const getUser = async id => {
 };
 const deleteUser = async id => {
   try {
-    const response = await axios.delete(url + `/${id}`);
+    const response = await axios.delete(usersUrl + `/${id}`);
     return response.data;
   } catch (error) {
     return error;
   }
 };
+
+// api/students/{studentId}/artifacts
+const updateStudentArtifacts = async user => {
+  try {
+    const response = await axios.put(studentsUrl + `/${user.id}` + '/artifacts', {
+      artifacts: user.artifacts
+    });
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
 
 export const userController = {
   getUsers,
@@ -84,5 +100,6 @@ export const userController = {
   addUser,
   updateUser,
   getUser,
-  deleteUser
+  deleteUser,
+  updateStudentArtifacts
 };

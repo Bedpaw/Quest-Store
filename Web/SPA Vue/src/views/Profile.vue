@@ -47,27 +47,33 @@
           >
             {{ artifact.name }}
           </p>
+          <upload-file @image-uploaded="setAvatar">Change avatar</upload-file>
         </v-card>
       </v-col>
     </v-row>
-    <template>
-      <upload-file></upload-file>
-    </template>
   </v-container>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import UploadFile from '@/components/uploadFile';
+import {UPDATE_USER} from "@/utils/macros/mutation-types";
 
 export default {
   name: 'Profile',
-  components: { UploadFile },
+  components: {UploadFile},
   computed: {
     ...mapGetters('classroom', ['getClassesByUserId']),
     ...mapGetters('user', ['getLoggedUser', 'getFullName'])
+  },
+  methods: {
+    setAvatar(newImage) {
+      const updatedUser = {...this.getLoggedUser, image:newImage}
+      this.$store.commit('user/' + UPDATE_USER, updatedUser)
+      //this.$store.dispatch('user/updateUser', updatedUser)
+    }
   }
-};
+}
 </script>
 
 <style scoped>

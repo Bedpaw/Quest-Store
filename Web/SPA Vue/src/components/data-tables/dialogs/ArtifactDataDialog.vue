@@ -57,6 +57,9 @@
                   :rules="positive"
                 />
               </v-col>
+              <v-col cols="12" sm="12" md="6">
+                <upload-file @image-uploaded="setImage"></upload-file>
+              </v-col>
             </v-row>
           </v-form>
         </v-container>
@@ -82,9 +85,11 @@ import {
   descriptionRules,
   positive
 } from '@/components/data-tables/validators';
+import UploadFile from "@/components/uploadFile";
 
 export default {
   name: 'ArtifactDataDialog',
+  components: {UploadFile},
   mixins: [dataTableDialogMixin],
   data() {
     return {
