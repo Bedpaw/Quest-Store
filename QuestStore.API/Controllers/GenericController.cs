@@ -34,7 +34,7 @@ namespace QuestStore.API.Controllers
         {
             try
             {
-                var result = await Repository.GetAll(true);
+                var result = await Repository.GetAll(2);
                 return Ok(Mapper.Map<List<TOut>>(result.ToList()));
             }
             catch (Exception)
@@ -48,7 +48,7 @@ namespace QuestStore.API.Controllers
         {
             try
             {
-                var result = await Repository.GetById(id, true);
+                var result = await Repository.GetById(id, 2);
 
                 if (result == null) return NotFound();
 

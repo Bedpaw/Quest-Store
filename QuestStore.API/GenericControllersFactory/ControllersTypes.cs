@@ -10,20 +10,20 @@ namespace QuestStore.API.GenericControllersFactory
 {
     public static class ControllersTypes
     {
-        public static Dictionary<Type, ControllerConfiguration> Configurations =>
-            new Dictionary<Type, ControllerConfiguration>
+        public static Dictionary<Type, GenericControllerConfiguration> GenericControllersConfigurations =>
+            new Dictionary<Type, GenericControllerConfiguration>
             {
                 {
                     typeof(Quest),
-                    new ControllerConfiguration {ResponseType = typeof(Quest), RequestType = typeof(Quest)}
+                    new GenericControllerConfiguration {ResponseType = typeof(Quest), RequestType = typeof(Quest)}
                 },
                 {
                     typeof(User),
-                    new ControllerConfiguration {ResponseType = typeof(User), RequestType = typeof(User)}
+                    new GenericControllerConfiguration {ResponseType = typeof(User), RequestType = typeof(User)}
                 },
                 {
                     typeof(Artifact),
-                    new ControllerConfiguration
+                    new GenericControllerConfiguration
                     {
                         ResponseType = typeof(ArtifactDetailedDto),
                         RequestType = typeof(ArtifactDetailedDto)
@@ -31,7 +31,7 @@ namespace QuestStore.API.GenericControllersFactory
                 },
                 {
                     typeof(Classroom),
-                    new ControllerConfiguration
+                    new GenericControllerConfiguration
                     {
                         ResponseType = typeof(ClassroomDetailedDto),
                         RequestType = typeof(ClassroomRequestDto)
@@ -39,16 +39,32 @@ namespace QuestStore.API.GenericControllersFactory
                 },
                 {
                     typeof(Student),
-                    new ControllerConfiguration
+                    new GenericControllerConfiguration
                     {
                         ResponseType = typeof(StudentDetailedDto), RequestType = typeof(StudentRequestDto)
                     }
                 },
                 {
                     typeof(Mentor),
-                    new ControllerConfiguration
+                    new GenericControllerConfiguration
                     {
                         ResponseType = typeof(MentorDetailedDto), RequestType = typeof(MentorRequestDto)
+                    }
+                }
+            };
+
+        public static Dictionary<Type, LinkingControllerConfiguration> LinkingControllersConfigurations =>
+            new Dictionary<Type, LinkingControllerConfiguration>
+            {
+                {
+                    typeof(StudentArtifact), 
+                    new LinkingControllerConfiguration
+                    {
+                        ResponseType = typeof(ArtifactDetailedDto),
+                        Name = nameof(StudentArtifact) + "s",
+                        ParentRoute = nameof(Student) + "s",
+                        ChildRoute = nameof(Artifact) + "s"
+                        
                     }
                 }
             };

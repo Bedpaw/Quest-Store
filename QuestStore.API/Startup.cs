@@ -34,9 +34,9 @@ namespace QuestStore.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers(o => o.Conventions.Add(new GenericControllersRouteConvention()))
+            services.AddControllers(o => o.Conventions.Add(new ControllersRouteConvention()))
                 .ConfigureApplicationPartManager(
-                    manager => manager.FeatureProviders.Add(new GenericControllersFeatureProvider()))
+                    manager => manager.FeatureProviders.Add(new ControllersFeatureProvider()))
                 .AddNewtonsoftJson(
                     o =>
                     {
@@ -96,6 +96,7 @@ namespace QuestStore.API
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(ILinkingRepository<>), typeof(LinkingRepository<>));
         }
 
         public void Configure(IApplicationBuilder app)

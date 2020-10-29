@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QuestStore.API.GenericControllersFactory
 {
-    public class ControllerConfiguration
+    public class GenericControllerConfiguration
     {
         public Type RequestType { get; set; }
         public Type ResponseType { get; set; }
