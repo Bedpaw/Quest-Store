@@ -17,7 +17,7 @@ export const users = [
     description:
       "Hi, I'm Paweł and i want to be full stack developer, my favorite technologies are C#, ASP NET Core and Vue.js",
     role: ROLES.ADMIN,
-    image: '',
+    image: '/sample',
     coins: 100,
     artifacts: [artifacts[0], artifacts[1]]
   }),
@@ -28,7 +28,7 @@ export const users = [
     email: 'kowal@test.com',
     role: ROLES.STUDENT,
     image: '',
-    coins: 0,
+    coins: 2000,
     artifacts: []
   }),
   new User({
@@ -63,4 +63,3 @@ export const users = [
     artifacts: []
   })
 ];
-export const loggedUser = users[0];

@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import {cloud_name, upload_preset} from "../../cloudinary_config.json";
+import {cloud_name, upload_preset} from "../../../cloudinary_config.json";
 
 export default {
   name: 'uploadFile',

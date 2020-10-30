@@ -85,7 +85,7 @@ import {
   descriptionRules,
   positive
 } from '@/components/data-tables/validators';
-import UploadFile from "@/components/uploadFile";
+import UploadFile from "@/components/utils/uploadFile";
 
 export default {
   name: 'ArtifactDataDialog',
