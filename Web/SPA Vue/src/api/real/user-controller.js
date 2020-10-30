@@ -4,9 +4,10 @@ const url = 'https://localhost:5001/api';
 const usersUrl = url + '/users';
 const studentsUrl = url + '/students'
 
-const getUsers = async () => {
+// generic get
+const getByRole = (urlForRole) => async () => {
   try {
-    const response = await axios.get(usersUrl);
+    const response = await axios.get(urlForRole);
     console.log(response);
     return response.data;
   } catch (error) {
@@ -14,6 +15,12 @@ const getUsers = async () => {
     return error;
   }
 };
+
+const getUsers = getByRole(usersUrl)
+const getStudents = getByRole(studentsUrl)
+
+
+
 const addUser = async user => {
   try {
     const response = await axios.post(usersUrl, {
@@ -101,5 +108,6 @@ export const userController = {
   updateUser,
   getUser,
   deleteUser,
+  getStudents,
   updateStudentArtifacts
 };
