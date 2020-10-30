@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex align-center justify-center fill-height background-image">
+  <div class="d-flex align-center justify-center fill-height">
     <v-container class="container">
       <component :is="menuComponent"></component>
     </v-container>
@@ -9,13 +9,13 @@
 <script>
 import loggedInMenu from '@/components/landing-page/loggedInMenu';
 import loggedOutMenu from '@/components/landing-page/loggedOutMenu';
-import { getInstance } from '@/auth';
+import {getInstance} from '@/auth';
 import loadingMenu from '@/components/landing-page/loadingMenu';
 import loggedAsGuest from '@/components/landing-page/loggedAsGuest';
 
 export default {
   name: 'Home',
-  components: { loggedInMenu, loggedOutMenu },
+  components: {loggedInMenu, loggedOutMenu},
   data() {
     return {};
   },
@@ -35,9 +35,6 @@ export default {
 </script>
 
 <style scoped>
-.background-image {
-  background-image: url('../../public/layout.jpg');
-}
 .container {
   border-radius: 10px;
 }

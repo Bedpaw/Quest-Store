@@ -33,6 +33,7 @@ const addQuest = async quest => {
 const updateQuest = async quest => {
   try {
     const response = await axios.put(url + `/${quest.id}`, {
+      id: quest.id,
       name: quest.name,
       description: quest.description,
       image: quest.image,

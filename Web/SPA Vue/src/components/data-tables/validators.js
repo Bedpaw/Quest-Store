@@ -9,7 +9,7 @@ export const surnameRules = [
 ];
 
 export const descriptionRules = [
-  v => v.length <= 100 || 'Description max length is 100 characters'
+  v => v.length <= 500 || 'Description max length is 500 characters'
 ];
 
 export const positive = [

@@ -1,4 +1,4 @@
-import { users } from '@/mock/user-mock';
+import {users} from '@/mock/user-mock';
 import {
   ADD_USER,
   DELETE_USER,
@@ -7,11 +7,11 @@ import {
   PUSH_ARTIFACT,
   UPDATE_USER
 } from '@/utils/macros/mutation-types';
-import { ROLES } from '@/utils/macros/roles';
-import { arrayUtils } from '@/utils/array-utils';
-import { api } from '@/api';
-import { User } from '@/structures/user';
-import { storeActions } from '@/utils/store-utils';
+import {ROLES} from '@/utils/macros/roles';
+import {arrayUtils} from '@/utils/array-utils';
+import {api} from '@/api';
+import {User} from '@/structures/user';
+import {storeActions} from '@/utils/store-utils';
 
 export const user = {
   namespaced: true,
@@ -22,8 +22,7 @@ export const user = {
   getters: {
     // For test only // that should be mutation
     changeToUserWithRole: state => role => {
-      const userWithRole = users.find(user => user.role === role);
-      state.loggedUser = userWithRole;
+      state.loggedUser = users.find(user => user.role === role);
     },
 
     // Logged User
@@ -63,12 +62,14 @@ export const user = {
     [DELETE_USER]: (state, payload) =>
       arrayUtils.removeItem(state.users, payload),
     [PUSH_ARTIFACT]: (state, { user, artifact }) => {
+      console.log(artifact)
       user.coins -= artifact.cost;
       user.artifacts.push(artifact);
     }
   },
   actions: {
     fetchUsers: storeActions.fetchResources(api.getUsers, FETCH_USERS, User),
+    fetchStudents: storeActions.fetchResources(api.getStudents, FETCH_USERS, User),
     addUser: storeActions.addResource(api.addUser, ADD_USER, User),
     updateUser: storeActions.updateResource(api.updateUser, UPDATE_USER, User),
     deleteUser: storeActions.deleteResource(api.deleteUser, DELETE_USER),

@@ -31,6 +31,7 @@ const addArtifact = async artifact => {
 const updateArtifact = async artifact => {
   try {
     const response = await axios.put(url + `/${artifact.id}`, {
+      id: artifact.id,
       name: artifact.name,
       description: artifact.description,
       image: artifact.image,

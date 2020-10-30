@@ -1,5 +1,5 @@
 import { Basic } from './basic';
-import { QUEST_TYPES } from '../utils/macros/quest-types';
+import { QUEST_TYPES } from '@/utils/macros/quest-types';
 
 export class Quest extends Basic {
   constructor({
@@ -11,7 +11,7 @@ export class Quest extends Basic {
     type = QUEST_TYPES.BASIC
   }) {
     super(id, name, description);
-    this.image = image;
+    this.image = image === null ? '' : image
     this.reward = reward;
     this.type = type;
   }

@@ -25,3 +25,4 @@ pnpm-debug.log*
 
 auth_config.json
 package-lock.json
+cloudinary_config.json

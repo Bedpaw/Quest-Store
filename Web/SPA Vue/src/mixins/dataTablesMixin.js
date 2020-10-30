@@ -54,6 +54,9 @@ export const dataTableDialogMixin = {
     },
     isEditMode() {
       return objectUtils.isEmptyObject(this.currentItem);
+    },
+    setImage(imageId) {
+      this.editedItem.image = imageId
     }
   }
 };
