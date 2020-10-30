@@ -1,7 +1,7 @@
 <template>
   <v-col cols="12" md="6">
     <v-card
-      class="d-flex flex-column align-center py-sm-6 lime lighten-5"
+      class="d-flex flex-column align-center py-sm-6 lime lighten-5 hover"
       @click="$router.push(path)"
     >
       <v-icon class="flex justify-center" size="108px">{{ icon }}</v-icon>
@@ -30,4 +30,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.hover:hover {
+  opacity: 0.9;
+}
+</style>

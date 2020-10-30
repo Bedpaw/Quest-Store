@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <grid-container title="Extra Quests" :items="getExtraQuests">
+    <grid-container title="Extra Quests" :items="getExtraQuests" class="mb-10">
       <template v-slot:default="slotProps">
         <quest-card :quest="slotProps.item"></quest-card>
       </template>

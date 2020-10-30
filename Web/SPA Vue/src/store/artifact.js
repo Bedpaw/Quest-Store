@@ -3,7 +3,7 @@ import {
   ADD_ARTIFACT,
   BUY_ARTIFACT,
   DELETE_ARTIFACT,
-  FETCH_ARTIFACTS,
+  FETCH_ARTIFACTS, PUSH_ARTIFACT,
   UPDATE_ARTIFACT
 } from '@/utils/macros/mutation-types';
 import { api } from '@/api';
@@ -31,7 +31,7 @@ export const artifact = {
       const purchasedArtifact = state.artifacts.find(
         artifact => artifact.id === parseInt(artifactId)
       );
-      purchasedArtifact.quantity--;
+      if (purchasedArtifact.quantity !== null) purchasedArtifact.quantity--;
     }
   },
   actions: {
@@ -53,6 +53,12 @@ export const artifact = {
     deleteArtifact: storeActions.deleteResource(
       api.artifactController.deleteArtifact,
       DELETE_ARTIFACT
-    )
+    ),
+    buyArtifact({commit}, {user, artifact}) {
+      if (user.coins >= artifact.cost) {
+        commit(BUY_ARTIFACT, artifact.id)
+        commit('user/' + PUSH_ARTIFACT, { user, artifact}, {root: true})
+      }
+    }
   }
-};
+}
