@@ -10,45 +10,86 @@ namespace QuestStore.API.GenericControllersFactory
 {
     public static class ControllersTypes
     {
-        public static Dictionary<Type, ControllerConfiguration> Configurations =>
-            new Dictionary<Type, ControllerConfiguration>
+        public static Dictionary<(Type entityType, Type responseType, Type requestType), GenericControllerConfiguration> GenericControllers =>
+            new Dictionary<(Type entityType, Type responseType, Type requestType), GenericControllerConfiguration>
             {
                 {
-                    typeof(Quest),
-                    new ControllerConfiguration {ResponseType = typeof(Quest), RequestType = typeof(Quest)}
+                    (typeof(Quest), typeof(Quest), typeof(Quest)),
+                    new GenericControllerConfiguration()
                 },
                 {
-                    typeof(User),
-                    new ControllerConfiguration {ResponseType = typeof(User), RequestType = typeof(User)}
+                    (typeof(User), typeof(User), typeof(User)),
+                    new GenericControllerConfiguration()
                 },
                 {
-                    typeof(Artifact),
-                    new ControllerConfiguration
+                    (typeof(Artifact), typeof(ArtifactDetailedDto), typeof(ArtifactDetailedDto)),
+                    new GenericControllerConfiguration()
+                },
+                {
+                    (typeof(Classroom), typeof(ClassroomDetailedDto), typeof(ClassroomRequestDto)),
+                    new GenericControllerConfiguration()
+                },
+                {
+                    (typeof(Student), typeof(StudentDetailedDto), typeof(StudentRequestDto)),
+                    new GenericControllerConfiguration()
+                },
+                {
+                    (typeof(Mentor), typeof(MentorDetailedDto), typeof(MentorRequestDto)),
+                    new GenericControllerConfiguration()
+                }
+            };
+
+        public static Dictionary<(Type entityType, Type responseType, Type postResponseType), LinkingControllerConfiguration> LinkingControllers =>
+            new Dictionary<(Type entityType, Type responseType, Type postResponseType), LinkingControllerConfiguration>
+            {
+                {
+                    (typeof(StudentArtifact), typeof(ArtifactDetailedDto), typeof(StudentArtifactBrief)), 
+                    new LinkingControllerConfiguration
                     {
-                        ResponseType = typeof(ArtifactDetailedDto),
-                        RequestType = typeof(ArtifactDetailedDto)
+                        Name = nameof(Student) + "s",
+                        ParentRoute = nameof(Student) + "s",
+                        ChildRoute = nameof(Artifact) + "s",
+                        ReverseKeyOrder = false
                     }
                 },
                 {
-                    typeof(Classroom),
-                    new ControllerConfiguration
+                    (typeof(StudentClassroom), typeof(ClassroomDetailedDto), typeof(StudentClassroomBrief)),
+                    new LinkingControllerConfiguration
                     {
-                        ResponseType = typeof(ClassroomDetailedDto),
-                        RequestType = typeof(ClassroomRequestDto)
+                        Name = nameof(Student) + "s",
+                        ParentRoute = nameof(Student) + "s",
+                        ChildRoute = nameof(Classroom) + "s",
+                        ReverseKeyOrder = false
                     }
                 },
                 {
-                    typeof(Student),
-                    new ControllerConfiguration
+                    (typeof(StudentClassroom), typeof(StudentDetailedDto), typeof(StudentClassroomBrief)),
+                    new LinkingControllerConfiguration
                     {
-                        ResponseType = typeof(StudentDetailedDto), RequestType = typeof(StudentRequestDto)
+                        Name = nameof(Classroom) + "s",
+                        ParentRoute = nameof(Classroom) + "s",
+                        ChildRoute = nameof(Student) + "s",
+                        ReverseKeyOrder = true
                     }
                 },
                 {
-                    typeof(Mentor),
-                    new ControllerConfiguration
+                    (typeof(MentorClassroom), typeof(ClassroomDetailedDto), typeof(MentorClassroomBrief)),
+                    new LinkingControllerConfiguration
                     {
-                        ResponseType = typeof(MentorDetailedDto), RequestType = typeof(MentorRequestDto)
+                        Name = nameof(Mentor) + "s",
+                        ParentRoute = nameof(Mentor) + "s",
+                        ChildRoute = nameof(Classroom) + "s",
+                        ReverseKeyOrder = false
+                    }
+                },
+                {
+                    (typeof(MentorClassroom), typeof(MentorDetailedDto), typeof(MentorClassroomBrief)),
+                    new LinkingControllerConfiguration
+                    {
+                        Name = nameof(Classroom) + "s",
+                        ParentRoute = nameof(Classroom) + "s",
+                        ChildRoute = nameof(Mentor) + "s",
+                        ReverseKeyOrder = true
                     }
                 }
             };
