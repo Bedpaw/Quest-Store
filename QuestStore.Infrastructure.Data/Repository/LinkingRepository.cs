@@ -23,9 +23,9 @@ namespace QuestStore.Infrastructure.Data.Repository
                 .Properties.Select(p => p.Name);
 
         }
-        public virtual async Task<IEnumerable<T>> GetByFirstId(int firstId, int includeDepth)
+        public virtual async Task<IEnumerable<T>> GetBySingleId(int id, bool useFirstId , int includeDepth = 0)
         {
-            var (conditionExpression, parameterExpression) = CreateFirstIdExpressionArguments(firstId);
+            var (conditionExpression, parameterExpression) = CreateSingleIdExpressionArguments(id, useFirstId);
             var query = Entities.Where(
                 Expression.Lambda<Func<T, bool>>(conditionExpression, parameterExpression));
 
@@ -37,7 +37,7 @@ namespace QuestStore.Infrastructure.Data.Repository
             return await query.ToListAsync();
         }
 
-        public virtual async Task<T> GetByFullKey(int firstId, int secondId, int includeDepth)
+        public virtual async Task<T> GetByFullKey(int firstId, int secondId, int includeDepth = 0)
         {
             if (includeDepth > 0)
             {
@@ -56,41 +56,41 @@ namespace QuestStore.Infrastructure.Data.Repository
             await Context.SaveChangesAsync();
         }
 
-        public virtual async Task DeleteByFirstId(int firstId)
+        public virtual async Task Delete(T entity)
         {
-            var (conditionExpression, parameterExpression) = CreateFirstIdExpressionArguments(firstId);
-            var query = Entities.Where(
-                Expression.Lambda<Func<T, bool>>(conditionExpression, parameterExpression)).ToList();
-            Entities.RemoveRange(query);
-            await Context.SaveChangesAsync();
-        }
-
-        public virtual async Task DeleteByFullKey(int firstId, int secondId)
-        {
-            var entity = await Entities.FindAsync(firstId, secondId);
-
-            if (entity == null) throw new ArgumentException("Wrong primary key");
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
 
             Entities.Remove(entity);
             await Context.SaveChangesAsync();
         }
 
-        private (BinaryExpression, ParameterExpression) CreateFirstIdExpressionArguments(int firstId)
+        public virtual async Task DeleteBySingleId(int id, bool useFirstId)
+        {
+            var (conditionExpression, parameterExpression) = CreateSingleIdExpressionArguments(id, useFirstId);
+            var query = Entities.Where(
+                Expression.Lambda<Func<T, bool>>(conditionExpression, parameterExpression));
+            Entities.RemoveRange(query);
+            await Context.SaveChangesAsync();
+        }
+
+        private (BinaryExpression, ParameterExpression) CreateSingleIdExpressionArguments(int id, bool useFirstId)
         {
             // Expression <=> entity (function argument)
             var parameterExpression = Expression.Parameter(typeof(T), "entity");
-            // Expression <=> entity.firstKeyName
-            var getPropertyExpression = Expression.Property(parameterExpression, _keyPropertiesNames.First());
-            // Expression <=> firstId
-            var firstIdExpression = Expression.Constant(firstId, typeof(int));
-            // Expression <=> entity.firstKeyName == firstId
+            // Expression <=> entity.KeyName
+            var getPropertyExpression = Expression.Property(
+                parameterExpression,
+                useFirstId ? _keyPropertiesNames.First() : _keyPropertiesNames.Last());
+            // Expression <=> id
+            var firstIdExpression = Expression.Constant(id, typeof(int));
+            // Expression <=> entity.KeyName == id
             var conditionExpression =  Expression.Equal(getPropertyExpression, firstIdExpression);
             return (conditionExpression, parameterExpression);
         }
 
         private Expression<Func<T, bool>> CreateFullKeyExpression(int firstId, int secondId)
         {
-            var (firstConditionExpression, parameterExpression) = CreateFirstIdExpressionArguments(firstId);
+            var (firstConditionExpression, parameterExpression) = CreateSingleIdExpressionArguments(firstId, true);
             // Expression <=> entity.SecondKeyName
             var getSecondPropertyExpression = Expression.Property(parameterExpression, _keyPropertiesNames.Last());
             // Expression <=> secondId

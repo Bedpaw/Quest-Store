@@ -7,12 +7,10 @@ namespace QuestStore.Core.Interfaces
 {
     public interface ILinkingRepository<T> where T : class
     {
-        Task<IEnumerable<T>> GetByFirstId(int firstId, int includeDepth);
-        Task<T> GetByFullKey(int firstId, int secondId, int includeDepth);
+        Task<IEnumerable<T>> GetBySingleId(int id, bool useFirstId, int includeDepth = 0);
+        Task<T> GetByFullKey(int firstId, int secondId, int includeDepth = 0);
         Task Add(T entity);
-        Task DeleteByFirstId(int firstIsd);
-        Task DeleteByFullKey(int firstId, int secondId);
-
-
+        Task Delete(T entity);
+        Task DeleteBySingleId(int id, bool useFirstId);
     }
 }

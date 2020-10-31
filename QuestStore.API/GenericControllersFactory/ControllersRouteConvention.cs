@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using QuestStore.API.Controllers;
 using QuestStore.Core;
@@ -13,28 +14,27 @@ namespace QuestStore.API.GenericControllersFactory
 
             if (!controllerType.IsGenericType) return;
 
-            var entityType = controllerType.GenericTypeArguments[0];
+            var controllerArguments = (controllerType.GenericTypeArguments[0],
+                controllerType.GenericTypeArguments[1], controllerType.GenericTypeArguments[2]);
 
-            // `2 in the name of the controller results form that it has got 2 generic parameters.
-            if (controllerType.Name == nameof(LinkingGenericController<object,object>) + "`2")
+            // `3 in the name of the controller results form that it has got 3 generic parameters.
+            if (controllerType.Name == nameof(LinkingGenericController<object, object, object>) + "`3")
             {
-                controller.ControllerName =
-                    ControllersTypes.LinkingControllersConfigurations[entityType].Name ?? entityType.Name + "s";
+                controller.ControllerName = ControllersTypes.LinkingControllers[controllerArguments].Name;
 
                 controller.RouteValues["ParentController"] =
-                    ControllersTypes.LinkingControllersConfigurations[entityType].ParentRoute ?? entityType.Name + "s";
+                    ControllersTypes.LinkingControllers[controllerArguments].ParentRoute;
 
                 controller.RouteValues["ChildController"] =
-                    ControllersTypes.LinkingControllersConfigurations[entityType].ChildRoute ?? entityType.Name + "s";
-
+                    ControllersTypes.LinkingControllers[controllerArguments].ChildRoute;
             }
             else
             {
                 controller.ControllerName =
-                    ControllersTypes.GenericControllersConfigurations[entityType].Name ?? entityType.Name + "s";
+                    ControllersTypes.GenericControllers[controllerArguments].Name ?? controllerArguments.Item1.Name + "s";
 
                 controller.RouteValues["Controller"] =
-                    ControllersTypes.GenericControllersConfigurations[entityType].Route ?? entityType.Name + "s";
+                    ControllersTypes.GenericControllers[controllerArguments].Route ?? controllerArguments.Item1.Name + "s";
             }
 
 

@@ -10,61 +10,86 @@ namespace QuestStore.API.GenericControllersFactory
 {
     public static class ControllersTypes
     {
-        public static Dictionary<Type, GenericControllerConfiguration> GenericControllersConfigurations =>
-            new Dictionary<Type, GenericControllerConfiguration>
+        public static Dictionary<(Type entityType, Type responseType, Type requestType), GenericControllerConfiguration> GenericControllers =>
+            new Dictionary<(Type entityType, Type responseType, Type requestType), GenericControllerConfiguration>
             {
                 {
-                    typeof(Quest),
-                    new GenericControllerConfiguration {ResponseType = typeof(Quest), RequestType = typeof(Quest)}
+                    (typeof(Quest), typeof(Quest), typeof(Quest)),
+                    new GenericControllerConfiguration()
                 },
                 {
-                    typeof(User),
-                    new GenericControllerConfiguration {ResponseType = typeof(User), RequestType = typeof(User)}
+                    (typeof(User), typeof(User), typeof(User)),
+                    new GenericControllerConfiguration()
                 },
                 {
-                    typeof(Artifact),
-                    new GenericControllerConfiguration
-                    {
-                        ResponseType = typeof(ArtifactDetailedDto),
-                        RequestType = typeof(ArtifactDetailedDto)
-                    }
+                    (typeof(Artifact), typeof(ArtifactDetailedDto), typeof(ArtifactDetailedDto)),
+                    new GenericControllerConfiguration()
                 },
                 {
-                    typeof(Classroom),
-                    new GenericControllerConfiguration
-                    {
-                        ResponseType = typeof(ClassroomDetailedDto),
-                        RequestType = typeof(ClassroomRequestDto)
-                    }
+                    (typeof(Classroom), typeof(ClassroomDetailedDto), typeof(ClassroomRequestDto)),
+                    new GenericControllerConfiguration()
                 },
                 {
-                    typeof(Student),
-                    new GenericControllerConfiguration
-                    {
-                        ResponseType = typeof(StudentDetailedDto), RequestType = typeof(StudentRequestDto)
-                    }
+                    (typeof(Student), typeof(StudentDetailedDto), typeof(StudentRequestDto)),
+                    new GenericControllerConfiguration()
                 },
                 {
-                    typeof(Mentor),
-                    new GenericControllerConfiguration
-                    {
-                        ResponseType = typeof(MentorDetailedDto), RequestType = typeof(MentorRequestDto)
-                    }
+                    (typeof(Mentor), typeof(MentorDetailedDto), typeof(MentorRequestDto)),
+                    new GenericControllerConfiguration()
                 }
             };
 
-        public static Dictionary<Type, LinkingControllerConfiguration> LinkingControllersConfigurations =>
-            new Dictionary<Type, LinkingControllerConfiguration>
+        public static Dictionary<(Type entityType, Type responseType, Type postResponseType), LinkingControllerConfiguration> LinkingControllers =>
+            new Dictionary<(Type entityType, Type responseType, Type postResponseType), LinkingControllerConfiguration>
             {
                 {
-                    typeof(StudentArtifact), 
+                    (typeof(StudentArtifact), typeof(ArtifactDetailedDto), typeof(StudentArtifactBrief)), 
                     new LinkingControllerConfiguration
                     {
-                        ResponseType = typeof(ArtifactDetailedDto),
-                        Name = nameof(StudentArtifact) + "s",
+                        Name = nameof(Student) + "s",
                         ParentRoute = nameof(Student) + "s",
-                        ChildRoute = nameof(Artifact) + "s"
-                        
+                        ChildRoute = nameof(Artifact) + "s",
+                        ReverseKeyOrder = false
+                    }
+                },
+                {
+                    (typeof(StudentClassroom), typeof(ClassroomDetailedDto), typeof(StudentClassroomBrief)),
+                    new LinkingControllerConfiguration
+                    {
+                        Name = nameof(Student) + "s",
+                        ParentRoute = nameof(Student) + "s",
+                        ChildRoute = nameof(Classroom) + "s",
+                        ReverseKeyOrder = false
+                    }
+                },
+                {
+                    (typeof(StudentClassroom), typeof(StudentDetailedDto), typeof(StudentClassroomBrief)),
+                    new LinkingControllerConfiguration
+                    {
+                        Name = nameof(Classroom) + "s",
+                        ParentRoute = nameof(Classroom) + "s",
+                        ChildRoute = nameof(Student) + "s",
+                        ReverseKeyOrder = true
+                    }
+                },
+                {
+                    (typeof(MentorClassroom), typeof(ClassroomDetailedDto), typeof(MentorClassroomBrief)),
+                    new LinkingControllerConfiguration
+                    {
+                        Name = nameof(Mentor) + "s",
+                        ParentRoute = nameof(Mentor) + "s",
+                        ChildRoute = nameof(Classroom) + "s",
+                        ReverseKeyOrder = false
+                    }
+                },
+                {
+                    (typeof(MentorClassroom), typeof(MentorDetailedDto), typeof(MentorClassroomBrief)),
+                    new LinkingControllerConfiguration
+                    {
+                        Name = nameof(Classroom) + "s",
+                        ParentRoute = nameof(Classroom) + "s",
+                        ChildRoute = nameof(Mentor) + "s",
+                        ReverseKeyOrder = true
                     }
                 }
             };

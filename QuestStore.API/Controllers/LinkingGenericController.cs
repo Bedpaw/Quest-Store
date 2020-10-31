@@ -7,14 +7,15 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QuestStore.API.Dtos.InDtos;
+using QuestStore.API.GenericControllersFactory;
 using QuestStore.Core.Interfaces;
 
 namespace QuestStore.API.Controllers
 {
-    [Route("api/[ParentController]/{id1}/[ChildController]")]
+    [Route("api/[ParentController]/{id}/[ChildController]")]
     [ApiController]
     [ApiConventionType(typeof(DefaultApiConventions))]
-    public class LinkingGenericController<T, TOut> : ControllerBase
+    public class LinkingGenericController<T, TOut, TPost> : ControllerBase
     where T : class
     {
         protected readonly ILinkingRepository<T> Repository;
@@ -29,11 +30,14 @@ namespace QuestStore.API.Controllers
         }
 
         [HttpGet]
-        public virtual async Task<ActionResult<List<TOut>>> GetAllResources(int id1)
+        public virtual async Task<ActionResult<List<TOut>>> GetAllResources(int id)
         {
             try
             {
-                var result = await Repository.GetByFirstId(id1, 1);
+                var useFirstId = !ControllersTypes
+                    .LinkingControllers[(typeof(T), typeof(TOut), typeof(TPost))]
+                    .ReverseKeyOrder;
+                var result = await Repository.GetBySingleId(id, useFirstId,1);
                 return Ok(Mapper.Map<List<TOut>>(result.ToList()));
             }
             catch (Exception)
@@ -43,11 +47,14 @@ namespace QuestStore.API.Controllers
         }
 
         [HttpGet("{id2}")]
-        public virtual async Task<ActionResult<TOut>> GetResource(int id1, int id2)
+        public virtual async Task<ActionResult<TOut>> GetResource(int id, int id2)
         {
             try
             {
-                var result = await Repository.GetByFullKey(id1, id2, 1);
+                var result = ControllersTypes.LinkingControllers[(typeof(T), typeof(TOut), typeof(TPost))]
+                    .ReverseKeyOrder
+                    ? await Repository.GetByFullKey(id2, id, 1)
+                    : await Repository.GetByFullKey(id, id2, 1);
 
                 if (result == null) return NotFound();
 
@@ -60,23 +67,69 @@ namespace QuestStore.API.Controllers
         }
 
         [HttpPost("{id2}")]
-        public virtual async Task<ActionResult<TOut>> CreateResource(int id1, int id2)
+        public virtual async Task<ActionResult<TPost>> CreateResource(int id, int id2)
         {
             try
             {
-                var resource = Mapper.Map<T>(new LinkingDto { Id1 = id1, Id2 = id2 });
+                if (ControllersTypes.LinkingControllers[(typeof(T), typeof(TOut), typeof(TPost))].ReverseKeyOrder)
+                {
+                    (id, id2) = (id2, id);
+                }
+
+                var resource = Mapper.Map<T>(new LinkingDto {Id1 = id, Id2 = id2});
                 await Repository.Add(resource);
-                resource = await Repository.GetByFullKey(id1, id2, 1);
 
                 return CreatedAtAction(
                     nameof(GetResource),
-                    new { id1 = id1, id2 = id2 },
-                    Mapper.Map<TOut>(resource));
+                    new { id = id, id2 = id2 }, Mapper.Map<TPost>(resource));
             }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, _errorMessage);
             }
         }
+
+        [HttpDelete("{id2}")]
+        public virtual async Task<IActionResult> DeleteResource(int id, int id2)
+        {
+            try
+            {
+                var resource = ControllersTypes.LinkingControllers[(typeof(T), typeof(TOut), typeof(TPost))]
+                    .ReverseKeyOrder
+                    ? await Repository.GetByFullKey(id2, id, 1)
+                    : await Repository.GetByFullKey(id, id2, 1);
+
+                if (resource == null) return NotFound();
+
+                await Repository.Delete(resource);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, _errorMessage);
+            }
+        }
+
+        //[HttpDelete]
+        //public virtual async Task<IActionResult> DeleteAllResources(int id)
+        //{
+        //    try
+        //    {
+        //        var useFirstId = !ControllersTypes
+        //            .LinkingControllers[(typeof(T), typeof(TOut), typeof(TPost))]
+        //            .ReverseKeyOrder;
+
+        //        var resources = await Repository.GetBySingleId(id, useFirstId);
+
+        //        if (resources == null) return NotFound();
+
+        //        await Repository.DeleteBySingleId(id, useFirstId);
+        //        return Ok();
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, _errorMessage);
+        //    }
+        //}
     }
 }

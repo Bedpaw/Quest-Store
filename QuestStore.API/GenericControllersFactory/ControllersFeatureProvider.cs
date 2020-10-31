@@ -13,22 +13,19 @@ namespace QuestStore.API.GenericControllersFactory
     {
         public void PopulateFeature(IEnumerable<ApplicationPart> parts, ControllerFeature feature)
         {
-            foreach (var entityType in ControllersTypes.GenericControllersConfigurations.Keys)
+            foreach (var (entityType, responseType, requestType) in ControllersTypes.GenericControllers.Keys)
             {
                 feature.Controllers.Add(
-                    typeof(GenericController<,,>).MakeGenericType(
-                            entityType,
-                            ControllersTypes.GenericControllersConfigurations[entityType].ResponseType,
-                            ControllersTypes.GenericControllersConfigurations[entityType].RequestType)
+                    typeof(GenericController<,,>)
+                        .MakeGenericType(entityType, responseType, requestType)
                         .GetTypeInfo());
             }
 
-            foreach (var entityType in ControllersTypes.LinkingControllersConfigurations.Keys)
+            foreach (var (entityType, responseType, postResponseType) in ControllersTypes.LinkingControllers.Keys)
             {
                 feature.Controllers.Add(
-                    typeof(LinkingGenericController<,>).MakeGenericType(
-                            entityType,
-                            ControllersTypes.LinkingControllersConfigurations[entityType].ResponseType)
+                    typeof(LinkingGenericController<,,>)
+                        .MakeGenericType(entityType, responseType, postResponseType)
                         .GetTypeInfo());
             }
 
