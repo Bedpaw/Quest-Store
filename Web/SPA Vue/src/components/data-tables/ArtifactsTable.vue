@@ -117,7 +117,7 @@ export default {
     },
     quantityChipColor(quantity) {
       if (quantity === null) return 'yellow'
-      return quantity === 0 ? 'red' : 'green';
+      return parseInt(quantity) === 0 ? 'red' : 'green';
     }
   }
 };

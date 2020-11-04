@@ -80,7 +80,7 @@ export const users = [
     role: ROLES.ADMIN,
     image: '/sample',
     coins: 100,
-    classrooms: [classrooms[0]],
+    classrooms: [classrooms[0], classrooms[1]],
     artifacts: [artifacts[0], artifacts[1]]
   }),
   ...students,

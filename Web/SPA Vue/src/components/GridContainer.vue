@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card>
+    <v-card class="bg">
       <v-card-title class="d-flex justify-center text-h4 font-weight-bold mb-6">
         {{ title }}
       </v-card-title>
@@ -48,4 +48,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.bg {
+  background-color: rgb(139 239 246);
+}
+</style>

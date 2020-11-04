@@ -17,7 +17,7 @@
           </v-card-text>
 
           <expander title="Personal information" class="my-2">
-            <v-col cols="12" class="flex flex-column">
+            <v-col cols="12" class="flex flex-column text-center">
               <p>Email: {{ getLoggedUser.email }}</p>
               <p>Role: {{ getLoggedUser.role }}</p>
               <p>Coins: {{ getLoggedUser.coins }}</p>
@@ -32,7 +32,7 @@
                     :key="_class.id"
                     class="d-flex justify-space-between"
                 >
-                  <v-btn @click="$router.push(ROUTES.classroom.name + '/' + _class.id)">
+                  <v-btn class="primary mb-2" @click="$router.push(ROUTES.classroom.name + '/' + _class.id)">
                     {{_class.name}}
                   </v-btn>
                 </div>

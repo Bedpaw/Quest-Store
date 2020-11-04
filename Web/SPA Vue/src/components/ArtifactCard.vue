@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card class="bg">
     <cld-image
         v-if="artifact.image !== ''"
         :public-id="artifact.image"
@@ -99,4 +99,8 @@ export default {
 
 </script>
 
-<style scoped></style>
+<style scoped>
+.bg {
+  background-color: rgb(139 239 246);
+}
+</style>
