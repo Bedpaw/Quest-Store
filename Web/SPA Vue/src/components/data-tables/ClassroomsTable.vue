@@ -86,7 +86,6 @@ export default {
   },
   created() {
     this.$store.dispatch('classroom/fetchClasses');
-    console.log(this.getClasses);
   },
   methods: {
     ...mapMutations('classroom', [ADD_CLASS, DELETE_CLASS, UPDATE_CLASS]),

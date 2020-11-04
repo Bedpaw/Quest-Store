@@ -60,7 +60,7 @@ export default {
   watch: {
     dialog: function () {
       if (this.dialog === true) {
-        this.$store.dispatch('user/fetchUsers')
+        this.$store.dispatch('user/fetchStudents')
       }
     }
   },

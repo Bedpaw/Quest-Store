@@ -72,9 +72,10 @@ export default {
   methods: {
     ...mapMutations('artifact', [BUY_ARTIFACT]),
     ...mapMutations('user', [PUSH_ARTIFACT]),
+
+
     buy() {
-      window.confirm("Are you sure?")
-      {
+      if(window.confirm("Are you sure?")) {
         this.$store.dispatch('artifact/buyArtifact',
             {
               user: this.getLoggedUser,

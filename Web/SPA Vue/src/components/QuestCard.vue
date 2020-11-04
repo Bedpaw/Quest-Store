@@ -53,15 +53,15 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('user', ['getLoggedUserRole']),
+    ...mapGetters('user', ['getLoggedUserRole', 'getThisUserRoleArray']),
   },
   methods: {
     ...mapMutations('user', [UPDATE_USER]),
     questCompleted(students) {
       students.map(student =>
           this.$store.dispatch('user/updateUser',{
-            ...student,
-            coins: parseInt(student.coins) + this.quest.reward
+            user: {...student, coins: parseInt(student.coins) + this.quest.reward},
+            userArray: this.getThisUserRoleArray(student)
           })
       );
       this.dialog = false;

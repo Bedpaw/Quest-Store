@@ -23,8 +23,7 @@ export const artifact = {
   mutations: {
     [FETCH_ARTIFACTS]: (state, payload) => (state.artifacts = payload),
     [ADD_ARTIFACT]: (state, payload) => state.artifacts.push(payload),
-    [UPDATE_ARTIFACT]: (state, payload) =>
-      arrayUtils.updateItem(state.artifacts, payload),
+    [UPDATE_ARTIFACT]: (state, payload) => arrayUtils.updateItem(state.artifacts, payload),
     [DELETE_ARTIFACT]: (state, payload) =>
       arrayUtils.removeItem(state.artifacts, payload),
     [BUY_ARTIFACT]: (state, artifactId) => {
@@ -55,7 +54,8 @@ export const artifact = {
       DELETE_ARTIFACT
     ),
     buyArtifact({commit}, {user, artifact}) {
-      if (user.coins >= artifact.cost) {
+      const enoughOrUnlimitedArtifacts = (artifact.quantity === null || artifact.quantity > 0)
+      if (user.coins >= artifact.cost && enoughOrUnlimitedArtifacts) {
         commit(BUY_ARTIFACT, artifact.id)
         commit('user/' + PUSH_ARTIFACT, { user, artifact}, {root: true})
       }

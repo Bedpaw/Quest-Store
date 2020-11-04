@@ -13,6 +13,8 @@ export const UPDATE_USER = 'UPDATE_USER';
 export const DELETE_USER = 'DELETE_USER';
 export const PUSH_ARTIFACT = 'PUSH_ARTIFACT';
 export const FETCH_USERS = 'FETCH_USERS';
+export const FETCH_STUDENTS = 'FETCH_STUDENTS';
+export const FETCH_MENTORS = 'FETCH_MENTORS';
 export const FETCH_LOGGED_USER = 'FETCH_LOGGED_USER';
 
 export const ADD_ARTIFACT = 'ADD_ARTIFACT';
