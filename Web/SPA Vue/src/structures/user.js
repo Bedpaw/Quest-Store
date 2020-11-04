@@ -1,5 +1,5 @@
 import { Basic } from './basic';
-import { ROLES } from '../utils/macros/roles';
+import { ROLES } from '@/utils/macros/roles';
 
 export class User extends Basic {
   constructor({
@@ -11,10 +11,11 @@ export class User extends Basic {
     role = ROLES.GUEST,
     image = '',
     coins = 0,
-    artifacts = []
+    artifacts = [],
+    classrooms = []
   }) {
     super(id, name, description);
-
+    this.classrooms = classrooms
     this.role = role;
     this.image = image;
     this.coins = coins;

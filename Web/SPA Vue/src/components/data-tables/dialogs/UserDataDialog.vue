@@ -55,7 +55,7 @@
                 />
               </v-col>
 
-              <v-col cols="12" sm="6" md="6">
+              <v-col cols="12" sm="6" md="6" v-if="editedItem.role === ROLES.STUDENT">
                 <v-text-field
                   v-model="editedItem.coins"
                   label="Account Balance"
@@ -117,6 +117,7 @@ export default {
       positive,
       emailRules,
       formName: 'User',
+      ROLES,
       roles: Object.values(ROLES)
     };
   }

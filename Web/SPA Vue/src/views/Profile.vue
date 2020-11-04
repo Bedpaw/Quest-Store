@@ -28,7 +28,7 @@
             <v-col cols="12" md="6">
               <v-card-text class="flex flex-column align-center">
                 <div
-                    v-for="_class in getClassesByUserId(getLoggedUser.id)"
+                    v-for="_class in getLoggedUser.classrooms"
                     :key="_class.id"
                     class="d-flex justify-space-between"
                 >
@@ -69,7 +69,6 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('classroom', ['getClassesByUserId']),
     ...mapGetters('user', ['getLoggedUser', 'getFullName'])
   },
   methods: {
