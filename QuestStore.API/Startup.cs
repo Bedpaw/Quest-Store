@@ -19,6 +19,7 @@ using QuestStore.API.GenericControllersFactory;
 using QuestStore.Infrastructure.Data;
 using QuestStore.Core;
 using QuestStore.Core.Interfaces;
+using QuestStore.Core.Services;
 using QuestStore.Infrastructure.Data.Repository;
 
 namespace QuestStore.API
@@ -110,9 +111,10 @@ namespace QuestStore.API
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped(typeof(ILinkingRepository<>), typeof(LinkingRepository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IStudentService, StudentService>();
         }
 
         public void Configure(IApplicationBuilder app)

@@ -8,12 +8,12 @@ using QuestStore.Core.Interfaces;
 
 namespace QuestStore.Infrastructure.Data.Repository
 {
-    public class Repository<T> : IRepository<T> where T : BaseEntity, new()
+    public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity, new()
     {
         protected readonly StoreDbContext Context; 
         protected readonly DbSet<T> Entities;
 
-        public Repository(StoreDbContext context)
+        public GenericRepository(StoreDbContext context)
         {
             Context = context;
             Entities = context.Set<T>();

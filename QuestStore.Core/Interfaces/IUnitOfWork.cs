@@ -13,11 +13,9 @@ namespace QuestStore.Core.Interfaces
         public Task<int> Save();
         public TrackingBehavior TrackingBehavior { get; set; }
 
-        public TRepo GetRepository<TRepo, TEntity>() where TRepo : IRepository<TEntity>
-            where TEntity : BaseEntity, new();
+        public IGenericRepository<TEntity> GenericRepository<TEntity>() where TEntity : BaseEntity, new();
 
-        public TRepo GetLinkingRepository<TRepo, TEntity>() where TRepo : ILinkingRepository<TEntity>
-            where TEntity : class;
+        public ILinkingRepository<TEntity> LinkingRepository<TEntity>() where TEntity : class;
 
     }
 }

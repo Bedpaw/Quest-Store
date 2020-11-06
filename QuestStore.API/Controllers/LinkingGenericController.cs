@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -10,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using QuestStore.API.Dtos.InDtos;
 using QuestStore.API.GenericControllersFactory;
 using QuestStore.Core.Interfaces;
-using QuestStore.Infrastructure.Data.Repository;
 
 namespace QuestStore.API.Controllers
 {
@@ -21,16 +18,15 @@ namespace QuestStore.API.Controllers
     where T : class
     {
         private readonly ILinkingRepository<T> _repository;
-        protected readonly IUnitOfWork UnitOfWork;
-        protected readonly IMapper Mapper;
-        protected readonly string ErrorMessage;
+        protected IUnitOfWork UnitOfWork { get; }
+        protected IMapper Mapper { get; }
+        protected string ErrorMessage { get; set; } = "Database error";
 
         public LinkingGenericController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             UnitOfWork = unitOfWork;
-            _repository = UnitOfWork.GetLinkingRepository<LinkingRepository<T>, T>();
+            _repository = UnitOfWork.LinkingRepository<T>();
             Mapper = mapper;
-            ErrorMessage = "Database error";
         }
 
         [HttpGet]
@@ -86,7 +82,7 @@ namespace QuestStore.API.Controllers
 
                 return CreatedAtAction(
                     nameof(GetResource),
-                    new { id = id, id2 = id2 }, Mapper.Map<TPost>(resource));
+                    new {id, id2 }, Mapper.Map<TPost>(resource));
             }
             catch (Exception)
             {

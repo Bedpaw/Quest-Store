@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -9,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QuestStore.Core.Entities;
 using QuestStore.Core.Interfaces;
-using QuestStore.Infrastructure.Data.Repository;
 
 namespace QuestStore.API.Controllers
 {
@@ -20,15 +18,15 @@ namespace QuestStore.API.Controllers
         where T : BaseEntity, new()
         where TIn : BaseEntity, new()
     {
-        private readonly IRepository<T> _repository;
-        protected readonly IUnitOfWork UnitOfWork;
-        protected readonly IMapper Mapper;
-        protected readonly string ErrorMessage = "Database error";
+        private readonly IGenericRepository<T> _repository;
+        protected IUnitOfWork UnitOfWork { get; }
+        protected IMapper Mapper { get; }
+        protected string ErrorMessage { get; set; } = "Database error";
 
         public GenericController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             UnitOfWork = unitOfWork;
-            _repository = UnitOfWork.GetRepository<Repository<T>, T>();
+            _repository = UnitOfWork.GenericRepository<T>();
             Mapper = mapper;
         }
 
