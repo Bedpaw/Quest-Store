@@ -15,18 +15,22 @@ namespace QuestStore.API.GenericControllersFactory
         {
             foreach (var (entityType, responseType, requestType) in ControllersTypes.GenericControllers.Keys)
             {
-                feature.Controllers.Add(
-                    typeof(GenericController<,,>)
-                        .MakeGenericType(entityType, responseType, requestType)
-                        .GetTypeInfo());
+                var genericControllerType = typeof(GenericController<,,>)
+                    .MakeGenericType(entityType, responseType, requestType);
+                if (!feature.Controllers.Any(t => t.IsSubclassOf(genericControllerType)))
+                {
+                    feature.Controllers.Add(genericControllerType.GetTypeInfo());
+                }
             }
 
             foreach (var (entityType, responseType, postResponseType) in ControllersTypes.LinkingControllers.Keys)
             {
-                feature.Controllers.Add(
-                    typeof(LinkingGenericController<,,>)
-                        .MakeGenericType(entityType, responseType, postResponseType)
-                        .GetTypeInfo());
+                var linkingControllerType = typeof(LinkingGenericController<,,>)
+                    .MakeGenericType(entityType, responseType, postResponseType);
+                if (!feature.Controllers.Any(t => t.IsSubclassOf(linkingControllerType)))
+                {
+                    feature.Controllers.Add(linkingControllerType.GetTypeInfo());
+                }
             }
 
         }

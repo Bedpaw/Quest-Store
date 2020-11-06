@@ -43,7 +43,7 @@ namespace QuestStore.API.GenericControllersFactory
             new Dictionary<(Type entityType, Type responseType, Type postResponseType), LinkingControllerConfiguration>
             {
                 {
-                    (typeof(StudentArtifact), typeof(ArtifactDetailedDto), typeof(StudentArtifactBrief)), 
+                    (typeof(StudentArtifact), typeof(ArtifactDetailedDto), typeof(StudentArtifactBrief)),
                     new LinkingControllerConfiguration
                     {
                         Name = nameof(Student) + "s",

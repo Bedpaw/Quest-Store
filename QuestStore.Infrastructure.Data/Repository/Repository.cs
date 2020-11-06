@@ -26,7 +26,7 @@ namespace QuestStore.Infrastructure.Data.Repository
                 //Cycles are not allowed in no-tracking queries. Add AsTracking to a dbSet or uncomment FindInverse() in the GetAllPaths
                 return await Entities.Include(Context.GetAllPaths(typeof(T), includeDepth)).ToListAsync(); 
             }
-            
+
             return await Entities.ToListAsync();
         }
 
@@ -41,26 +41,23 @@ namespace QuestStore.Infrastructure.Data.Repository
             return await Entities.FindAsync(id);
         }
 
-        public virtual async Task Add(T entity)
+        public virtual void Add(T entity)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
             Entities.Add(entity);
-            await Context.SaveChangesAsync();
         }
 
-        public virtual async Task Update(T entity)
+        public virtual void Update(T entity)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
             Entities.Update(entity);
-            await Context.SaveChangesAsync();
         }
 
-        public virtual async Task DeleteById(int id)
+        public virtual void DeleteById(int id)
         {
             Entities.Remove(new T {Id = id});
-            await Context.SaveChangesAsync();
         }
     }
 }

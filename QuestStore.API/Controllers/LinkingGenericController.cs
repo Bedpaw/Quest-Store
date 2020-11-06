@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using QuestStore.API.Dtos.InDtos;
 using QuestStore.API.GenericControllersFactory;
 using QuestStore.Core.Interfaces;
+using QuestStore.Infrastructure.Data.Repository;
 
 namespace QuestStore.API.Controllers
 {
@@ -18,15 +20,17 @@ namespace QuestStore.API.Controllers
     public class LinkingGenericController<T, TOut, TPost> : ControllerBase
     where T : class
     {
-        protected readonly ILinkingRepository<T> Repository;
+        private readonly ILinkingRepository<T> _repository;
+        protected readonly IUnitOfWork UnitOfWork;
         protected readonly IMapper Mapper;
-        private readonly string _errorMessage;
+        protected readonly string ErrorMessage;
 
-        public LinkingGenericController(ILinkingRepository<T> repository, IMapper mapper)
+        public LinkingGenericController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            Repository = repository;
+            UnitOfWork = unitOfWork;
+            _repository = UnitOfWork.GetLinkingRepository<LinkingRepository<T>, T>();
             Mapper = mapper;
-            _errorMessage = "Database error";
+            ErrorMessage = "Database error";
         }
 
         [HttpGet]
@@ -37,12 +41,12 @@ namespace QuestStore.API.Controllers
                 var useFirstId = !ControllersTypes
                     .LinkingControllers[(typeof(T), typeof(TOut), typeof(TPost))]
                     .ReverseKeyOrder;
-                var result = await Repository.GetBySingleId(id, useFirstId,1);
+                var result = await _repository.GetBySingleId(id, useFirstId,1);
                 return Ok(Mapper.Map<List<TOut>>(result.ToList()));
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, _errorMessage);
+                return StatusCode(StatusCodes.Status500InternalServerError, ErrorMessage);
             }
         }
 
@@ -53,8 +57,8 @@ namespace QuestStore.API.Controllers
             {
                 var result = ControllersTypes.LinkingControllers[(typeof(T), typeof(TOut), typeof(TPost))]
                     .ReverseKeyOrder
-                    ? await Repository.GetByFullKey(id2, id, 1)
-                    : await Repository.GetByFullKey(id, id2, 1);
+                    ? await _repository.GetByFullKey(id2, id, 1)
+                    : await _repository.GetByFullKey(id, id2, 1);
 
                 if (result == null) return NotFound();
 
@@ -62,7 +66,7 @@ namespace QuestStore.API.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, _errorMessage);
+                return StatusCode(StatusCodes.Status500InternalServerError, ErrorMessage);
             }
         }
 
@@ -77,7 +81,8 @@ namespace QuestStore.API.Controllers
                 }
 
                 var resource = Mapper.Map<T>(new LinkingDto {Id1 = id, Id2 = id2});
-                await Repository.Add(resource);
+                _repository.Add(resource);
+                await UnitOfWork.Save();
 
                 return CreatedAtAction(
                     nameof(GetResource),
@@ -85,7 +90,7 @@ namespace QuestStore.API.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, _errorMessage);
+                return StatusCode(StatusCodes.Status500InternalServerError, ErrorMessage);
             }
         }
 
@@ -96,17 +101,18 @@ namespace QuestStore.API.Controllers
             {
                 var resource = ControllersTypes.LinkingControllers[(typeof(T), typeof(TOut), typeof(TPost))]
                     .ReverseKeyOrder
-                    ? await Repository.GetByFullKey(id2, id, 1)
-                    : await Repository.GetByFullKey(id, id2, 1);
+                    ? await _repository.GetByFullKey(id2, id)
+                    : await _repository.GetByFullKey(id, id2);
 
                 if (resource == null) return NotFound();
 
-                await Repository.Delete(resource);
+                _repository.Delete(resource);
+                await UnitOfWork.Save();
                 return Ok();
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, _errorMessage);
+                return StatusCode(StatusCodes.Status500InternalServerError, ErrorMessage);
             }
         }
 
@@ -119,11 +125,11 @@ namespace QuestStore.API.Controllers
         //            .LinkingControllers[(typeof(T), typeof(TOut), typeof(TPost))]
         //            .ReverseKeyOrder;
 
-        //        var resources = await Repository.GetBySingleId(id, useFirstId);
+        //        var resources = await GetRepository.GetBySingleId(id, useFirstId);
 
         //        if (resources == null) return NotFound();
 
-        //        await Repository.DeleteBySingleId(id, useFirstId);
+        //        await GetRepository.DeleteBySingleId(id, useFirstId);
         //        return Ok();
         //    }
         //    catch (Exception)

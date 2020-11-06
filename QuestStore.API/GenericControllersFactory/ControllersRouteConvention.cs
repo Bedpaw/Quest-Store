@@ -8,19 +8,24 @@ namespace QuestStore.API.GenericControllersFactory
 {
     public class ControllersRouteConvention : IControllerModelConvention
     {
-        public void Apply(Microsoft.AspNetCore.Mvc.ApplicationModels.ControllerModel controller)
+        public void Apply(ControllerModel controller)
         {
             var controllerType = controller.ControllerType;
 
-            if (!controllerType.IsGenericType) return;
+            if (!controllerType.IsGenericType && !controllerType.BaseType.IsGenericType) return;
 
-            var controllerArguments = (controllerType.GenericTypeArguments[0],
-                controllerType.GenericTypeArguments[1], controllerType.GenericTypeArguments[2]);
+            var controllerArguments = controllerType.IsGenericType
+                ? (controllerType.GenericTypeArguments[0],
+                    controllerType.GenericTypeArguments[1], controllerType.GenericTypeArguments[2])
+                : (controllerType.BaseType.GenericTypeArguments[0],
+                    controllerType.BaseType.GenericTypeArguments[1], controllerType.BaseType.GenericTypeArguments[2]);
 
             // `3 in the name of the controller results form that it has got 3 generic parameters.
-            if (controllerType.Name == nameof(LinkingGenericController<object, object, object>) + "`3")
+            var linkingControllerName = nameof(LinkingGenericController<object, object, object>) + "`3";
+            if (controllerType.Name == linkingControllerName || controllerType.BaseType.Name == linkingControllerName)
             {
-                controller.ControllerName = ControllersTypes.LinkingControllers[controllerArguments].Name;
+                controller.ControllerName = ControllersTypes.LinkingControllers[controllerArguments].Name ??
+                                            controller.ControllerName;
 
                 controller.RouteValues["ParentController"] =
                     ControllersTypes.LinkingControllers[controllerArguments].ParentRoute;

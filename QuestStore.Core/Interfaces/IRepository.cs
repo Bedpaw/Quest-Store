@@ -10,9 +10,8 @@ namespace QuestStore.Core.Interfaces
     {
         Task<IEnumerable<T>> GetAll(int includeDepth = 0);
         Task<T> GetById(int id, int includeDepth = 0);
-        Task Add(T entity);
-        Task Update(T entity);
-        Task DeleteById(int id);
-
+        void Add(T entity);
+        void Update(T entity);
+        void DeleteById(int id);
     }
 }

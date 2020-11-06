@@ -9,8 +9,8 @@ namespace QuestStore.Core.Interfaces
     {
         Task<IEnumerable<T>> GetBySingleId(int id, bool useFirstId, int includeDepth = 0);
         Task<T> GetByFullKey(int firstId, int secondId, int includeDepth = 0);
-        Task Add(T entity);
-        Task Delete(T entity);
-        Task DeleteBySingleId(int id, bool useFirstId);
+        void Add(T entity);
+        void Delete(T entity); 
+        void DeleteBySingleId(int id, bool useFirstId);
     }
 }

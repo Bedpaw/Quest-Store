@@ -48,29 +48,26 @@ namespace QuestStore.Infrastructure.Data.Repository
             return await Entities.FindAsync(firstId, secondId);
         }
 
-        public virtual async Task Add(T entity)
+        public virtual void Add(T entity)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
             Entities.Add(entity);
-            await Context.SaveChangesAsync();
         }
 
-        public virtual async Task Delete(T entity)
+        public virtual void Delete(T entity)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
             Entities.Remove(entity);
-            await Context.SaveChangesAsync();
         }
 
-        public virtual async Task DeleteBySingleId(int id, bool useFirstId)
+        public virtual void DeleteBySingleId(int id, bool useFirstId)
         {
             var (conditionExpression, parameterExpression) = CreateSingleIdExpressionArguments(id, useFirstId);
             var query = Entities.Where(
                 Expression.Lambda<Func<T, bool>>(conditionExpression, parameterExpression));
             Entities.RemoveRange(query);
-            await Context.SaveChangesAsync();
         }
 
         private (BinaryExpression, ParameterExpression) CreateSingleIdExpressionArguments(int id, bool useFirstId)

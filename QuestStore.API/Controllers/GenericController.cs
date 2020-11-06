@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QuestStore.Core.Entities;
 using QuestStore.Core.Interfaces;
+using QuestStore.Infrastructure.Data.Repository;
 
 namespace QuestStore.API.Controllers
 {
@@ -19,13 +20,15 @@ namespace QuestStore.API.Controllers
         where T : BaseEntity, new()
         where TIn : BaseEntity, new()
     {
-        protected readonly IRepository<T> Repository;
+        private readonly IRepository<T> _repository;
+        protected readonly IUnitOfWork UnitOfWork;
         protected readonly IMapper Mapper;
-        private readonly string _errorMessage = "Database error";
+        protected readonly string ErrorMessage = "Database error";
 
-        public GenericController(IRepository<T> repository, IMapper mapper)
+        public GenericController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            Repository = repository;
+            UnitOfWork = unitOfWork;
+            _repository = UnitOfWork.GetRepository<Repository<T>, T>();
             Mapper = mapper;
         }
 
@@ -34,12 +37,12 @@ namespace QuestStore.API.Controllers
         {
             try
             {
-                var result = await Repository.GetAll(2);
+                var result = await _repository.GetAll(2);
                 return Ok(Mapper.Map<List<TOut>>(result.ToList()));
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, _errorMessage);
+                return StatusCode(StatusCodes.Status500InternalServerError, ErrorMessage);
             }
         }
 
@@ -48,7 +51,7 @@ namespace QuestStore.API.Controllers
         {
             try
             {
-                var result = await Repository.GetById(id, 2);
+                var result = await _repository.GetById(id, 2);
 
                 if (result == null) return NotFound();
 
@@ -56,7 +59,7 @@ namespace QuestStore.API.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, _errorMessage);
+                return StatusCode(StatusCodes.Status500InternalServerError, ErrorMessage);
             }
         }
 
@@ -66,7 +69,8 @@ namespace QuestStore.API.Controllers
             try
             {
                 var resource = Mapper.Map<T>(resourceDto);
-                await Repository.Add(resource);
+                _repository.Add(resource);
+                await UnitOfWork.Save();
                 return CreatedAtAction(
                     nameof(GetResource),
                     new {id = resource.Id},
@@ -74,7 +78,7 @@ namespace QuestStore.API.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, _errorMessage);
+                return StatusCode(StatusCodes.Status500InternalServerError, ErrorMessage);
             }
         }
 
@@ -85,11 +89,12 @@ namespace QuestStore.API.Controllers
             {
                 if (id != resourceDto.Id) return BadRequest();
 
-                await Repository.Update(Mapper.Map<T>(resourceDto));
+                _repository.Update(Mapper.Map<T>(resourceDto));
+                await UnitOfWork.Save();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (await Repository.GetById(id) == null)
+                if (await _repository.GetById(id) == null)
                 {
                     return NotFound();
                 }
@@ -98,7 +103,7 @@ namespace QuestStore.API.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, _errorMessage);
+                return StatusCode(StatusCodes.Status500InternalServerError, ErrorMessage);
             }
 
             return NoContent(); //The operation was successful
@@ -109,16 +114,17 @@ namespace QuestStore.API.Controllers
         {
             try
             {
-                var resource = await Repository.GetById(id);
+                var resource = await _repository.GetById(id);
 
                 if (resource == null) return NotFound();
 
-                await Repository.DeleteById(id);
+                _repository.DeleteById(id);
+                await UnitOfWork.Save();
                 return Ok();
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, _errorMessage);
+                return StatusCode(StatusCodes.Status500InternalServerError, ErrorMessage);
             }
         }
     }
