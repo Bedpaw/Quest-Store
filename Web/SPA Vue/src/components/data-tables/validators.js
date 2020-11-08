@@ -13,7 +13,7 @@ export const descriptionRules = [
 ];
 
 export const positive = [
-  v => (v >= 0 || v === null) || 'This field must be 0 or greater'
+  v => v >= 0 || v === null || 'This field must be 0 or greater'
 ];
 export const emailRules = [
   v => !!v || 'E-mail is required',

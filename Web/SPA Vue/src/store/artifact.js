@@ -3,7 +3,8 @@ import {
   ADD_ARTIFACT,
   BUY_ARTIFACT,
   DELETE_ARTIFACT,
-  FETCH_ARTIFACTS, PUSH_ARTIFACT,
+  FETCH_ARTIFACTS,
+  PUSH_ARTIFACT,
   UPDATE_ARTIFACT
 } from '@/utils/macros/mutation-types';
 import { api } from '@/api';
@@ -23,7 +24,8 @@ export const artifact = {
   mutations: {
     [FETCH_ARTIFACTS]: (state, payload) => (state.artifacts = payload),
     [ADD_ARTIFACT]: (state, payload) => state.artifacts.push(payload),
-    [UPDATE_ARTIFACT]: (state, payload) => arrayUtils.updateItem(state.artifacts, payload),
+    [UPDATE_ARTIFACT]: (state, payload) =>
+      arrayUtils.updateItem(state.artifacts, payload),
     [DELETE_ARTIFACT]: (state, payload) =>
       arrayUtils.removeItem(state.artifacts, payload),
     [BUY_ARTIFACT]: (state, artifactId) => {
@@ -53,12 +55,13 @@ export const artifact = {
       api.artifactController.deleteArtifact,
       DELETE_ARTIFACT
     ),
-    buyArtifact({commit}, {user, artifact}) {
-      const enoughOrUnlimitedArtifacts = (artifact.quantity === null || artifact.quantity > 0)
+    buyArtifact({ commit }, { user, artifact }) {
+      const enoughOrUnlimitedArtifacts =
+        artifact.quantity === null || artifact.quantity > 0;
       if (user.coins >= artifact.cost && enoughOrUnlimitedArtifacts) {
-        commit(BUY_ARTIFACT, artifact.id)
-        commit('user/' + PUSH_ARTIFACT, { user, artifact}, {root: true})
+        commit(BUY_ARTIFACT, artifact.id);
+        commit('user/' + PUSH_ARTIFACT, { user, artifact }, { root: true });
       }
     }
   }
-}
+};

@@ -59,7 +59,7 @@ const deleteClassroom = async id => {
 
 //api/classrooms/{1}/artifact{id}
 const performGroupPurchase = async (_class, artifact) => {
-  const urlConcat = url + `/${_class.id}` + '/artifact' + `/${artifact.id}`
+  const urlConcat = url + `/${_class.id}` + '/artifact' + `/${artifact.id}`;
   try {
     const response = await axios.put(urlConcat);
     console.log(response);
@@ -67,7 +67,7 @@ const performGroupPurchase = async (_class, artifact) => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const classroomController = {
   getClassrooms,

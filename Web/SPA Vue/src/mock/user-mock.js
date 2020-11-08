@@ -1,17 +1,15 @@
-import {User} from '@/structures/user';
-import {ROLES} from '@/utils/macros/roles';
-import {artifacts} from '@/mock/artifacts-mock';
-import {Mentor} from "@/structures/mentor";
-import {classrooms} from "@/mock/classroom-mock";
-import {Student} from "@/structures/student";
+import { User } from '@/structures/user';
+import { ROLES } from '@/utils/macros/roles';
+import { artifacts } from '@/mock/artifacts-mock';
+import { Mentor } from '@/structures/mentor';
+import { classrooms } from '@/mock/classroom-mock';
+import { Student } from '@/structures/student';
 
 export const user = {
   name: 'Paweł Bednarczyk',
   role: 'Admin',
   avatar: 'https://randomuser.me/api/portraits/men/81.jpg'
 };
-
-
 
 export const mentors = [
   new Mentor({
@@ -21,10 +19,7 @@ export const mentors = [
     email: 'Bruce@gmail.com',
     role: ROLES.MENTOR,
     image: '',
-    classrooms: [
-      classrooms[0],
-      classrooms[1]
-    ]
+    classrooms: [classrooms[0], classrooms[1]]
   }),
   new Mentor({
     id: 5,
@@ -33,11 +28,9 @@ export const mentors = [
     email: 'Chan@gmail.com',
     role: ROLES.MENTOR,
     image: '',
-    classrooms: [
-      classrooms[0],
-    ]
+    classrooms: [classrooms[0]]
   })
-]
+];
 
 export const students = [
   new Student({
@@ -49,10 +42,7 @@ export const students = [
     image: '',
     coins: 2000,
     artifacts: [],
-    classrooms: [
-      classrooms[0],
-      classrooms[1]
-    ]
+    classrooms: [classrooms[0], classrooms[1]]
   }),
   new Student({
     id: 4,
@@ -63,11 +53,9 @@ export const students = [
     image: '',
     coins: 1000,
     artifacts: [],
-    classrooms: [
-      classrooms[0],
-    ]
-  }),
-]
+    classrooms: [classrooms[0]]
+  })
+];
 
 export const users = [
   new User({

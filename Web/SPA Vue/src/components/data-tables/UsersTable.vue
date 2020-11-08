@@ -9,7 +9,11 @@
       class="px-4"
     />
 
-    <v-data-table :items="getStudentsAndMentors" :headers="headers" :search="search">
+    <v-data-table
+      :items="getStudentsAndMentors"
+      :headers="headers"
+      :search="search"
+    >
       <!--Join name + surname in first column -->
       <template v-slot:item.name="{ item }">
         {{ getFullName(item) }}
@@ -25,7 +29,7 @@
       <!--Styling account balance column -->
       <template v-slot:item.coins="{ item }">
         <v-chip small color="yellow" style="font-weight: bold">
-          {{ item.coins ? item.coins : "-" }}
+          {{ item.coins ? item.coins : '-' }}
         </v-chip>
       </template>
 
@@ -86,15 +90,21 @@ export default {
   }),
   mixins: [dataTableMixin],
   computed: {
-    ...mapGetters('user', ['getStudents', "getMentors", "getFullName", 'getUserById', 'getThisUserRoleArray']),
+    ...mapGetters('user', [
+      'getStudents',
+      'getMentors',
+      'getFullName',
+      'getUserById',
+      'getThisUserRoleArray'
+    ]),
     getStudentsAndMentors() {
-      return [...this.getStudents, ...this.getMentors]
+      return [...this.getStudents, ...this.getMentors];
     }
   },
 
   created() {
-    this.$store.dispatch('user/fetchMentors')
-    this.$store.dispatch('user/fetchStudents')
+    this.$store.dispatch('user/fetchMentors');
+    this.$store.dispatch('user/fetchStudents');
   },
   methods: {
     ...mapMutations('user', [ADD_USER, UPDATE_USER, DELETE_USER]),
@@ -113,7 +123,7 @@ export default {
       // User exist, so update him
       if (user) {
         user = Object.assign(user, changedItem);
-        console.log(user)
+        console.log(user);
         this.$store.dispatch('user/updateUser', {
           user: user,
           userArray: this.getThisUserRoleArray(user)
@@ -122,7 +132,7 @@ export default {
       // User not found, so create
       else {
         user = new User({ ...changedItem });
-        this.$store.dispatch('user/addUser',{
+        this.$store.dispatch('user/addUser', {
           user: user,
           userArray: this.getThisUserRoleArray(user)
         });

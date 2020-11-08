@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import {cloud_name, upload_preset} from "../../../cloudinary_config.json";
+import { cloud_name, upload_preset } from '../../../cloudinary_config.json';
 
 export default {
   name: 'uploadFile',
@@ -20,24 +20,25 @@ export default {
       publicId: '',
       uploadMessage: '',
       cloudName: cloud_name
-    }
+    };
   },
   methods: {
     openUploadModal() {
-      window.cloudinary.openUploadWidget( { cloud_name, upload_preset },
-          (error, result) => {
-            if (!error && result && result.event === "success") {
-              console.log('Done uploading..: ', result.info);
-              this.uploadMessage = "Image uploaded"
-              this.publicId = result.info.public_id
-              this.$emit('image-uploaded', this.publicId)
-            }
-          }).open();
+      window.cloudinary
+        .openUploadWidget({ cloud_name, upload_preset }, (error, result) => {
+          if (!error && result && result.event === 'success') {
+            console.log('Done uploading..: ', result.info);
+            this.uploadMessage = 'Image uploaded';
+            this.publicId = result.info.public_id;
+            this.$emit('image-uploaded', this.publicId);
+          }
+        })
+        .open();
     }
   },
   beforeDestroy() {
-    this.publicId = ''
-    this.uploadMessage = ''
+    this.publicId = '';
+    this.uploadMessage = '';
   }
-}
+};
 </script>

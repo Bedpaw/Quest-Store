@@ -4,15 +4,15 @@
       <v-card-title class="d-flex justify-center text-h4 font-weight-bold mb-6">
         {{ title }}
       </v-card-title>
-      <v-text-field v-model="search" label="Search" single-line class="px-4"/>
+      <v-text-field v-model="search" label="Search" single-line class="px-4" />
     </v-card>
     <v-row>
       <v-col
-          cols="12"
-          sm="6"
-          md="4"
-          v-for="item in searchedItems"
-          :key="item.id"
+        cols="12"
+        sm="6"
+        md="4"
+        v-for="item in searchedItems"
+        :key="item.id"
       >
         <slot :item="item"></slot>
       </v-col>
@@ -31,7 +31,7 @@ export default {
   computed: {
     searchedItems() {
       return this.items.filter(item =>
-          item.name?.toLowerCase().includes(this.search?.toLowerCase())
+        item.name?.toLowerCase().includes(this.search?.toLowerCase())
       );
     }
   },

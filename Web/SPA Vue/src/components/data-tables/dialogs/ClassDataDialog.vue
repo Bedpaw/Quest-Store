@@ -75,11 +75,11 @@
 import { dataTableDialogMixin } from '@/mixins/dataTablesMixin';
 import { mapGetters } from 'vuex';
 import { nameRules } from '@/components/data-tables/validators';
-import UploadFile from "@/components/utils/uploadFile";
+import UploadFile from '@/components/utils/uploadFile';
 
 export default {
   name: 'ClassDataDialog',
-  components: {UploadFile},
+  components: { UploadFile },
   mixins: [dataTableDialogMixin],
   data() {
     return {
@@ -91,6 +91,12 @@ export default {
       formName: 'Class',
       nameRules
     };
+  },
+  watch: {
+    dialog: function() {
+      this.editedItem = { ...this.emptyItemTemplate, ...this.currentItem };
+      console.log(this.editedItem)
+    }
   },
   computed: {
     ...mapGetters('user', [

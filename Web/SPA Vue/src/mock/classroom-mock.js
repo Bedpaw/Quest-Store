@@ -1,4 +1,4 @@
-import {Classroom} from '@/structures/classroom';
+import { Classroom } from '@/structures/classroom';
 
 export const classrooms = [
   new Classroom({
@@ -10,27 +10,27 @@ export const classrooms = [
         id: 3,
         name: 'Bruce',
         surname: 'Lee',
-        email: 'Bruce@gmail.com',
+        email: 'Bruce@gmail.com'
       },
       {
         id: 5,
         name: 'Jackie',
         surname: 'Chan',
-        email: 'Chan@gmail.com',
-      },
+        email: 'Chan@gmail.com'
+      }
     ],
     students: [
       {
         id: 2,
         name: 'Jan',
         surname: 'Kowalski',
-        email: 'kowal@test.com',
+        email: 'kowal@test.com'
       },
       {
         id: 4,
         name: 'Janek',
         surname: 'Kowalczyk',
-        email: 'Kowalczyk@wp.pl',
+        email: 'Kowalczyk@wp.pl'
       }
     ]
   }),
@@ -43,16 +43,16 @@ export const classrooms = [
         id: 3,
         name: 'Bruce',
         surname: 'Lee',
-        email: 'Bruce@gmail.com',
-      },
+        email: 'Bruce@gmail.com'
+      }
     ],
     students: [
       {
         id: 2,
         name: 'Jan',
         surname: 'Kowalski',
-        email: 'kowal@test.com',
-      },
+        email: 'kowal@test.com'
+      }
     ]
   })
 ];

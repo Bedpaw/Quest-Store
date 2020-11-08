@@ -21,7 +21,7 @@ export const dataTableDialogMixin = {
   data() {
     return {
       editedItem: {},
-      emptyItemTemplate: {},
+      emptyItemTemplate: {}, // Define it in component
       formName: 'Item',
       valid: true
     };
@@ -41,11 +41,6 @@ export const dataTableDialogMixin = {
       return 'Edit ' + this.formName;
     }
   },
-  watch: {
-    dialog: function() {
-      this.editedItem = { ...this.emptyItemTemplate, ...this.currentItem };
-    }
-  },
   methods: {
     save() {
       if (this.$refs.form.validate()) {
@@ -56,7 +51,7 @@ export const dataTableDialogMixin = {
       return objectUtils.isEmptyObject(this.currentItem);
     },
     setImage(imageId) {
-      this.editedItem.image = imageId
+      this.editedItem.image = imageId;
     }
   }
 };

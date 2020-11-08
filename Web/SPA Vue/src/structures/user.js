@@ -15,7 +15,7 @@ export class User extends Basic {
     classrooms = []
   }) {
     super(id, name, description);
-    this.classrooms = classrooms
+    this.classrooms = classrooms;
     this.role = role;
     this.image = image;
     this.coins = coins;

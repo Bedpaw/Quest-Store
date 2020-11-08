@@ -2,10 +2,10 @@ import axios from 'axios';
 
 const url = 'https://localhost:5001/api';
 const usersUrl = url + '/users';
-const studentsUrl = url + '/students'
+const studentsUrl = url + '/students';
 
 // generic get
-const getByRole = (urlForRole) => async () => {
+const getByRole = urlForRole => async () => {
   try {
     const response = await axios.get(urlForRole);
     console.log(response);
@@ -16,10 +16,8 @@ const getByRole = (urlForRole) => async () => {
   }
 };
 
-const getUsers = getByRole(usersUrl)
-const getStudents = getByRole(studentsUrl)
-
-
+const getUsers = getByRole(usersUrl);
+const getStudents = getByRole(studentsUrl);
 
 const addUser = async user => {
   try {
@@ -89,9 +87,12 @@ const deleteUser = async id => {
 // api/students/{studentId}/artifacts
 const updateStudentArtifacts = async user => {
   try {
-    const response = await axios.put(studentsUrl + `/${user.id}` + '/artifacts', {
-      artifacts: user.artifacts
-    });
+    const response = await axios.put(
+      studentsUrl + `/${user.id}` + '/artifacts',
+      {
+        artifacts: user.artifacts
+      }
+    );
     console.log(response);
     return response.data;
   } catch (error) {
@@ -99,7 +100,6 @@ const updateStudentArtifacts = async user => {
     return error;
   }
 };
-
 
 export const userController = {
   getUsers,

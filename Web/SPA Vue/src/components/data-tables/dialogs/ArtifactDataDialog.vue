@@ -3,11 +3,11 @@
     <!--Button activator-->
     <template v-slot:activator="{ on, attrs }">
       <v-btn
-          color="primary"
-          dark
-          class="mb-2"
-          v-bind="attrs"
-          @click="$emit('toggleDialog')"
+        color="primary"
+        dark
+        class="mb-2"
+        v-bind="attrs"
+        @click="$emit('toggleDialog')"
       >
         Add Artifact
       </v-btn>
@@ -25,43 +25,43 @@
             <v-row>
               <v-col cols="12" sm="12" md="6">
                 <v-text-field
-                    v-model="editedItem.name"
-                    label="Name"
-                    :rules="nameRules"
+                  v-model="editedItem.name"
+                  label="Name"
+                  :rules="nameRules"
                 />
               </v-col>
               <v-col cols="12" sm="12" md="6">
                 <v-text-field
-                    v-model="editedItem.description"
-                    label="Description"
-                    :rules="descriptionRules"
+                  v-model="editedItem.description"
+                  label="Description"
+                  :rules="descriptionRules"
                 />
               </v-col>
               <v-col cols="12" sm="12" md="6">
                 <v-text-field
-                    v-model="editedItem.cost"
-                    label="Cost"
-                    type="number"
-                    step="10"
-                    min="0"
-                    :rules="positive"
+                  v-model="editedItem.cost"
+                  label="Cost"
+                  type="number"
+                  step="10"
+                  min="0"
+                  :rules="positive"
                 />
               </v-col>
               <v-col cols="12" sm="12" md="6">
                 <v-text-field
-                    v-model="editedItem.quantity"
-                    label="Quantity"
-                    type="number"
-                    step="1"
-                    min="0"
-                    :rules="positive"
-                    :disabled="unlimitedQuantity"
+                  v-model="editedItem.quantity"
+                  label="Quantity"
+                  type="number"
+                  step="1"
+                  min="0"
+                  :rules="positive"
+                  :disabled="unlimitedQuantity"
                 />
               </v-col>
               <v-col cols="12" sm="12" md="6">
                 <v-checkbox
-                    label="unlimited quantity"
-                    v-model="unlimitedQuantity"
+                  label="unlimited quantity"
+                  v-model="unlimitedQuantity"
                 />
               </v-col>
               <v-col cols="12" sm="12" md="6">
@@ -86,17 +86,17 @@
 </template>
 
 <script>
-import {dataTableDialogMixin} from '@/mixins/dataTablesMixin';
+import { dataTableDialogMixin } from '@/mixins/dataTablesMixin';
 import {
   nameRules,
   descriptionRules,
   positive
 } from '@/components/data-tables/validators';
-import UploadFile from "@/components/utils/uploadFile";
+import UploadFile from '@/components/utils/uploadFile';
 
 export default {
   name: 'ArtifactDataDialog',
-  components: {UploadFile},
+  components: { UploadFile },
   mixins: [dataTableDialogMixin],
   data() {
     return {
@@ -116,12 +116,12 @@ export default {
     };
   },
   watch: {
-    unlimitedQuantity: function () {
+    unlimitedQuantity: function() {
       if (this.unlimitedQuantity === true) {
-        this.lastQuantity = this.editedItem.quantity
-        this.editedItem.quantity = null
+        this.lastQuantity = this.editedItem.quantity;
+        this.editedItem.quantity = null;
       } else {
-        this.editedItem.quantity = this.lastQuantity
+        this.editedItem.quantity = this.lastQuantity;
       }
     }
   }
