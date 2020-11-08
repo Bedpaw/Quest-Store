@@ -8,5 +8,6 @@ namespace QuestStore.Core.Interfaces
     public interface IStudentService
     {
         Task<bool> BuyArtifact(int studentId, int artifactId);
+        Task<bool> ClassBuyArtifact(int classroomId, int artifactId);
     }
 }

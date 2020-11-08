@@ -1,5 +1,4 @@
 ﻿using System;
-
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -7,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using QuestStore.API.Dtos.Duplex;
 using QuestStore.API.Dtos.OutDtos;
 using QuestStore.Core.Entities;
-using QuestStore.Core.Enums;
 using QuestStore.Core.Interfaces;
 
 namespace QuestStore.API.Controllers
@@ -29,7 +27,9 @@ namespace QuestStore.API.Controllers
             {
                 if (await _studentService.BuyArtifact(id, id2))
                 {
-                    return await base.CreateResource(id, id2);
+                    return CreatedAtAction(
+                        nameof(GetResource),
+                        new {id, id2}, new StudentArtifactBrief {StudentId = id, ArtifactId = id2});
                 }
 
                 return StatusCode(StatusCodes.Status409Conflict, "Not enough coins.");
