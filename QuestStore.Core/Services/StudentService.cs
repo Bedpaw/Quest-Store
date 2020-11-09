@@ -27,15 +27,16 @@ namespace QuestStore.Core.Services
             }
 
             var artifact = await _unitOfWork.GenericRepository<Artifact>().GetById(artifactId);
-            if (student.Coins >= artifact.Cost)
+            if (student.Coins < artifact.Cost)
             {
-                student.Coins -= artifact.Cost;
-                student.StudentArtifacts.Add(new StudentArtifact {ArtifactId = artifactId});
-                await _unitOfWork.Save();
-                return true;
+                return false;
             }
 
-            return false;
+            student.Coins -= artifact.Cost;
+            student.StudentArtifacts.Add(new StudentArtifact {ArtifactId = artifactId});
+            await _unitOfWork.Save();
+            return true;
+
         }
 
         public async Task<bool> ClassBuyArtifact(int classroomId, int artifactId)
@@ -50,6 +51,7 @@ namespace QuestStore.Core.Services
                 if (student.Coins >= costPerStudent)
                 {
                     student.Coins -= costPerStudent;
+                    student.StudentArtifacts ??= new List<StudentArtifact>();
                     student.StudentArtifacts.Add(new StudentArtifact {ArtifactId = artifactId});
                 }
                 else

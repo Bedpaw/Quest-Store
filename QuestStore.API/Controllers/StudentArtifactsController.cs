@@ -10,7 +10,6 @@ using QuestStore.Core.Interfaces;
 
 namespace QuestStore.API.Controllers
 {
-    //Add attribute [ApiExplorerSettings(GroupName = "name")] to controller to change its name in the Swagger
     public class StudentArtifactsController : LinkingGenericController<StudentArtifact, ArtifactDetailedDto, StudentArtifactBrief>
     {
         private readonly IStudentService _studentService;

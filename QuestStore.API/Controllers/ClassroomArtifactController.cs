@@ -13,6 +13,8 @@ namespace QuestStore.API.Controllers
     [ApiController]
     [ApiConventionType(typeof(DefaultApiConventions))]
     [Route("classrooms/{id}/artifacts")]
+    // Attribute changes controller name in the Swagger
+    [ApiExplorerSettings(GroupName = "Classrooms")]
     public class ClassroomArtifactController : ControllerBase
     {
         private readonly IStudentService _studentService;
