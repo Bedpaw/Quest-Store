@@ -21,6 +21,9 @@ namespace QuestStore.API.Controllers
         protected IUnitOfWork UnitOfWork { get; }
         protected IMapper Mapper { get; }
         protected string ErrorMessage { get; set; } = "Database error";
+        protected virtual bool ReverseKeyOrder { get; } = ControllersTypes
+            .LinkingControllers[(typeof(T), typeof(TOut), typeof(TPost))]
+            .ReverseKeyOrder;
 
         public LinkingGenericController(IUnitOfWork unitOfWork, IMapper mapper)
         {
@@ -34,9 +37,7 @@ namespace QuestStore.API.Controllers
         {
             try
             {
-                var useFirstId = !ControllersTypes
-                    .LinkingControllers[(typeof(T), typeof(TOut), typeof(TPost))]
-                    .ReverseKeyOrder;
+                var useFirstId = !ReverseKeyOrder;
                 var result = await _repository.GetBySingleId(id, useFirstId,1);
                 return Ok(Mapper.Map<List<TOut>>(result.ToList()));
             }
@@ -51,8 +52,7 @@ namespace QuestStore.API.Controllers
         {
             try
             {
-                var result = ControllersTypes.LinkingControllers[(typeof(T), typeof(TOut), typeof(TPost))]
-                    .ReverseKeyOrder
+                var result = ReverseKeyOrder
                     ? await _repository.GetByFullKey(id2, id, 1)
                     : await _repository.GetByFullKey(id, id2, 1);
 
@@ -95,8 +95,7 @@ namespace QuestStore.API.Controllers
         {
             try
             {
-                var resource = ControllersTypes.LinkingControllers[(typeof(T), typeof(TOut), typeof(TPost))]
-                    .ReverseKeyOrder
+                var resource = ReverseKeyOrder
                     ? await _repository.GetByFullKey(id2, id)
                     : await _repository.GetByFullKey(id, id2);
 
@@ -117,9 +116,7 @@ namespace QuestStore.API.Controllers
         //{
         //    try
         //    {
-        //        var useFirstId = !ControllersTypes
-        //            .LinkingControllers[(typeof(T), typeof(TOut), typeof(TPost))]
-        //            .ReverseKeyOrder;
+        //        var useFirstId = !ReverseKeyOrder;
 
         //        var resources = await GetRepository.GetBySingleId(id, useFirstId);
 

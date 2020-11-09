@@ -13,6 +13,7 @@ namespace QuestStore.API.Controllers
     public class StudentArtifactsController : LinkingGenericController<StudentArtifact, ArtifactDetailedDto, StudentArtifactBrief>
     {
         private readonly IStudentService _studentService;
+        protected override bool ReverseKeyOrder { get; } = false;
 
         public StudentArtifactsController(IUnitOfWork unitOfWork, IMapper mapper, IStudentService studentService)
             : base(unitOfWork, mapper)
