@@ -9,5 +9,6 @@ namespace QuestStore.Core.Entities
     {
         public int Reward { get; set; }
         public QuestType Type { get; set; }
+        public ICollection<StudentQuest> StudentQuests { get; set; }
     }
 }

@@ -9,5 +9,6 @@ namespace QuestStore.Core.Entities
         public int Coins { get; set; }
         public ICollection<StudentArtifact> StudentArtifacts { get; set; }
         public ICollection<StudentClassroom> StudentClassrooms { get; set; }
+        public ICollection<StudentQuest> StudentQuests { get; set; }
     }
 }
