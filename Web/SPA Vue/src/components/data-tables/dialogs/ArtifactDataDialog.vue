@@ -64,8 +64,9 @@
                   v-model="unlimitedQuantity"
                 />
               </v-col>
-              <v-col cols="12" sm="12" md="6">
-                <upload-file @image-uploaded="setImage"></upload-file>
+              <v-spacer></v-spacer>
+              <v-col cols="12" class="d-flex align-center justify-center">
+                <upload-file show-picture-after-upload="true" @image-uploaded="setImage"></upload-file>
               </v-col>
             </v-row>
           </v-form>

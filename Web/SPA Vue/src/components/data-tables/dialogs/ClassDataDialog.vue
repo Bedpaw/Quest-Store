@@ -92,12 +92,6 @@ export default {
       nameRules
     };
   },
-  watch: {
-    dialog: function() {
-      this.editedItem = { ...this.emptyItemTemplate, ...this.currentItem };
-      console.log(this.editedItem)
-    }
-  },
   computed: {
     ...mapGetters('user', [
       'getStudents',

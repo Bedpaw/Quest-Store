@@ -18,7 +18,6 @@ export const classroom = {
   },
   getters: {
     getClasses: state => {
-      console.log(state.classes)
       return state.classes
     },
     getClassById: state => _classId =>

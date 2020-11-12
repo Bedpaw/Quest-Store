@@ -41,6 +41,11 @@ export const dataTableDialogMixin = {
       return 'Edit ' + this.formName;
     }
   },
+  watch: {
+    dialog: function() {
+      this.editedItem = { ...this.emptyItemTemplate, ...this.currentItem };
+    }
+  },
   methods: {
     save() {
       if (this.$refs.form.validate()) {
