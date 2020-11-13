@@ -18,7 +18,7 @@ namespace QuestStore.API.Controllers
         where T : BaseEntity, new()
         where TIn : BaseEntity, new()
     {
-        private readonly IGenericRepository<T> _repository;
+        protected IGenericRepository<T> Repository { get; }
         protected IUnitOfWork UnitOfWork { get; }
         protected IMapper Mapper { get; }
         protected string ErrorMessage { get; set; } = "Database error";
@@ -26,7 +26,7 @@ namespace QuestStore.API.Controllers
         public GenericController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             UnitOfWork = unitOfWork;
-            _repository = UnitOfWork.GenericRepository<T>();
+            Repository = UnitOfWork.GenericRepository<T>();
             Mapper = mapper;
         }
 
@@ -35,7 +35,7 @@ namespace QuestStore.API.Controllers
         {
             try
             {
-                var result = await _repository.GetAll(2);
+                var result = await Repository.GetAll(2);
                 return Ok(Mapper.Map<List<TOut>>(result.ToList()));
             }
             catch (Exception)
@@ -49,7 +49,7 @@ namespace QuestStore.API.Controllers
         {
             try
             {
-                var result = await _repository.GetById(id, 2);
+                var result = await Repository.GetById(id, 2);
 
                 if (result == null) return NotFound();
 
@@ -67,7 +67,7 @@ namespace QuestStore.API.Controllers
             try
             {
                 var resource = Mapper.Map<T>(resourceDto);
-                _repository.Add(resource);
+                Repository.Add(resource);
                 await UnitOfWork.Save();
                 return CreatedAtAction(
                     nameof(GetResource),
@@ -81,18 +81,18 @@ namespace QuestStore.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public virtual async Task<ActionResult<T>> UpdateResource(int id, TIn resourceDto)
+        public virtual async Task<IActionResult> UpdateResource(int id, TIn resourceDto)
         {
             try
             {
                 if (id != resourceDto.Id) return BadRequest();
 
-                _repository.Update(Mapper.Map<T>(resourceDto));
+                Repository.Update(Mapper.Map<T>(resourceDto));
                 await UnitOfWork.Save();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (await _repository.GetById(id) == null)
+                if (await Repository.GetById(id) == null)
                 {
                     return NotFound();
                 }
@@ -112,11 +112,11 @@ namespace QuestStore.API.Controllers
         {
             try
             {
-                var resource = await _repository.GetById(id);
+                var resource = await Repository.GetById(id);
 
                 if (resource == null) return NotFound();
 
-                _repository.DeleteById(id);
+                Repository.DeleteById(id);
                 await UnitOfWork.Save();
                 return Ok();
             }

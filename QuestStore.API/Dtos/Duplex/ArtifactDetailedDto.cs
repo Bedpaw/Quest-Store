@@ -2,7 +2,7 @@
 
 namespace QuestStore.API.Dtos.Duplex
 {
-    public class ArtifactDetailedDto : ResourceEntity
+    public class ArtifactDetailedDto : ResourceDto
     {
         public int Cost { get; set; }
         public int? Quantity { get; set; }

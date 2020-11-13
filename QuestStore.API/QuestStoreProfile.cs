@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using AutoMapper;
-using QuestStore.API.Dtos;
 using QuestStore.API.Dtos.Duplex;
 using QuestStore.API.Dtos.InDtos;
 using QuestStore.API.Dtos.OutDtos;
@@ -14,11 +13,7 @@ namespace QuestStore.API
         {
             //DuplexDtos
             CreateMap<Artifact, ArtifactDetailedDto>().ReverseMap();
-            //.ForMember(
-            //    dto => dto.Students,
-            //    opt =>
-            //        opt.MapFrom(a => 
-            //            a.StudentArtifacts.Select(sa => sa.Student).ToList()));
+            CreateMap<Quest, QuestDetailedDto>().ReverseMap();
 
             //RequestDtos
             CreateMap<StudentRequestDto, Student>();
@@ -45,6 +40,16 @@ namespace QuestStore.API
                     opt =>
                         opt.MapFrom(ld => ld.Id2));
 
+            CreateMap<LinkingDto, StudentQuest>()
+                .ForMember(
+                    sq => sq.StudentId,
+                    opt =>
+                        opt.MapFrom(ld => ld.Id1))
+                .ForMember(
+                    sq => sq.QuestId,
+                    opt =>
+                        opt.MapFrom(ld => ld.Id2));
+
             CreateMap<LinkingDto, MentorClassroom>()
                 .ForMember(
                     mc => mc.MentorId,
@@ -60,12 +65,24 @@ namespace QuestStore.API
             CreateMap<Artifact, ArtifactBriefDto>();
             CreateMap<Mentor, MentorBriefDto>();
             CreateMap<Classroom, ClassroomBriefDto>();
-            CreateMap<StudentArtifact, StudentArtifactBrief>();
-            CreateMap<StudentClassroom, StudentClassroomBrief>();
-            CreateMap<MentorClassroom, MentorClassroomBrief>();
+
+            CreateMap<StudentArtifact, StudentArtifactBriefDto>();
+            CreateMap<StudentClassroom, StudentClassroomBriefDto>();
+            CreateMap<StudentQuest, StudentQuestBriefDto>();
+            CreateMap<MentorClassroom, MentorClassroomBriefDto>();
 
             CreateMap<StudentArtifact, ArtifactDetailedDto>()
                 .IncludeMembers(sa => sa.Artifact);
+            CreateMap<StudentClassroom, ClassroomDetailedDto>()
+                .IncludeMembers(sc => sc.Classroom);
+            CreateMap<StudentQuest, QuestDetailedDto>()
+                .IncludeMembers(sq => sq.Quest);
+            CreateMap<StudentClassroom, StudentDetailedDto>()
+                .IncludeMembers(sc => sc.Student);
+            CreateMap<MentorClassroom, ClassroomDetailedDto>()
+                .IncludeMembers(mc => mc.Classroom);
+            CreateMap<MentorClassroom, MentorDetailedDto>()
+                .IncludeMembers(mc => mc.Mentor);
 
             CreateMap<Mentor, MentorDetailedDto>()
                 .ForMember(
@@ -93,7 +110,6 @@ namespace QuestStore.API
                     opt =>
                         opt.MapFrom(c =>
                             c.MentorClassrooms.Select(mc => mc.Mentor).ToList()));
-
         }
     }
 }

@@ -60,7 +60,7 @@ namespace QuestStore.API.GenericControllersFactory
                     LinkingControllerConfiguration>
                 {
                     {
-                        (typeof(StudentArtifact), typeof(ArtifactDetailedDto), typeof(StudentArtifactBrief)),
+                        (typeof(StudentArtifact), typeof(ArtifactDetailedDto), typeof(StudentArtifactBriefDto)),
                         new LinkingControllerConfiguration
                         {
                             Name = nameof(Student) + "s",
@@ -70,8 +70,18 @@ namespace QuestStore.API.GenericControllersFactory
                         }
                     },
                     {
+                        (typeof(StudentQuest), typeof(QuestDetailedDto), typeof(StudentQuestBriefDto)),
+                        new LinkingControllerConfiguration
+                        {
+                            Name = nameof(Student) + "s",
+                            ParentRoute = nameof(Student) + "s",
+                            ChildRoute = nameof(Quest) + "s",
+                            ReverseKeyOrder = false
+                        }
+                    },
+                    {
                         (typeof(StudentClassroom), typeof(ClassroomDetailedDto),
-                            typeof(StudentClassroomBrief)),
+                            typeof(StudentClassroomBriefDto)),
                         new LinkingControllerConfiguration
                         {
                             Name = nameof(Student) + "s",
@@ -81,7 +91,7 @@ namespace QuestStore.API.GenericControllersFactory
                         }
                     },
                     {
-                        (typeof(StudentClassroom), typeof(StudentDetailedDto), typeof(StudentClassroomBrief)),
+                        (typeof(StudentClassroom), typeof(StudentDetailedDto), typeof(StudentClassroomBriefDto)),
                         new LinkingControllerConfiguration
                         {
                             Name = nameof(Classroom) + "s",
@@ -91,7 +101,7 @@ namespace QuestStore.API.GenericControllersFactory
                         }
                     },
                     {
-                        (typeof(MentorClassroom), typeof(ClassroomDetailedDto), typeof(MentorClassroomBrief)),
+                        (typeof(MentorClassroom), typeof(ClassroomDetailedDto), typeof(MentorClassroomBriefDto)),
                         new LinkingControllerConfiguration
                         {
                             Name = nameof(Mentor) + "s",
@@ -101,7 +111,7 @@ namespace QuestStore.API.GenericControllersFactory
                         }
                     },
                     {
-                        (typeof(MentorClassroom), typeof(MentorDetailedDto), typeof(MentorClassroomBrief)),
+                        (typeof(MentorClassroom), typeof(MentorDetailedDto), typeof(MentorClassroomBriefDto)),
                         new LinkingControllerConfiguration
                         {
                             Name = nameof(Classroom) + "s",

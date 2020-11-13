@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace QuestStore.API.Dtos.OutDtos
 {
-    public class StudentArtifactBrief
+    public class StudentClassroomBriefDto
     {
         public int StudentId { get; set; }
-        public int ArtifactId { get; set; }
+        public int ClassroomId { get; set; }
     }
 }

@@ -20,19 +20,16 @@ namespace QuestStore.Core.Services
         }
         public async Task<bool> BuyArtifact(int studentId, int artifactId)
         {
-            var student = await _unitOfWork.GenericRepository<Student>().GetById(studentId, 1);
-            if (student.StudentArtifacts.Any(sa => sa.ArtifactId == artifactId))
-            {
-                return true;
-            }
-
+            var student = await _unitOfWork.GenericRepository<Student>().GetById(studentId);
             var artifact = await _unitOfWork.GenericRepository<Artifact>().GetById(artifactId);
-            if (student.Coins < artifact.Cost)
+            if (student.Coins < artifact.Cost || artifact.Quantity <= 0)
             {
                 return false;
             }
 
             student.Coins -= artifact.Cost;
+            artifact.Quantity -= 1;
+            student.StudentArtifacts ??= new List<StudentArtifact>();
             student.StudentArtifacts.Add(new StudentArtifact {ArtifactId = artifactId});
             await _unitOfWork.Save();
             return true;
@@ -41,9 +38,15 @@ namespace QuestStore.Core.Services
 
         public async Task<bool> ClassBuyArtifact(int classroomId, int artifactId)
         {
+            var artifact = await _unitOfWork.GenericRepository<Artifact>().GetById(artifactId);
+            //TODO: Add type of artifact(basic, extra)
+            if (artifact.Quantity <= 0)
+            {
+                return false;
+            }
+
             var students = (await _unitOfWork.LinkingRepository<StudentClassroom>()
                 .GetBySingleId(classroomId, false, 1)).Select(sc => sc.Student).ToList();
-            var artifact = await _unitOfWork.GenericRepository<Artifact>().GetById(artifactId);
             var costPerStudent = artifact.Cost / students.Count;
 
             foreach (var student in students)

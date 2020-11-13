@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using QuestStore.API.Dtos.InDtos;
 using QuestStore.API.GenericControllersFactory;
 using QuestStore.Core.Interfaces;
@@ -17,7 +20,7 @@ namespace QuestStore.API.Controllers
     public class LinkingGenericController<T, TOut, TPost> : ControllerBase
     where T : class
     {
-        private readonly ILinkingRepository<T> _repository;
+        protected ILinkingRepository<T> Repository { get; }
         protected IUnitOfWork UnitOfWork { get; }
         protected IMapper Mapper { get; }
         protected string ErrorMessage { get; set; } = "Database error";
@@ -28,7 +31,7 @@ namespace QuestStore.API.Controllers
         public LinkingGenericController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             UnitOfWork = unitOfWork;
-            _repository = UnitOfWork.LinkingRepository<T>();
+            Repository = UnitOfWork.LinkingRepository<T>();
             Mapper = mapper;
         }
 
@@ -38,7 +41,7 @@ namespace QuestStore.API.Controllers
             try
             {
                 var useFirstId = !ReverseKeyOrder;
-                var result = await _repository.GetBySingleId(id, useFirstId,1);
+                var result = await Repository.GetBySingleId(id, useFirstId,1);
                 return Ok(Mapper.Map<List<TOut>>(result.ToList()));
             }
             catch (Exception)
@@ -47,14 +50,15 @@ namespace QuestStore.API.Controllers
             }
         }
 
+        [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Get))]
         [HttpGet("{id2}")]
         public virtual async Task<ActionResult<TOut>> GetResource(int id, int id2)
         {
             try
             {
                 var result = ReverseKeyOrder
-                    ? await _repository.GetByFullKey(id2, id, 1)
-                    : await _repository.GetByFullKey(id, id2, 1);
+                    ? await Repository.GetByFullKey(id2, id, 1)
+                    : await Repository.GetByFullKey(id, id2, 1);
 
                 if (result == null) return NotFound();
 
@@ -66,23 +70,29 @@ namespace QuestStore.API.Controllers
             }
         }
 
+        [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Post))]
         [HttpPost("{id2}")]
         public virtual async Task<ActionResult<TPost>> CreateResource(int id, int id2)
         {
             try
             {
-                if (ControllersTypes.LinkingControllers[(typeof(T), typeof(TOut), typeof(TPost))].ReverseKeyOrder)
+                if (ReverseKeyOrder)
                 {
                     (id, id2) = (id2, id);
                 }
 
                 var resource = Mapper.Map<T>(new LinkingDto {Id1 = id, Id2 = id2});
-                _repository.Add(resource);
+                Repository.Add(resource);
                 await UnitOfWork.Save();
 
                 return CreatedAtAction(
                     nameof(GetResource),
-                    new {id, id2 }, Mapper.Map<TPost>(resource));
+                    new {id, id2},
+                    Mapper.Map<TPost>(resource));
+            }
+            catch (DbUpdateException ex) when((ex.InnerException as SqlException)?.Number == 2627)
+            {
+                return BadRequest("Entry already exists");
             }
             catch (Exception)
             {
@@ -90,18 +100,19 @@ namespace QuestStore.API.Controllers
             }
         }
 
+        [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Delete))]
         [HttpDelete("{id2}")]
         public virtual async Task<IActionResult> DeleteResource(int id, int id2)
         {
             try
             {
                 var resource = ReverseKeyOrder
-                    ? await _repository.GetByFullKey(id2, id)
-                    : await _repository.GetByFullKey(id, id2);
+                    ? await Repository.GetByFullKey(id2, id)
+                    : await Repository.GetByFullKey(id, id2);
 
                 if (resource == null) return NotFound();
 
-                _repository.Delete(resource);
+                Repository.Delete(resource);
                 await UnitOfWork.Save();
                 return Ok();
             }
@@ -111,6 +122,7 @@ namespace QuestStore.API.Controllers
             }
         }
 
+        //[ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Delete))]
         //[HttpDelete]
         //public virtual async Task<IActionResult> DeleteAllResources(int id)
         //{

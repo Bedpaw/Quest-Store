@@ -23,10 +23,11 @@ namespace QuestStore.Infrastructure.Data.Repository
                 .Properties.Select(p => p.Name);
 
         }
-        public virtual async Task<IEnumerable<T>> GetBySingleId(int id, bool useFirstId , int includeDepth = 0)
+        public virtual async Task<IEnumerable<T>> GetBySingleId(int id, bool useFirstId , int includeDepth = 0, Expression<Func<T, bool>> filter = null)
         {
             var (conditionExpression, parameterExpression) = CreateSingleIdExpressionArguments(id, useFirstId);
-            var query = Entities.Where(
+            var query = filter != null ? Entities.Where(filter) : Entities;
+            query = query.Where(
                 Expression.Lambda<Func<T, bool>>(conditionExpression, parameterExpression));
 
             if (includeDepth > 0)
@@ -53,6 +54,13 @@ namespace QuestStore.Infrastructure.Data.Repository
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
             Entities.Add(entity);
+        }
+
+        public virtual void Update(T entity)
+        {
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
+
+            Entities.Update(entity);
         }
 
         public virtual void Delete(T entity)

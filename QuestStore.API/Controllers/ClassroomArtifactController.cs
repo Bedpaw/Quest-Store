@@ -24,6 +24,7 @@ namespace QuestStore.API.Controllers
             _studentService = studentService;
         }
 
+        [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Post))]
         [HttpPost("{id2}")]
         public async Task<IActionResult> CreateClassPurchase(int id, int id2)
         {
@@ -34,7 +35,7 @@ namespace QuestStore.API.Controllers
                     return StatusCode(StatusCodes.Status201Created);
                 }
 
-                return StatusCode(StatusCodes.Status409Conflict, "Not enough coins.");
+                return BadRequest("Not enough coins.");
             }
             catch (Exception)
             {
