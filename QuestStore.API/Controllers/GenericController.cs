@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using QuestStore.Core.Entities;
 using QuestStore.Core.Interfaces;
 
@@ -86,18 +85,17 @@ namespace QuestStore.API.Controllers
             try
             {
                 if (id != resourceDto.Id) return BadRequest();
-
                 Repository.Update(Mapper.Map<T>(resourceDto));
-                await UnitOfWork.Save();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (await Repository.GetById(id) == null)
+                try
                 {
-                    return NotFound();
+                    await UnitOfWork.Save();
                 }
+                catch (InvalidOperationException)
+                {
+                    if (await Repository.GetById(id) == null) return NotFound();
 
-                throw;
+                    throw;
+                }
             }
             catch (Exception)
             {
@@ -113,7 +111,6 @@ namespace QuestStore.API.Controllers
             try
             {
                 var resource = await Repository.GetById(id);
-
                 if (resource == null) return NotFound();
 
                 Repository.DeleteById(id);

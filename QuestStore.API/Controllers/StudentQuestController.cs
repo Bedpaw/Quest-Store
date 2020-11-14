@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.Internal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using QuestStore.API.Dtos.Duplex;
 using QuestStore.API.Dtos.OutDtos;
 using QuestStore.Core.Entities;
@@ -43,26 +41,27 @@ namespace QuestStore.API.Controllers
         [HttpPut("{id2}")]
         public async Task<IActionResult> UpdateQuest(int id, int id2, QuestStatus status)
         {
+            try
             {
+                var studentQuest = new StudentQuest {StudentId = id, QuestId = id2, Status = status};
+                Repository.Update(studentQuest);
                 try
                 {
-                    var studentQuest = await Repository.GetByFullKey(id, id2);
-                    if (studentQuest == null)
-                    {
-                        return NotFound();
-                    }
-
-                    studentQuest.Status = status;
-                    Repository.Update(studentQuest);
                     await UnitOfWork.Save();
                 }
-                catch (Exception)
+                catch (InvalidOperationException)
                 {
-                    return StatusCode(StatusCodes.Status500InternalServerError, ErrorMessage);
-                }
+                    if (await Repository.GetByFullKey(id, id2) == null) return NotFound();
 
-                return NoContent(); //The operation was successful
+                    throw;
+                }
             }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ErrorMessage);
+            }
+
+            return NoContent(); //The operation was successful
         }
 
         [NonAction]
@@ -98,40 +97,45 @@ namespace QuestStore.API.Controllers
 
         private async Task<ActionResult<StudentQuestBriefDto>> CreateQuest(int id, int id2, QuestStatus status)
         {
+            var studentQuest = new StudentQuest {StudentId = id, QuestId = id2, Status = status};
             try
             {
-                var studentQuest = new StudentQuest
-                    { StudentId = id, QuestId = id2, Status = status };
                 Repository.Add(studentQuest);
-                await UnitOfWork.Save();
-                return CreatedAtAction(
-                    nameof(GetResource),
-                    new {id, id2},
-                    Mapper.Map<StudentQuestBriefDto>(studentQuest));
-            }
-            catch (DbUpdateException)
-            {
-                if (status == QuestStatus.Completed)
+                try
                 {
-                    var studentQuest = await Repository.GetByFullKey(id, id2);
-                    if (studentQuest.Status == QuestStatus.Pending)
-                    {
-                        studentQuest.Status = QuestStatus.Completed;
-                        Repository.Update(studentQuest);
-                        await UnitOfWork.Save();
-                        return CreatedAtAction(
-                            nameof(GetResource),
-                            new { id, id2 },
-                            Mapper.Map<StudentQuestBriefDto>(studentQuest));
-                    }
+                    await UnitOfWork.Save();
                 }
+                catch (InvalidOperationException)
+                {
+                    studentQuest = await Repository.GetByFullKey(id, id2);
+                    if (studentQuest != null)
+                    {
+                        if (status == QuestStatus.Completed && studentQuest.Status == QuestStatus.Pending)
+                        {
+                            studentQuest.Status = QuestStatus.Completed;
+                            Repository.Update(studentQuest);
+                            await UnitOfWork.Save();
+                            return CreatedAtAction(
+                                nameof(GetResource),
+                                new {id, id2},
+                                Mapper.Map<StudentQuestBriefDto>(studentQuest));
+                        }
 
-                return BadRequest("Entry already exists");
+                        return BadRequest("Quest already exists");
+                    }
+
+                    throw;
+                }
             }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ErrorMessage);
             }
+
+            return CreatedAtAction(
+                nameof(GetResource),
+                new {id, id2},
+                Mapper.Map<StudentQuestBriefDto>(studentQuest));
         }
     }
 }

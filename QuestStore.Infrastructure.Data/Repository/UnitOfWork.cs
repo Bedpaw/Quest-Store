@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using QuestStore.Core.Entities;
 using QuestStore.Core.Enums;
@@ -18,7 +20,30 @@ namespace QuestStore.Infrastructure.Data.Repository
         {
             Context = context;
         }
-        public virtual async Task<int> Save() => await Context.SaveChangesAsync();
+
+        public virtual async Task<int> Save()
+        {
+            try
+            {
+                return await Context.SaveChangesAsync();
+            }
+            catch (DbUpdateException exception)
+            {
+                // Detach all tracked entries (including failed one).
+                Context.ChangeTracker.Entries().ToList().ForEach(entry => entry.State = EntityState.Detached);
+                throw exception switch
+                {
+                    { } ex when (ex.InnerException as SqlException)?.Number == 2627 =>
+                    new InvalidOperationException("Entry already exists", ex),
+
+                    DbUpdateConcurrencyException ex => new InvalidOperationException(
+                        "Entry does not exist or concurrency exception",
+                        ex),
+
+                    _ => new InvalidOperationException("Other save operation exception", exception)
+                };
+            }
+        }
 
         public virtual TrackingBehavior TrackingBehavior
         {

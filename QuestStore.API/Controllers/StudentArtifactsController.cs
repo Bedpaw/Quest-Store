@@ -3,8 +3,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
 using QuestStore.API.Dtos.Duplex;
 using QuestStore.API.Dtos.OutDtos;
 using QuestStore.Core.Entities;
@@ -35,9 +33,9 @@ namespace QuestStore.API.Controllers
                         new StudentArtifactBriefDto {StudentId = id, ArtifactId = id2});
                 }
 
-                return BadRequest("Not enough coins.");
+                return BadRequest("The artifact cannot be purchased.");
             }
-            catch (DbUpdateException ex) when ((ex.InnerException as SqlException)?.Number == 2627)
+            catch (InvalidOperationException)
             {
                 return BadRequest("The artifact has already been purchased");
             }

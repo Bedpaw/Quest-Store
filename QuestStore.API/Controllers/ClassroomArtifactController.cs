@@ -35,7 +35,7 @@ namespace QuestStore.API.Controllers
                     return StatusCode(StatusCodes.Status201Created);
                 }
 
-                return BadRequest("Not enough coins.");
+                return BadRequest("The artifact cannot be purchased.");
             }
             catch (Exception)
             {

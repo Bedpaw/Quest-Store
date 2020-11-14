@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
 using QuestStore.API.Dtos.InDtos;
 using QuestStore.API.GenericControllersFactory;
 using QuestStore.Core.Interfaces;
@@ -90,9 +87,9 @@ namespace QuestStore.API.Controllers
                     new {id, id2},
                     Mapper.Map<TPost>(resource));
             }
-            catch (DbUpdateException ex) when((ex.InnerException as SqlException)?.Number == 2627)
+            catch (InvalidOperationException)
             {
-                return BadRequest("Entry already exists");
+                return BadRequest("Resource already exists");
             }
             catch (Exception)
             {
