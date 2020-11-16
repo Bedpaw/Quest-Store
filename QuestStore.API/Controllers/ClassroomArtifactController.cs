@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -30,17 +31,19 @@ namespace QuestStore.API.Controllers
         {
             try
             {
-                if (await _studentService.ClassBuyArtifact(id, id2))
-                {
+                if (await _studentService.ClassBuyArtifact(id, id2)) 
                     return StatusCode(StatusCodes.Status201Created);
-                }
-
-                return BadRequest("The artifact cannot be purchased.");
             }
-            catch (Exception)
+            catch (ArgumentException ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Database error");
+                BadRequest(ex.Message);
             }
+            catch (DataException)
+            {
+                return BadRequest("The artifact has already been purchased");
+            }
+
+            return BadRequest("The artifact cannot be purchased.");
         }
     }
 }

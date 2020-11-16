@@ -124,6 +124,10 @@ namespace QuestStore.API
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+            }
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {

@@ -11,6 +11,7 @@ namespace QuestStore.Core.Interfaces
     {
         Task<IEnumerable<T>> GetAll(int includeDepth = 0, Expression<Func<T, bool>> filter = null);
         Task<T> GetById(int id, int includeDepth = 0);
+        Task<bool> Exists(int id);
         void Add(T entity);
         void Update(T entity);
         void DeleteById(int id);

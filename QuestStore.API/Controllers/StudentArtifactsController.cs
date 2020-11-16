@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Data;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QuestStore.API.Dtos.Duplex;
 using QuestStore.API.Dtos.OutDtos;
@@ -29,20 +29,20 @@ namespace QuestStore.API.Controllers
                 {
                     return CreatedAtAction(
                         nameof(GetResource),
-                        new {id, id2},
-                        new StudentArtifactBriefDto {StudentId = id, ArtifactId = id2});
+                        new { id, id2 },
+                        new StudentArtifactBriefDto { StudentId = id, ArtifactId = id2 });
                 }
-
-                return BadRequest("The artifact cannot be purchased.");
             }
-            catch (InvalidOperationException)
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (DataException)
             {
                 return BadRequest("The artifact has already been purchased");
             }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ErrorMessage);
-            }
+
+            return BadRequest("The artifact cannot be purchased.");
         }
     }
 }

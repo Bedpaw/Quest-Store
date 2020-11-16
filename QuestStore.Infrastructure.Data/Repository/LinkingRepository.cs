@@ -49,6 +49,11 @@ namespace QuestStore.Infrastructure.Data.Repository
             return await Entities.FindAsync(firstId, secondId);
         }
 
+        public virtual async Task<bool> Exists(int firstId, int secondId)
+        {
+            return await Entities.AnyAsync(CreateFullKeyExpression(firstId, secondId));
+        }
+
         public virtual void Add(T entity)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
