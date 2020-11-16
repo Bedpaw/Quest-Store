@@ -25,7 +25,7 @@ namespace QuestStore.Core.Services
             var artifact = await _unitOfWork.GenericRepository<Artifact>().GetById(artifactId);
             if (artifact == null) throw new ArgumentException("There is no artifact with the given id.");
 
-            if (student.Coins < artifact.Cost || artifact.Quantity <= 0)
+            if (student.Coins < artifact.Cost || (artifact.Quantity <= 0 && artifact.Quantity != null))
             {
                 return false;
             }

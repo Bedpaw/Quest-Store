@@ -11,5 +11,7 @@ namespace QuestStore.API.Dtos.OutDtos
         public int Coins { get; set; }
         public ICollection<ArtifactBriefDto> Artifacts { get; set; }
         public ICollection<ClassroomBriefDto> Classrooms { get; set; }
+        public ICollection<QuestBriefDto> PendingQuests { get; set; }
+        public ICollection<QuestBriefDto> CompletedQuests { get; set; }
     }
 }

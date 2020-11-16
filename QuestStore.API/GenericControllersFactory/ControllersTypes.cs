@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using QuestStore.API.Dtos;
 using QuestStore.API.Dtos.Duplex;
 using QuestStore.API.Dtos.InDtos;
 using QuestStore.API.Dtos.OutDtos;
@@ -23,7 +22,7 @@ namespace QuestStore.API.GenericControllersFactory
                     GenericControllerConfiguration>
                 {
                     {
-                        (typeof(Quest), typeof(Quest), typeof(Quest)),
+                        (typeof(Quest), typeof(QuestDetailedDto), typeof(QuestDetailedDto)),
                         new GenericControllerConfiguration()
                     },
                     {

@@ -7,7 +7,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QuestStore.API.Dtos.Duplex;
-using QuestStore.API.Dtos.OutDtos;
 using QuestStore.Core.Entities;
 using QuestStore.Core.Enums;
 using QuestStore.Core.Interfaces;
@@ -22,11 +21,13 @@ namespace QuestStore.API.Controllers
     {
         private readonly IStudentService _studentService;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public ClassroomArtifactQuestController(IStudentService studentService, IUnitOfWork unitOfWork)
+        public ClassroomArtifactQuestController(IStudentService studentService, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _studentService = studentService;
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         [Route("classrooms/{id}/artifacts/{id2}")]
@@ -64,7 +65,7 @@ namespace QuestStore.API.Controllers
             var pendingQuests = new List<Quest>(); 
             foreach (var studentId in studentsIds)
             {
-                var studentQuests =
+                var quests =
                     (await _unitOfWork.LinkingRepository<StudentQuest>()
                         .GetBySingleId(
                             studentId,
@@ -72,10 +73,10 @@ namespace QuestStore.API.Controllers
                             1,
                             sq => sq.Status == QuestStatus.Pending))
                     ?.Select(sq => sq.Quest);
-                pendingQuests.AddRange(studentQuests ?? Array.Empty<Quest>());
+                pendingQuests.AddRange(quests ?? Array.Empty<Quest>());
             }
 
-            return Ok(pendingQuests);
+            return Ok(_mapper.Map<List<QuestDetailedDto>>(pendingQuests));
         }
     }
 }
