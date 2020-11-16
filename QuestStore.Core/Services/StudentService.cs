@@ -50,13 +50,12 @@ namespace QuestStore.Core.Services
                 return false;
             }
 
-            var studentClassrooms = (await _unitOfWork.LinkingRepository<StudentClassroom>()
-                .GetBySingleId(classroomId, false, 1));
-            if (studentClassrooms == null)
+            var students = (await _unitOfWork.LinkingRepository<StudentClassroom>()
+                .GetBySingleId(classroomId, false, 1))?.Select(sc => sc.Student).ToList();
+            if (students == null)
                 throw new ArgumentException(
                     "There are no students within the given classroom or the wrong classroom id.");
 
-            var students = studentClassrooms.Select(sc => sc.Student).ToList();
             var costPerStudent = artifact.Cost / students.Count;
 
             foreach (var student in students)

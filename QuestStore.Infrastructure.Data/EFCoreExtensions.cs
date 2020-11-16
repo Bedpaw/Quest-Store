@@ -37,7 +37,7 @@ namespace QuestStore.Infrastructure.Data
                 }
             }
 
-            return allPaths;
+            return allPaths;    
         }
 
         private static void NavigationsDfs(INavigation initial, Stack<string> path,

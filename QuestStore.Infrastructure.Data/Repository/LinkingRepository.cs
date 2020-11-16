@@ -32,7 +32,7 @@ namespace QuestStore.Infrastructure.Data.Repository
 
             if (includeDepth > 0)
             {
-                return await  query.Include(Context.GetAllPaths(typeof(T))).ToListAsync();
+                return await  query.Include(Context.GetAllPaths(typeof(T), includeDepth)).ToListAsync();
             }
 
             return await query.ToListAsync();
@@ -42,7 +42,7 @@ namespace QuestStore.Infrastructure.Data.Repository
         {
             if (includeDepth > 0)
             {
-                return await Entities.Include(Context.GetAllPaths(typeof(T)))
+                return await Entities.Include(Context.GetAllPaths(typeof(T), includeDepth))
                     .FirstOrDefaultAsync(CreateFullKeyExpression(firstId, secondId));
             }
 
