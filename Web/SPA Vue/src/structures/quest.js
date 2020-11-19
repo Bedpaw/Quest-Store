@@ -11,7 +11,7 @@ export class Quest extends Basic {
     type = QUEST_TYPES.BASIC
   }) {
     super(id, name, description);
-    this.image = image === null ? '' : image
+    this.image = image === null ? '' : image;
     this.reward = reward;
     this.type = type;
   }

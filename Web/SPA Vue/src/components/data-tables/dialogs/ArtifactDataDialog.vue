@@ -55,10 +55,18 @@
                   step="1"
                   min="0"
                   :rules="positive"
+                  :disabled="unlimitedQuantity"
                 />
               </v-col>
               <v-col cols="12" sm="12" md="6">
-                <upload-file @image-uploaded="setImage"></upload-file>
+                <v-checkbox
+                  label="unlimited quantity"
+                  v-model="unlimitedQuantity"
+                />
+              </v-col>
+              <v-spacer></v-spacer>
+              <v-col cols="12" class="d-flex align-center justify-center">
+                <upload-file show-picture-after-upload="true" @image-uploaded="setImage"></upload-file>
               </v-col>
             </v-row>
           </v-form>
@@ -85,11 +93,11 @@ import {
   descriptionRules,
   positive
 } from '@/components/data-tables/validators';
-import UploadFile from "@/components/utils/uploadFile";
+import UploadFile from '@/components/utils/uploadFile';
 
 export default {
   name: 'ArtifactDataDialog',
-  components: {UploadFile},
+  components: { UploadFile },
   mixins: [dataTableDialogMixin],
   data() {
     return {
@@ -97,14 +105,26 @@ export default {
         name: '',
         description: '',
         cost: 50,
-        quantity: 10,
+        quantity: null,
         image: ''
       },
       nameRules,
       descriptionRules,
       positive,
-      formName: 'Artifact'
+      formName: 'Artifact',
+      unlimitedQuantity: this.editedItem === null,
+      lastQuantity: null
     };
+  },
+  watch: {
+    unlimitedQuantity: function() {
+      if (this.unlimitedQuantity === true) {
+        this.lastQuantity = this.editedItem.quantity;
+        this.editedItem.quantity = null;
+      } else {
+        this.editedItem.quantity = this.lastQuantity;
+      }
+    }
   }
 };
 </script>

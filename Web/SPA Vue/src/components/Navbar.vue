@@ -19,13 +19,22 @@
           @click="pushIfNotProfilePage"
         >
           <v-list-item-avatar>
-            <cld-image v-if="getLoggedUser.image !== ''" :public-id="getLoggedUser.image" auto crop="fit" />
+            <cld-image
+              v-if="getLoggedUser.image !== ''"
+              :public-id="getLoggedUser.image"
+              resize="fit"
+            />
             <img v-else src="../assets/avatar.svg" />
           </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title>{{ getLoggedUser.name }}{{ getLoggedUser.surname }}</v-list-item-title>
-            <v-list-item-subtitle>{{ getLoggedUser.role }}</v-list-item-subtitle>
+            <v-list-item-title
+              >{{ getLoggedUser.name
+              }}{{ getLoggedUser.surname }}</v-list-item-title
+            >
+            <v-list-item-subtitle>{{
+              getLoggedUser.role
+            }}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
 

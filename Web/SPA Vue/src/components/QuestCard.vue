@@ -1,13 +1,13 @@
 <template>
-  <v-card class="px-6">
+  <v-card class="px-6 bg">
     <cld-image
-        v-if="quest.image !== ''"
-        :public-id="quest.image"
-        dpr="auto"
-        responsive="width"
-        width="auto"
-        crop="scale"
-        loading="lazy"
+      v-if="quest.image !== ''"
+      :public-id="quest.image"
+      dpr="auto"
+      responsive="width"
+      width="auto"
+      crop="scale"
+      loading="lazy"
     >
     </cld-image>
     <v-img v-else src="../assets/background1.jpg" height="200px"></v-img>
@@ -19,11 +19,11 @@
       <p class="ma-0">REWARD</p>
       <p>{{ quest.reward }}</p>
       <mark-completed-quest-dialog
-          :dialog="dialog"
-          @toggleDialog="dialog = !dialog"
-          @questCompleted="questCompleted"
-          v-if="getLoggedUserRole !== ROLES.STUDENT"
-          class="my-4"
+        :dialog="dialog"
+        @toggleDialog="dialog = !dialog"
+        @questCompleted="questCompleted"
+        v-if="getLoggedUserRole !== ROLES.STUDENT"
+        class="my-4"
       />
     </div>
 
@@ -34,15 +34,15 @@
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex';
-import {UPDATE_USER} from '@/utils/macros/mutation-types';
-import {ROLES} from '@/utils/macros/roles';
-import CardBottomDescription from "@/components/CardBottomDescription";
-import MarkCompletedQuestDialog from "@/components/dialogs/MarkCompletedQuestDialog";
+import { mapGetters, mapMutations } from 'vuex';
+import { UPDATE_USER } from '@/utils/macros/mutation-types';
+import { ROLES } from '@/utils/macros/roles';
+import CardBottomDescription from '@/components/CardBottomDescription';
+import MarkCompletedQuestDialog from '@/components/dialogs/MarkCompletedQuestDialog';
 
 export default {
   name: 'QuestCard',
-  components: {MarkCompletedQuestDialog, CardBottomDescription},
+  components: { MarkCompletedQuestDialog, CardBottomDescription },
   data: () => ({
     dialog: false,
     ROLES
@@ -53,16 +53,19 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('user', ['getLoggedUserRole']),
+    ...mapGetters('user', ['getLoggedUserRole', 'getThisUserRoleArray'])
   },
   methods: {
     ...mapMutations('user', [UPDATE_USER]),
     questCompleted(students) {
       students.map(student =>
-          this.$store.dispatch('user/updateUser',{
+        this.$store.dispatch('user/updateUser', {
+          user: {
             ...student,
             coins: parseInt(student.coins) + this.quest.reward
-          })
+          },
+          userArray: this.getThisUserRoleArray(student)
+        })
       );
       this.dialog = false;
     }
@@ -70,4 +73,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.bg {
+  background-color: rgb(139 239 246);
+}
+</style>

@@ -1,14 +1,14 @@
 import { Basic } from './basic';
 import { ROLES } from '@/utils/macros/roles';
 
-export class User extends Basic {
+export class Student extends Basic {
   constructor({
     id,
     name,
     description,
     surname = '',
     email = '',
-    role = ROLES.GUEST,
+    role = ROLES.STUDENT,
     image = '',
     coins = 0,
     artifacts = [],
