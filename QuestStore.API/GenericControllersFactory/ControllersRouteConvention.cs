@@ -21,25 +21,23 @@ namespace QuestStore.API.GenericControllersFactory
                     controllerType.BaseType.GenericTypeArguments[1], controllerType.BaseType.GenericTypeArguments[2]);
 
             // `3 in the name of the controller results form that it has got 3 generic parameters.
-            var linkingControllerName = nameof(LinkingGenericController<object, object, object>) + "`3";
+            const string linkingControllerName = nameof(LinkingGenericController<object, object, object>) + "`3";
             if (controllerType.Name == linkingControllerName || controllerType.BaseType.Name == linkingControllerName)
             {
-                controller.ControllerName = ControllersTypes.LinkingControllers[controllerArguments].Name ??
-                                            controller.ControllerName;
-
-                controller.RouteValues["ParentController"] =
-                    ControllersTypes.LinkingControllers[controllerArguments].ParentRoute;
-
-                controller.RouteValues["ChildController"] =
-                    ControllersTypes.LinkingControllers[controllerArguments].ChildRoute;
+                if (ControllersTypes.LinkingControllers.TryGetValue(controllerArguments, out var configuration))
+                {
+                    controller.ControllerName = configuration.Name ?? controller.ControllerName;
+                    controller.RouteValues["ParentController"] = configuration.ParentRoute;
+                    controller.RouteValues["ChildController"] = configuration.ChildRoute;
+                }
             }
             else
             {
-                controller.ControllerName =
-                    ControllersTypes.GenericControllers[controllerArguments].Name ?? controllerArguments.Item1.Name + "s";
-
-                controller.RouteValues["Controller"] =
-                    ControllersTypes.GenericControllers[controllerArguments].Route ?? controllerArguments.Item1.Name + "s";
+                if (ControllersTypes.GenericControllers.TryGetValue(controllerArguments, out var configuration))
+                {
+                    controller.ControllerName = configuration.Name ?? controllerArguments.Item1.Name + "s";
+                    controller.RouteValues["Controller"] = configuration.Route ?? controllerArguments.Item1.Name + "s";
+                }
             }
 
 

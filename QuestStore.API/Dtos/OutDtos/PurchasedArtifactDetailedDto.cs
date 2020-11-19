@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using QuestStore.API.Dtos.Duplex;
 
 namespace QuestStore.API.Dtos.OutDtos
 {
-    public class StudentArtifactBriefDto
+    public class PurchasedArtifactDetailedDto : ArtifactDetailedDto
     {
-        public int StudentId { get; set; }
-        public int ArtifactId { get; set; }
         public int PurchasedQuantity { get; set; }
     }
 }

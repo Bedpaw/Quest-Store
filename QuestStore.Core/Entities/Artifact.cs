@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using QuestStore.Core.Enums;
 
 namespace QuestStore.Core.Entities
 {
@@ -7,6 +8,7 @@ namespace QuestStore.Core.Entities
     {
         public int Cost { get; set; }
         public int? Quantity { get; set; }
+        public ArtifactType Type { get; set; }
         //public ICollection<StudentArtifact> StudentArtifacts { get; set; }
 
     }

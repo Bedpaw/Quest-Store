@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Data;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using QuestStore.API.Dtos.Duplex;
 using QuestStore.API.Dtos.OutDtos;
 using QuestStore.Core.Entities;
 using QuestStore.Core.Interfaces;
 
 namespace QuestStore.API.Controllers
 {
-    public class StudentArtifactsController : LinkingGenericController<StudentArtifact, ArtifactDetailedDto, StudentArtifactBriefDto>
+    public class StudentArtifactsController : LinkingGenericController<StudentArtifact, PurchasedArtifactDetailedDto, StudentArtifactBriefDto>
     {
         private readonly IStudentService _studentService;
         protected override bool ReverseKeyOrder { get; } = false;
@@ -23,23 +21,21 @@ namespace QuestStore.API.Controllers
 
         public override async Task<ActionResult<StudentArtifactBriefDto>> CreateResource(int id, int id2)
         {
+            StudentArtifact studentArtifact;
             try
             {
-                if (await _studentService.BuyArtifact(id, id2))
-                {
-                    return CreatedAtAction(
-                        nameof(GetResource),
-                        new { id, id2 },
-                        new StudentArtifactBriefDto { StudentId = id, ArtifactId = id2 });
-                }
+                studentArtifact = await _studentService.BuyArtifact(id, id2);
             }
             catch (ArgumentException ex)
             {
                 return BadRequest(ex.Message);
             }
-            catch (DataException)
+
+            if (studentArtifact != null)
             {
-                return BadRequest("The artifact has already been purchased");
+                return CreatedAtAction(
+                    nameof(GetResource),
+                    new { id, id2 }, Mapper.Map<StudentArtifactBriefDto>(studentArtifact));
             }
 
             return BadRequest("The artifact cannot be purchased.");

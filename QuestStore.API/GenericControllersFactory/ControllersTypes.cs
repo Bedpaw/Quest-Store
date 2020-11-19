@@ -59,7 +59,7 @@ namespace QuestStore.API.GenericControllersFactory
                     LinkingControllerConfiguration>
                 {
                     {
-                        (typeof(StudentArtifact), typeof(ArtifactDetailedDto), typeof(StudentArtifactBriefDto)),
+                        (typeof(StudentArtifact), typeof(PurchasedArtifactDetailedDto), typeof(StudentArtifactBriefDto)),
                         new LinkingControllerConfiguration
                         {
                             Name = nameof(Student) + "s",

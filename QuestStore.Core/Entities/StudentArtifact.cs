@@ -10,5 +10,6 @@ namespace QuestStore.Core.Entities
         public Student Student { get; set; }
         public int ArtifactId { get; set; }
         public Artifact Artifact { get; set; }
+        public int PurchasedQuantity { get; set; }
     }
 }

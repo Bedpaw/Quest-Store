@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -43,10 +42,6 @@ namespace QuestStore.API.Controllers
             catch (ArgumentException ex)
             {
                 BadRequest(ex.Message);
-            }
-            catch (DataException)
-            {
-                return BadRequest("The artifact has already been purchased");
             }
 
             return BadRequest("The artifact cannot be purchased.");

@@ -63,17 +63,20 @@ namespace QuestStore.API
 
             //Response Dtos
             CreateMap<Student, StudentBriefDto>();
-            CreateMap<Artifact, ArtifactBriefDto>();
             CreateMap<Mentor, MentorBriefDto>();
             CreateMap<Classroom, ClassroomBriefDto>();
             CreateMap<Quest, QuestBriefDto>();
+            CreateMap<Artifact, PurchasedArtifactBriefDto>();
+            CreateMap<StudentArtifact, PurchasedArtifactBriefDto>()
+                .IncludeMembers(sa => sa.Artifact);
 
             CreateMap<StudentArtifact, StudentArtifactBriefDto>();
             CreateMap<StudentClassroom, StudentClassroomBriefDto>();
             CreateMap<StudentQuest, StudentQuestBriefDto>();
             CreateMap<MentorClassroom, MentorClassroomBriefDto>();
 
-            CreateMap<StudentArtifact, ArtifactDetailedDto>()
+            CreateMap<Artifact, PurchasedArtifactDetailedDto>();
+            CreateMap<StudentArtifact, PurchasedArtifactDetailedDto>()
                 .IncludeMembers(sa => sa.Artifact);
             CreateMap<StudentQuest, QuestDetailedDto>()
                 .IncludeMembers(sq => sq.Quest);
@@ -97,7 +100,7 @@ namespace QuestStore.API
                 .ForMember(dto => dto.Artifacts,
                     opt =>
                         opt.MapFrom(s =>
-                            s.StudentArtifacts.Select(sa => sa.Artifact).ToList()))
+                            s.StudentArtifacts))
                 .ForMember(dto => dto.Classrooms,
                     opt =>
                         opt.MapFrom(s =>
