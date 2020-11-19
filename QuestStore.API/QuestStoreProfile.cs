@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using AutoMapper;
-using QuestStore.API.Dtos;
 using QuestStore.API.Dtos.Duplex;
 using QuestStore.API.Dtos.InDtos;
 using QuestStore.API.Dtos.OutDtos;
 using QuestStore.Core.Entities;
+using QuestStore.Core.Enums;
 
 namespace QuestStore.API
 {
@@ -14,11 +14,7 @@ namespace QuestStore.API
         {
             //DuplexDtos
             CreateMap<Artifact, ArtifactDetailedDto>().ReverseMap();
-            //.ForMember(
-            //    dto => dto.Students,
-            //    opt =>
-            //        opt.MapFrom(a => 
-            //            a.StudentArtifacts.Select(sa => sa.Student).ToList()));
+            CreateMap<Quest, QuestDetailedDto>().ReverseMap();
 
             //RequestDtos
             CreateMap<StudentRequestDto, Student>();
@@ -45,6 +41,16 @@ namespace QuestStore.API
                     opt =>
                         opt.MapFrom(ld => ld.Id2));
 
+            CreateMap<LinkingDto, StudentQuest>()
+                .ForMember(
+                    sq => sq.StudentId,
+                    opt =>
+                        opt.MapFrom(ld => ld.Id1))
+                .ForMember(
+                    sq => sq.QuestId,
+                    opt =>
+                        opt.MapFrom(ld => ld.Id2));
+
             CreateMap<LinkingDto, MentorClassroom>()
                 .ForMember(
                     mc => mc.MentorId,
@@ -57,15 +63,31 @@ namespace QuestStore.API
 
             //Response Dtos
             CreateMap<Student, StudentBriefDto>();
-            CreateMap<Artifact, ArtifactBriefDto>();
             CreateMap<Mentor, MentorBriefDto>();
             CreateMap<Classroom, ClassroomBriefDto>();
-            CreateMap<StudentArtifact, StudentArtifactBrief>();
-            CreateMap<StudentClassroom, StudentClassroomBrief>();
-            CreateMap<MentorClassroom, MentorClassroomBrief>();
-
-            CreateMap<StudentArtifact, ArtifactDetailedDto>()
+            CreateMap<Quest, QuestBriefDto>();
+            CreateMap<Artifact, PurchasedArtifactBriefDto>();
+            CreateMap<StudentArtifact, PurchasedArtifactBriefDto>()
                 .IncludeMembers(sa => sa.Artifact);
+
+            CreateMap<StudentArtifact, StudentArtifactBriefDto>();
+            CreateMap<StudentClassroom, StudentClassroomBriefDto>();
+            CreateMap<StudentQuest, StudentQuestBriefDto>();
+            CreateMap<MentorClassroom, MentorClassroomBriefDto>();
+
+            CreateMap<Artifact, PurchasedArtifactDetailedDto>();
+            CreateMap<StudentArtifact, PurchasedArtifactDetailedDto>()
+                .IncludeMembers(sa => sa.Artifact);
+            CreateMap<StudentQuest, QuestDetailedDto>()
+                .IncludeMembers(sq => sq.Quest);
+            CreateMap<StudentClassroom, ClassroomDetailedDto>()
+                .IncludeMembers(sc => sc.Classroom);
+            CreateMap<StudentClassroom, StudentDetailedDto>()
+                .IncludeMembers(sc => sc.Student);
+            CreateMap<MentorClassroom, ClassroomDetailedDto>()
+                .IncludeMembers(mc => mc.Classroom);
+            CreateMap<MentorClassroom, MentorDetailedDto>()
+                .IncludeMembers(mc => mc.Mentor);
 
             CreateMap<Mentor, MentorDetailedDto>()
                 .ForMember(
@@ -77,12 +99,22 @@ namespace QuestStore.API
             CreateMap<Student, StudentDetailedDto>()
                 .ForMember(dto => dto.Artifacts,
                     opt =>
-                        opt.MapFrom(s => 
-                            s.StudentArtifacts.Select(sa => sa.Artifact).ToList()))
+                        opt.MapFrom(s =>
+                            s.StudentArtifacts))
                 .ForMember(dto => dto.Classrooms,
                     opt =>
-                        opt.MapFrom(s => 
-                            s.StudentClassrooms.Select(sc => sc.Classroom).ToList()));
+                        opt.MapFrom(s =>
+                            s.StudentClassrooms.Select(sc => sc.Classroom).ToList()))
+                .ForMember(dto => dto.PendingQuests,
+                    opt =>
+                        opt.MapFrom(s =>
+                            s.StudentQuests.Where(sq => sq.Status == QuestStatus.Pending)
+                                .Select(sq => sq.Quest).ToList()))
+                .ForMember(dto => dto.CompletedQuests,
+                opt =>
+                    opt.MapFrom(s =>
+                        s.StudentQuests.Where(sq => sq.Status == QuestStatus.Completed)
+                            .Select(sq => sq.Quest).ToList()));
 
             CreateMap<Classroom, ClassroomDetailedDto>()
                 .ForMember(dto => dto.Students,
@@ -93,7 +125,6 @@ namespace QuestStore.API
                     opt =>
                         opt.MapFrom(c =>
                             c.MentorClassrooms.Select(mc => mc.Mentor).ToList()));
-
         }
     }
 }

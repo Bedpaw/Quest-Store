@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
+using QuestStore.Core.Entities;
 
-namespace QuestStore.Core.Entities
+namespace QuestStore.API.Dtos.Duplex
 {
-    public abstract class ResourceEntity : BaseEntity
+    public class ResourceDto : BaseEntity
     {
         public string Name { get; set; }
         public string Description { get; set; }

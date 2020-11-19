@@ -35,7 +35,8 @@ namespace QuestStore.Infrastructure.Data.Seed
                 .RuleFor(a => a.Name, f => f.Commerce.ProductName())
                 .RuleFor(a => a.Description, f => f.Commerce.ProductDescription())
                 .RuleFor(a => a.Cost, f => f.Random.Number(1000))
-                .RuleFor(a => a.Quantity, f => f.Random.Number(10).OrNull(f, 0.5f));
+                .RuleFor(a => a.Quantity, f => f.Random.Number(10).OrNull(f, 0.4f))
+                .RuleFor(a => a.Type, f => f.PickRandom<ArtifactType>());
             FakeArtifacts = artifactFaker.Generate(FakesNumber);
 
             var studentId = 1;
@@ -55,8 +56,11 @@ namespace QuestStore.Infrastructure.Data.Seed
                 FakeArtifacts.Select(fa => fa.Id).ToList(), FakesNumber);
             var studentArtifactFaker = new Faker<StudentArtifact>()
                 .StrictMode(false)
-                .RuleFor(sa => sa.StudentId, f => studentArtifactPairs[studentArtifactId - 2].Item1)
-                .RuleFor(sa => sa.ArtifactId, f => studentArtifactPairs[studentArtifactId - 2].Item2)
+                .RuleFor(sa => sa.StudentId, f =>
+                    studentArtifactPairs[studentArtifactId - 2].Item1)
+                .RuleFor(sa => sa.ArtifactId, f =>
+                    studentArtifactPairs[studentArtifactId - 2].Item2)
+                .RuleFor(sa => sa.PurchasedQuantity, f => f.Random.Number(10))
                 .FinishWith((f, sa) => studentArtifactId++);
             FakeStudentArtifacts = studentArtifactFaker.Generate(FakesNumber);
         }

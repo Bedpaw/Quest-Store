@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using System.Security.Claims;
 using System.Text.Json.Serialization;
@@ -5,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -17,6 +19,7 @@ using QuestStore.API.GenericControllersFactory;
 using QuestStore.Infrastructure.Data;
 using QuestStore.Core;
 using QuestStore.Core.Interfaces;
+using QuestStore.Core.Services;
 using QuestStore.Infrastructure.Data.Repository;
 
 namespace QuestStore.API
@@ -69,15 +72,28 @@ namespace QuestStore.API
                         builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
                 });
 
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(options =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo
+                options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "Quest Store API",
                     Version = "v1",
                     Description = ""
                 });
-
+                options.TagActionsBy(api =>
+                {
+                    if (api.GroupName != null)
+                    {
+                        return new[] { api.GroupName };
+                    }
+                    if (api.ActionDescriptor is ControllerActionDescriptor controllerActionDescriptor)
+                    {
+                        return new[] { controllerActionDescriptor.ControllerName };
+                    }
+                    throw new InvalidOperationException("Unable to determine tag for endpoint.");
+                });
+                // It includes the action in the document regardless of its group name
+                options.DocInclusionPredicate((name, api) => true);
             });
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -89,14 +105,16 @@ namespace QuestStore.API
                         options.TokenValidationParameters = new TokenValidationParameters
                         {
                             NameClaimType = ClaimTypes.NameIdentifier,
-                            RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+                            RoleClaimType = ClaimTypes.Role
                         };
                     });
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped(typeof(ILinkingRepository<>), typeof(LinkingRepository<>));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IStudentService, StudentService>();
         }
 
         public void Configure(IApplicationBuilder app)
@@ -105,6 +123,10 @@ namespace QuestStore.API
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
             }
             app.UseSwagger();
             app.UseSwaggerUI(options =>

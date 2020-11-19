@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QuestStore.API.Dtos.InDtos;
 using QuestStore.API.GenericControllersFactory;
@@ -18,118 +16,95 @@ namespace QuestStore.API.Controllers
     public class LinkingGenericController<T, TOut, TPost> : ControllerBase
     where T : class
     {
-        protected readonly ILinkingRepository<T> Repository;
-        protected readonly IMapper Mapper;
-        private readonly string _errorMessage;
+        protected ILinkingRepository<T> Repository { get; }
+        protected IUnitOfWork UnitOfWork { get; }
+        protected IMapper Mapper { get; }
+        protected string ErrorMessage { get; set; } = "Database error";
+        protected virtual bool ReverseKeyOrder { get; } = ControllersTypes
+            .LinkingControllers[(typeof(T), typeof(TOut), typeof(TPost))]
+            .ReverseKeyOrder;
 
-        public LinkingGenericController(ILinkingRepository<T> repository, IMapper mapper)
+        public LinkingGenericController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            Repository = repository;
+            UnitOfWork = unitOfWork;
+            Repository = UnitOfWork.LinkingRepository<T>();
             Mapper = mapper;
-            _errorMessage = "Database error";
         }
 
         [HttpGet]
         public virtual async Task<ActionResult<List<TOut>>> GetAllResources(int id)
         {
-            try
-            {
-                var useFirstId = !ControllersTypes
-                    .LinkingControllers[(typeof(T), typeof(TOut), typeof(TPost))]
-                    .ReverseKeyOrder;
-                var result = await Repository.GetBySingleId(id, useFirstId,1);
-                return Ok(Mapper.Map<List<TOut>>(result.ToList()));
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, _errorMessage);
-            }
+
+            var useFirstId = !ReverseKeyOrder;
+            var result = await Repository.GetBySingleId(id, useFirstId, 1);
+            if (result == null) return NotFound();
+
+            return Ok(Mapper.Map<List<TOut>>(result.ToList()));
         }
 
+        [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Get))]
         [HttpGet("{id2}")]
         public virtual async Task<ActionResult<TOut>> GetResource(int id, int id2)
         {
-            try
-            {
-                var result = ControllersTypes.LinkingControllers[(typeof(T), typeof(TOut), typeof(TPost))]
-                    .ReverseKeyOrder
-                    ? await Repository.GetByFullKey(id2, id, 1)
-                    : await Repository.GetByFullKey(id, id2, 1);
 
-                if (result == null) return NotFound();
+            var result = ReverseKeyOrder
+                ? await Repository.GetByFullKey(id2, id, 1)
+                : await Repository.GetByFullKey(id, id2, 1);
+            if (result == null) return NotFound();
 
-                return Ok(Mapper.Map<TOut>(result));
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, _errorMessage);
-            }
+            return Ok(Mapper.Map<TOut>(result));
         }
 
+        [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Post))]
         [HttpPost("{id2}")]
         public virtual async Task<ActionResult<TPost>> CreateResource(int id, int id2)
         {
+            if (ReverseKeyOrder) (id, id2) = (id2, id);
+
+            if (await Repository.Exists(id, id2)) return BadRequest("Resource already exists");
+
+            var resource = Mapper.Map<T>(new LinkingDto {Id1 = id, Id2 = id2});
+            Repository.Add(resource);
             try
             {
-                if (ControllersTypes.LinkingControllers[(typeof(T), typeof(TOut), typeof(TPost))].ReverseKeyOrder)
-                {
-                    (id, id2) = (id2, id);
-                }
-
-                var resource = Mapper.Map<T>(new LinkingDto {Id1 = id, Id2 = id2});
-                await Repository.Add(resource);
-
-                return CreatedAtAction(
-                    nameof(GetResource),
-                    new { id = id, id2 = id2 }, Mapper.Map<TPost>(resource));
+                await UnitOfWork.Save();
             }
-            catch (Exception)
+            catch (ConstraintException)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, _errorMessage);
+                return BadRequest("Wrong primary key. Check if its components exist");
             }
+
+            return CreatedAtAction(
+                nameof(GetResource),
+                new {id, id2},
+                Mapper.Map<TPost>(resource));
         }
 
+        [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Delete))]
         [HttpDelete("{id2}")]
         public virtual async Task<IActionResult> DeleteResource(int id, int id2)
         {
-            try
-            {
-                var resource = ControllersTypes.LinkingControllers[(typeof(T), typeof(TOut), typeof(TPost))]
-                    .ReverseKeyOrder
-                    ? await Repository.GetByFullKey(id2, id, 1)
-                    : await Repository.GetByFullKey(id, id2, 1);
 
-                if (resource == null) return NotFound();
+            var resource = ReverseKeyOrder
+                ? await Repository.GetByFullKey(id2, id)
+                : await Repository.GetByFullKey(id, id2);
+            if (resource == null) return NotFound();
 
-                await Repository.Delete(resource);
-                return Ok();
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, _errorMessage);
-            }
+            Repository.Delete(resource);
+            await UnitOfWork.Save();
+            return Ok();
         }
 
+        //[ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Delete))]
         //[HttpDelete]
         //public virtual async Task<IActionResult> DeleteAllResources(int id)
         //{
-        //    try
-        //    {
-        //        var useFirstId = !ControllersTypes
-        //            .LinkingControllers[(typeof(T), typeof(TOut), typeof(TPost))]
-        //            .ReverseKeyOrder;
+        //    var useFirstId = !ReverseKeyOrder;
+        //    if (await Repository.GetBySingleId(id, useFirstId) == null) return NotFound();
 
-        //        var resources = await Repository.GetBySingleId(id, useFirstId);
-
-        //        if (resources == null) return NotFound();
-
-        //        await Repository.DeleteBySingleId(id, useFirstId);
-        //        return Ok();
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return StatusCode(StatusCodes.Status500InternalServerError, _errorMessage);
-        //    }
+        //    Repository.DeleteBySingleId(id, useFirstId);
+        //    await UnitOfWork.Save();
+        //    return Ok();
         //}
     }
 }

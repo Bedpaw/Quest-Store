@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using QuestStore.Core.Enums;
 
 namespace QuestStore.Core.Entities
 {
-    public class StudentArtifact 
+    public class StudentQuest
     {
         public int StudentId { get; set; }
         public Student Student { get; set; }
-        public int ArtifactId { get; set; }
-        public Artifact Artifact { get; set; }
-        public int PurchasedQuantity { get; set; }
+        public int QuestId { get; set; }
+        public Quest Quest { get; set; }
+        public QuestStatus Status { get; set; }
+
     }
 }
