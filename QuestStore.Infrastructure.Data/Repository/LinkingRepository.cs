@@ -23,15 +23,16 @@ namespace QuestStore.Infrastructure.Data.Repository
                 .Properties.Select(p => p.Name);
 
         }
-        public virtual async Task<IEnumerable<T>> GetBySingleId(int id, bool useFirstId , int includeDepth = 0)
+        public virtual async Task<IEnumerable<T>> GetBySingleId(int id, bool useFirstId , int includeDepth = 0, Expression<Func<T, bool>> filter = null)
         {
             var (conditionExpression, parameterExpression) = CreateSingleIdExpressionArguments(id, useFirstId);
-            var query = Entities.Where(
+            var query = filter != null ? Entities.Where(filter) : Entities;
+            query = query.Where(
                 Expression.Lambda<Func<T, bool>>(conditionExpression, parameterExpression));
 
             if (includeDepth > 0)
             {
-                return await  query.Include(Context.GetAllPaths(typeof(T))).ToListAsync();
+                return await  query.Include(Context.GetAllPaths(typeof(T), includeDepth)).ToListAsync();
             }
 
             return await query.ToListAsync();
@@ -41,36 +42,45 @@ namespace QuestStore.Infrastructure.Data.Repository
         {
             if (includeDepth > 0)
             {
-                return await Entities.Include(Context.GetAllPaths(typeof(T)))
+                return await Entities.Include(Context.GetAllPaths(typeof(T), includeDepth))
                     .FirstOrDefaultAsync(CreateFullKeyExpression(firstId, secondId));
             }
 
             return await Entities.FindAsync(firstId, secondId);
         }
 
-        public virtual async Task Add(T entity)
+        public virtual async Task<bool> Exists(int firstId, int secondId)
+        {
+            return await Entities.AnyAsync(CreateFullKeyExpression(firstId, secondId));
+        }
+
+        public virtual void Add(T entity)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
             Entities.Add(entity);
-            await Context.SaveChangesAsync();
         }
 
-        public virtual async Task Delete(T entity)
+        public virtual void Update(T entity)
+        {
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
+
+            Entities.Update(entity);
+        }
+
+        public virtual void Delete(T entity)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
             Entities.Remove(entity);
-            await Context.SaveChangesAsync();
         }
 
-        public virtual async Task DeleteBySingleId(int id, bool useFirstId)
+        public virtual void DeleteBySingleId(int id, bool useFirstId)
         {
             var (conditionExpression, parameterExpression) = CreateSingleIdExpressionArguments(id, useFirstId);
             var query = Entities.Where(
                 Expression.Lambda<Func<T, bool>>(conditionExpression, parameterExpression));
             Entities.RemoveRange(query);
-            await Context.SaveChangesAsync();
         }
 
         private (BinaryExpression, ParameterExpression) CreateSingleIdExpressionArguments(int id, bool useFirstId)

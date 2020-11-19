@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
+using QuestStore.Core.Entities;
 using QuestStore.Core.Enums;
 
-namespace QuestStore.Core.Entities
+namespace QuestStore.API.Dtos.Duplex
 {
-    public class Quest : ResourceEntity
+    public class QuestDetailedDto : ResourceDto
     {
         public int Reward { get; set; }
         public QuestType Type { get; set; }
-        //public ICollection<StudentQuest> StudentQuests { get; set; }
     }
 }

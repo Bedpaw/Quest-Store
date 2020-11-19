@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using QuestStore.Core.Entities;
@@ -31,10 +30,13 @@ namespace QuestStore.Infrastructure.Data
             }
 
             modelBuilder.Entity<StudentArtifact>().HasKey(sa => new {sa.StudentId, sa.ArtifactId});
+            modelBuilder.Entity<StudentQuest>().HasKey(sq => new { sq.StudentId, sq.QuestId });
             modelBuilder.Entity<StudentClassroom>().HasKey(sc => new {sc.StudentId, sc.ClassroomId});
             modelBuilder.Entity<MentorClassroom>().HasKey(mc => new {mc.MentorId, mc.ClassroomId});
 
             modelBuilder.Entity<Quest>().Property(q => q.Type).HasConversion<string>();
+            modelBuilder.Entity<Artifact>().Property(a => a.Type).HasConversion<string>();
+            modelBuilder.Entity<StudentQuest>().Property(sq => sq.Status).HasConversion<string>();
             modelBuilder.Entity<User>().HasDiscriminator<string>("Role").HasValue<User>("Admin");
 
             modelBuilder.Seed();

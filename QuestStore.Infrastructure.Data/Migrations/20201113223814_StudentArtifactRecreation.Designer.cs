@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QuestStore.Infrastructure.Data;
 
 namespace QuestStore.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    partial class StoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201113223814_StudentArtifactRecreation")]
+    partial class StudentArtifactRecreation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,10 +43,6 @@ namespace QuestStore.Infrastructure.Data.Migrations
                     b.Property<int?>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Artifact");
@@ -53,86 +51,78 @@ namespace QuestStore.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Cost = 792,
-                            Description = "Carbonite web goalkeeper gloves are ergonomically designed to give easy fit",
-                            Name = "Sleek Fresh Cheese",
-                            Type = "Extra"
+                            Cost = 895,
+                            Description = "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
+                            Name = "Awesome Frozen Table",
+                            Quantity = 8
                         },
                         new
                         {
                             Id = 2,
-                            Cost = 952,
-                            Description = "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
-                            Name = "Handmade Soft Table",
-                            Type = "Basic"
+                            Cost = 912,
+                            Description = "The slim & simple Maple Gaming Keyboard from Dev Byte comes with a sleek body and 7- Color RGB LED Back-lighting for smart functionality",
+                            Name = "Generic Soft Shirt",
+                            Quantity = 7
                         },
                         new
                         {
                             Id = 3,
-                            Cost = 603,
-                            Description = "The Football Is Good For Training And Recreational Purposes",
-                            Name = "Awesome Steel Towels",
-                            Quantity = 8,
-                            Type = "Basic"
+                            Cost = 998,
+                            Description = "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive",
+                            Name = "Fantastic Fresh Mouse"
                         },
                         new
                         {
                             Id = 4,
-                            Cost = 364,
-                            Description = "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
-                            Name = "Fantastic Fresh Bacon",
-                            Quantity = 6,
-                            Type = "Extra"
+                            Cost = 454,
+                            Description = "New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart",
+                            Name = "Unbranded Plastic Chips",
+                            Quantity = 7
                         },
                         new
                         {
                             Id = 5,
-                            Cost = 221,
-                            Description = "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
-                            Name = "Intelligent Rubber Bacon",
-                            Quantity = 3,
-                            Type = "Basic"
+                            Cost = 124,
+                            Description = "Carbonite web goalkeeper gloves are ergonomically designed to give easy fit",
+                            Name = "Generic Fresh Pants"
                         },
                         new
                         {
                             Id = 6,
-                            Cost = 231,
-                            Description = "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive",
-                            Name = "Sleek Metal Towels",
-                            Type = "Extra"
+                            Cost = 907,
+                            Description = "The slim & simple Maple Gaming Keyboard from Dev Byte comes with a sleek body and 7- Color RGB LED Back-lighting for smart functionality",
+                            Name = "Handmade Fresh Cheese"
                         },
                         new
                         {
                             Id = 7,
-                            Cost = 986,
-                            Description = "The Football Is Good For Training And Recreational Purposes",
-                            Name = "Handcrafted Cotton Keyboard",
-                            Type = "Extra"
+                            Cost = 289,
+                            Description = "Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals",
+                            Name = "Awesome Frozen Cheese"
                         },
                         new
                         {
                             Id = 8,
-                            Cost = 619,
-                            Description = "Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals",
-                            Name = "Intelligent Granite Ball",
-                            Quantity = 4,
-                            Type = "Basic"
+                            Cost = 343,
+                            Description = "Carbonite web goalkeeper gloves are ergonomically designed to give easy fit",
+                            Name = "Refined Soft Bacon",
+                            Quantity = 0
                         },
                         new
                         {
                             Id = 9,
-                            Cost = 180,
-                            Description = "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
-                            Name = "Refined Fresh Hat",
-                            Type = "Basic"
+                            Cost = 59,
+                            Description = "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
+                            Name = "Awesome Granite Chicken",
+                            Quantity = 10
                         },
                         new
                         {
                             Id = 10,
-                            Cost = 178,
-                            Description = "The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients",
-                            Name = "Fantastic Cotton Car",
-                            Type = "Extra"
+                            Cost = 819,
+                            Description = "New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart",
+                            Name = "Unbranded Steel Tuna",
+                            Quantity = 3
                         });
                 });
 
@@ -203,81 +193,81 @@ namespace QuestStore.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
-                            Name = "Rustic Wooden Fish",
-                            Reward = 181,
+                            Description = "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
+                            Name = "Incredible Plastic Ball",
+                            Reward = 21,
                             Type = "Extra"
                         },
                         new
                         {
                             Id = 2,
-                            Description = "New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart",
-                            Name = "Sleek Metal Bike",
-                            Reward = 112,
-                            Type = "Extra"
+                            Description = "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
+                            Name = "Generic Cotton Computer",
+                            Reward = 133,
+                            Type = "Basic"
                         },
                         new
                         {
                             Id = 3,
                             Description = "The Football Is Good For Training And Recreational Purposes",
-                            Name = "Refined Frozen Pants",
-                            Reward = 966,
+                            Name = "Tasty Rubber Chicken",
+                            Reward = 988,
                             Type = "Extra"
                         },
                         new
                         {
                             Id = 4,
-                            Description = "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
-                            Name = "Gorgeous Rubber Mouse",
-                            Reward = 524,
-                            Type = "Basic"
+                            Description = "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
+                            Name = "Incredible Steel Computer",
+                            Reward = 337,
+                            Type = "Extra"
                         },
                         new
                         {
                             Id = 5,
                             Description = "Carbonite web goalkeeper gloves are ergonomically designed to give easy fit",
-                            Name = "Ergonomic Wooden Car",
-                            Reward = 964,
+                            Name = "Sleek Fresh Bike",
+                            Reward = 10,
                             Type = "Extra"
                         },
                         new
                         {
                             Id = 6,
-                            Description = "Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals",
-                            Name = "Small Metal Tuna",
-                            Reward = 236,
-                            Type = "Extra"
+                            Description = "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
+                            Name = "Practical Cotton Table",
+                            Reward = 805,
+                            Type = "Basic"
                         },
                         new
                         {
                             Id = 7,
-                            Description = "The slim & simple Maple Gaming Keyboard from Dev Byte comes with a sleek body and 7- Color RGB LED Back-lighting for smart functionality",
-                            Name = "Ergonomic Concrete Towels",
-                            Reward = 259,
-                            Type = "Extra"
+                            Description = "New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart",
+                            Name = "Gorgeous Steel Car",
+                            Reward = 680,
+                            Type = "Basic"
                         },
                         new
                         {
                             Id = 8,
-                            Description = "The Football Is Good For Training And Recreational Purposes",
-                            Name = "Tasty Granite Towels",
-                            Reward = 566,
+                            Description = "The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients",
+                            Name = "Intelligent Concrete Tuna",
+                            Reward = 716,
                             Type = "Basic"
                         },
                         new
                         {
                             Id = 9,
-                            Description = "New ABC 13 9370, 13.3, 5th Gen CoreA5-8250U, 8GB RAM, 256GB SSD, power UHD Graphics, OS 10 Home, OS Office A & J 2016",
-                            Name = "Unbranded Metal Bike",
-                            Reward = 880,
-                            Type = "Extra"
+                            Description = "Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals",
+                            Name = "Incredible Steel Salad",
+                            Reward = 737,
+                            Type = "Basic"
                         },
                         new
                         {
                             Id = 10,
-                            Description = "The Football Is Good For Training And Recreational Purposes",
-                            Name = "Generic Metal Soap",
-                            Reward = 996,
+                            Description = "Carbonite web goalkeeper gloves are ergonomically designed to give easy fit",
+                            Name = "Handcrafted Fresh Sausages",
+                            Reward = 952,
                             Type = "Basic"
                         });
                 });
@@ -290,9 +280,6 @@ namespace QuestStore.Infrastructure.Data.Migrations
                     b.Property<int>("ArtifactId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PurchasedQuantity")
-                        .HasColumnType("int");
-
                     b.HasKey("StudentId", "ArtifactId");
 
                     b.HasIndex("ArtifactId");
@@ -302,63 +289,53 @@ namespace QuestStore.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            StudentId = 4,
-                            ArtifactId = 3,
-                            PurchasedQuantity = 6
+                            StudentId = 2,
+                            ArtifactId = 1
                         },
                         new
                         {
                             StudentId = 2,
-                            ArtifactId = 4,
-                            PurchasedQuantity = 1
+                            ArtifactId = 7
+                        },
+                        new
+                        {
+                            StudentId = 10,
+                            ArtifactId = 9
+                        },
+                        new
+                        {
+                            StudentId = 3,
+                            ArtifactId = 9
+                        },
+                        new
+                        {
+                            StudentId = 2,
+                            ArtifactId = 6
+                        },
+                        new
+                        {
+                            StudentId = 5,
+                            ArtifactId = 6
+                        },
+                        new
+                        {
+                            StudentId = 2,
+                            ArtifactId = 9
+                        },
+                        new
+                        {
+                            StudentId = 5,
+                            ArtifactId = 4
                         },
                         new
                         {
                             StudentId = 1,
-                            ArtifactId = 10,
-                            PurchasedQuantity = 4
+                            ArtifactId = 3
                         },
                         new
                         {
                             StudentId = 10,
-                            ArtifactId = 1,
-                            PurchasedQuantity = 8
-                        },
-                        new
-                        {
-                            StudentId = 4,
-                            ArtifactId = 6,
-                            PurchasedQuantity = 6
-                        },
-                        new
-                        {
-                            StudentId = 10,
-                            ArtifactId = 10,
-                            PurchasedQuantity = 8
-                        },
-                        new
-                        {
-                            StudentId = 7,
-                            ArtifactId = 4,
-                            PurchasedQuantity = 10
-                        },
-                        new
-                        {
-                            StudentId = 2,
-                            ArtifactId = 2,
-                            PurchasedQuantity = 5
-                        },
-                        new
-                        {
-                            StudentId = 7,
-                            ArtifactId = 8,
-                            PurchasedQuantity = 1
-                        },
-                        new
-                        {
-                            StudentId = 10,
-                            ArtifactId = 5,
-                            PurchasedQuantity = 3
+                            ArtifactId = 1
                         });
                 });
 
@@ -452,92 +429,92 @@ namespace QuestStore.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "The RSS monitor is down, copy the online monitor so we can copy the RSS monitor!",
-                            Email = "Tricia.Bailey4@yahoo.com",
-                            Name = "Tricia",
-                            Surname = "Bailey",
-                            Coins = 825
+                            Description = "If we reboot the port, we can get to the COM port through the wireless COM port!",
+                            Email = "Reginald.Sipes@gmail.com",
+                            Name = "Reginald",
+                            Surname = "Sipes",
+                            Coins = 844
                         },
                         new
                         {
                             Id = 2,
-                            Description = "I'll quantify the open-source COM program, that should program the COM program!",
-                            Email = "Monique_Morar@yahoo.com",
-                            Name = "Monique",
-                            Surname = "Morar",
-                            Coins = 219
+                            Description = "I'll compress the optical PCI driver, that should driver the PCI driver!",
+                            Email = "Tamara59@gmail.com",
+                            Name = "Tamara",
+                            Surname = "Blanda",
+                            Coins = 959
                         },
                         new
                         {
                             Id = 3,
-                            Description = "Use the primary SCSI alarm, then you can quantify the primary alarm!",
-                            Email = "Claire.White@hotmail.com",
-                            Name = "Claire",
-                            Surname = "White",
-                            Coins = 392
+                            Description = "Use the redundant SCSI pixel, then you can index the redundant pixel!",
+                            Email = "Sarah65@gmail.com",
+                            Name = "Sarah",
+                            Surname = "Hintz",
+                            Coins = 965
                         },
                         new
                         {
                             Id = 4,
-                            Description = "You can't copy the array without navigating the neural USB array!",
-                            Email = "William_Becker@hotmail.com",
-                            Name = "William",
-                            Surname = "Becker",
-                            Coins = 633
+                            Description = "I'll parse the digital CSS bus, that should bus the CSS bus!",
+                            Email = "Violet.Gutkowski@gmail.com",
+                            Name = "Violet",
+                            Surname = "Gutkowski",
+                            Coins = 819
                         },
                         new
                         {
                             Id = 5,
-                            Description = "Try to index the EXE bus, maybe it will index the online bus!",
-                            Email = "Johnathan_Hyatt13@yahoo.com",
-                            Name = "Johnathan",
-                            Surname = "Hyatt",
-                            Coins = 609
+                            Description = "You can't compress the capacitor without transmitting the back-end SCSI capacitor!",
+                            Email = "Lana42@yahoo.com",
+                            Name = "Lana",
+                            Surname = "Quigley",
+                            Coins = 406
                         },
                         new
                         {
                             Id = 6,
-                            Description = "Use the 1080p XSS microchip, then you can navigate the 1080p microchip!",
-                            Email = "Alfredo_Legros@hotmail.com",
-                            Name = "Alfredo",
-                            Surname = "Legros",
-                            Coins = 722
+                            Description = "I'll quantify the multi-byte CSS microchip, that should microchip the CSS microchip!",
+                            Email = "Pablo16@yahoo.com",
+                            Name = "Pablo",
+                            Surname = "Wilderman",
+                            Coins = 154
                         },
                         new
                         {
                             Id = 7,
-                            Description = "bypassing the firewall won't do anything, we need to generate the back-end RSS firewall!",
-                            Email = "Darlene93@hotmail.com",
-                            Name = "Darlene",
-                            Surname = "Becker",
-                            Coins = 582
+                            Description = "If we quantify the matrix, we can get to the JBOD matrix through the neural JBOD matrix!",
+                            Email = "Rose.Berge95@hotmail.com",
+                            Name = "Rose",
+                            Surname = "Berge",
+                            Coins = 436
                         },
                         new
                         {
                             Id = 8,
-                            Description = "transmitting the monitor won't do anything, we need to compress the wireless JSON monitor!",
-                            Email = "Edna.Heidenreich46@yahoo.com",
-                            Name = "Edna",
-                            Surname = "Heidenreich",
-                            Coins = 51
+                            Description = "You can't generate the application without programming the digital SMS application!",
+                            Email = "Lloyd73@yahoo.com",
+                            Name = "Lloyd",
+                            Surname = "Rolfson",
+                            Coins = 267
                         },
                         new
                         {
                             Id = 9,
-                            Description = "I'll bypass the 1080p SAS firewall, that should firewall the SAS firewall!",
-                            Email = "Julie_Metz65@gmail.com",
-                            Name = "Julie",
-                            Surname = "Metz",
-                            Coins = 14
+                            Description = "We need to hack the back-end SSL protocol!",
+                            Email = "Otis_Dooley15@yahoo.com",
+                            Name = "Otis",
+                            Surname = "Dooley",
+                            Coins = 544
                         },
                         new
                         {
                             Id = 10,
-                            Description = "We need to reboot the neural PNG interface!",
-                            Email = "Susan_Lemke5@gmail.com",
-                            Name = "Susan",
-                            Surname = "Lemke",
-                            Coins = 277
+                            Description = "I'll generate the online ADP capacitor, that should capacitor the ADP capacitor!",
+                            Email = "Antonia.Mitchell@gmail.com",
+                            Name = "Antonia",
+                            Surname = "Mitchell",
+                            Coins = 200
                         });
                 });
 
