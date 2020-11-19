@@ -12,13 +12,21 @@ namespace QuestStore.Infrastructure.Data.Seed
             modelBuilder.Entity<Quest>().HasData(fakeData.FakeQuests);
             modelBuilder.Entity<Artifact>().HasData(fakeData.FakeArtifacts);
             modelBuilder.Entity<Student>().HasData(fakeData.FakeStudents);
+            modelBuilder.Entity<Classroom>().HasData(fakeData.FakeClassrooms);
+            modelBuilder.Entity<Mentor>().HasData(fakeData.FakeMentors);
             modelBuilder.Entity<StudentArtifact>().HasData(fakeData.FakeStudentArtifacts);
+            modelBuilder.Entity<StudentQuest>().HasData(fakeData.FakeStudentQuests);
+            modelBuilder.Entity<StudentClassroom>().HasData(fakeData.FakeStudentClassrooms);
+            modelBuilder.Entity<MentorClassroom>().HasData(fakeData.FakeMentorClassrooms);
 
             //modelBuilder.Entity<Quest>()
             //    .HasData(
             //        new Quest
             //        {
-            //            Id = 1, Name = "Finishing two-week assignment", Reward = 100, Type = QuestType.Basic
+            //            Id = 1,
+            //            Name = "Finishing two-week assignment",
+            //            Reward = 100,
+            //            Type = QuestType.Basic
             //        },
             //        new Quest
             //        {
@@ -29,8 +37,8 @@ namespace QuestStore.Infrastructure.Data.Seed
             //        });
             //modelBuilder.Entity<Artifact>()
             //    .HasData(
-            //        new Artifact {Id = 1, Name = "Private mentoring", Cost = 50},
-            //        new Artifact {Id = 2, Name = "You can spend a day in home office", Cost = 300});
+            //        new Artifact { Id = 1, Name = "Private mentoring", Cost = 50 },
+            //        new Artifact { Id = 2, Name = "You can spend a day in home office", Cost = 300 });
 
         }
     }

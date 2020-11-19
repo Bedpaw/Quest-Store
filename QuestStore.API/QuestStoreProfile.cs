@@ -121,7 +121,7 @@ namespace QuestStore.API
                     opt =>
                         opt.MapFrom(c =>
                             c.StudentClassrooms.Select(sc => sc.Student).ToList()))
-                .ForMember(dto => dto.Students,
+                .ForMember(dto => dto.Mentors,
                     opt =>
                         opt.MapFrom(c =>
                             c.MentorClassrooms.Select(mc => mc.Mentor).ToList()));

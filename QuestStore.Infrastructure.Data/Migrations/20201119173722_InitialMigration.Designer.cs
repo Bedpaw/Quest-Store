@@ -10,7 +10,7 @@ using QuestStore.Infrastructure.Data;
 namespace QuestStore.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    [Migration("20201016162707_InitialMigration")]
+    [Migration("20201119173722_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,8 +34,8 @@ namespace QuestStore.Infrastructure.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("Image")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -43,23 +43,13 @@ namespace QuestStore.Infrastructure.Data.Migrations
                     b.Property<int?>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Artifact");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Cost = 50,
-                            Name = "Private mentoring"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Cost = 300,
-                            Name = "You can spend a day in home office"
-                        });
                 });
 
             modelBuilder.Entity("QuestStore.Core.Entities.Classroom", b =>
@@ -72,8 +62,8 @@ namespace QuestStore.Infrastructure.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("Image")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -85,22 +75,15 @@ namespace QuestStore.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("QuestStore.Core.Entities.MentorClassroom", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("MentorId")
+                        .HasColumnType("int");
 
                     b.Property<int>("ClassroomId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MentorId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("MentorId", "ClassroomId");
 
                     b.HasIndex("ClassroomId");
-
-                    b.HasIndex("MentorId");
 
                     b.ToTable("MentorClassroom");
                 });
@@ -115,8 +98,8 @@ namespace QuestStore.Infrastructure.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("Image")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -131,66 +114,58 @@ namespace QuestStore.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Quest");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Finishing two-week assignment",
-                            Reward = 100,
-                            Type = "Basic"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Passing a Checkpoint",
-                            Reward = 500,
-                            Type = "Basic"
-                        });
                 });
 
             modelBuilder.Entity("QuestStore.Core.Entities.StudentArtifact", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
 
                     b.Property<int>("ArtifactId")
                         .HasColumnType("int");
 
-                    b.Property<int>("StudentId")
+                    b.Property<int>("PurchasedQuantity")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("StudentId", "ArtifactId");
 
                     b.HasIndex("ArtifactId");
-
-                    b.HasIndex("StudentId");
 
                     b.ToTable("StudentArtifact");
                 });
 
             modelBuilder.Entity("QuestStore.Core.Entities.StudentClassroom", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
 
                     b.Property<int>("ClassroomId")
                         .HasColumnType("int");
 
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("StudentId", "ClassroomId");
 
                     b.HasIndex("ClassroomId");
 
-                    b.HasIndex("StudentId");
-
                     b.ToTable("StudentClassroom");
+                });
+
+            modelBuilder.Entity("QuestStore.Core.Entities.StudentQuest", b =>
+                {
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuestId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("StudentId", "QuestId");
+
+                    b.HasIndex("QuestId");
+
+                    b.ToTable("StudentQuest");
                 });
 
             modelBuilder.Entity("QuestStore.Core.Entities.User", b =>
@@ -209,8 +184,8 @@ namespace QuestStore.Infrastructure.Data.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("Image")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -249,13 +224,13 @@ namespace QuestStore.Infrastructure.Data.Migrations
             modelBuilder.Entity("QuestStore.Core.Entities.MentorClassroom", b =>
                 {
                     b.HasOne("QuestStore.Core.Entities.Classroom", "Classroom")
-                        .WithMany("Mentors")
+                        .WithMany("MentorClassrooms")
                         .HasForeignKey("ClassroomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("QuestStore.Core.Entities.Mentor", "Mentor")
-                        .WithMany("Classrooms")
+                        .WithMany("MentorClassrooms")
                         .HasForeignKey("MentorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -264,13 +239,13 @@ namespace QuestStore.Infrastructure.Data.Migrations
             modelBuilder.Entity("QuestStore.Core.Entities.StudentArtifact", b =>
                 {
                     b.HasOne("QuestStore.Core.Entities.Artifact", "Artifact")
-                        .WithMany("Students")
+                        .WithMany()
                         .HasForeignKey("ArtifactId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("QuestStore.Core.Entities.Student", "Student")
-                        .WithMany("Artifacts")
+                        .WithMany("StudentArtifacts")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -279,13 +254,28 @@ namespace QuestStore.Infrastructure.Data.Migrations
             modelBuilder.Entity("QuestStore.Core.Entities.StudentClassroom", b =>
                 {
                     b.HasOne("QuestStore.Core.Entities.Classroom", "Classroom")
-                        .WithMany("Students")
+                        .WithMany("StudentClassrooms")
                         .HasForeignKey("ClassroomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("QuestStore.Core.Entities.Student", "Student")
-                        .WithMany("Classrooms")
+                        .WithMany("StudentClassrooms")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("QuestStore.Core.Entities.StudentQuest", b =>
+                {
+                    b.HasOne("QuestStore.Core.Entities.Quest", "Quest")
+                        .WithMany()
+                        .HasForeignKey("QuestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("QuestStore.Core.Entities.Student", "Student")
+                        .WithMany("StudentQuests")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

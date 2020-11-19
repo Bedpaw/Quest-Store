@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace QuestStore.Infrastructure.Data.Migrations
 {
@@ -15,9 +14,10 @@ namespace QuestStore.Infrastructure.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    Image = table.Column<byte[]>(nullable: true),
+                    Image = table.Column<string>(nullable: true),
                     Cost = table.Column<int>(nullable: false),
-                    Quantity = table.Column<int>(nullable: true)
+                    Quantity = table.Column<int>(nullable: true),
+                    Type = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -32,7 +32,7 @@ namespace QuestStore.Infrastructure.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    Image = table.Column<byte[]>(nullable: true)
+                    Image = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -47,7 +47,7 @@ namespace QuestStore.Infrastructure.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    Image = table.Column<byte[]>(nullable: true),
+                    Image = table.Column<string>(nullable: true),
                     Reward = table.Column<int>(nullable: false),
                     Type = table.Column<string>(nullable: false)
                 },
@@ -64,7 +64,7 @@ namespace QuestStore.Infrastructure.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    Image = table.Column<byte[]>(nullable: true),
+                    Image = table.Column<string>(nullable: true),
                     AuthId = table.Column<string>(nullable: true),
                     Surname = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
@@ -80,14 +80,12 @@ namespace QuestStore.Infrastructure.Data.Migrations
                 name: "MentorClassroom",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     MentorId = table.Column<int>(nullable: false),
                     ClassroomId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MentorClassroom", x => x.Id);
+                    table.PrimaryKey("PK_MentorClassroom", x => new { x.MentorId, x.ClassroomId });
                     table.ForeignKey(
                         name: "FK_MentorClassroom_Classroom_ClassroomId",
                         column: x => x.ClassroomId,
@@ -106,14 +104,13 @@ namespace QuestStore.Infrastructure.Data.Migrations
                 name: "StudentArtifact",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     StudentId = table.Column<int>(nullable: false),
-                    ArtifactId = table.Column<int>(nullable: false)
+                    ArtifactId = table.Column<int>(nullable: false),
+                    PurchasedQuantity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StudentArtifact", x => x.Id);
+                    table.PrimaryKey("PK_StudentArtifact", x => new { x.StudentId, x.ArtifactId });
                     table.ForeignKey(
                         name: "FK_StudentArtifact_Artifact_ArtifactId",
                         column: x => x.ArtifactId,
@@ -132,14 +129,12 @@ namespace QuestStore.Infrastructure.Data.Migrations
                 name: "StudentClassroom",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     StudentId = table.Column<int>(nullable: false),
                     ClassroomId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StudentClassroom", x => x.Id);
+                    table.PrimaryKey("PK_StudentClassroom", x => new { x.StudentId, x.ClassroomId });
                     table.ForeignKey(
                         name: "FK_StudentClassroom_Classroom_ClassroomId",
                         column: x => x.ClassroomId,
@@ -154,22 +149,29 @@ namespace QuestStore.Infrastructure.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Artifact",
-                columns: new[] { "Id", "Cost", "Description", "Image", "Name", "Quantity" },
-                values: new object[,]
+            migrationBuilder.CreateTable(
+                name: "StudentQuest",
+                columns: table => new
                 {
-                    { 1, 50, null, null, "Private mentoring", null },
-                    { 2, 300, null, null, "You can spend a day in home office", null }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Quest",
-                columns: new[] { "Id", "Description", "Image", "Name", "Reward", "Type" },
-                values: new object[,]
+                    StudentId = table.Column<int>(nullable: false),
+                    QuestId = table.Column<int>(nullable: false),
+                    Status = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
                 {
-                    { 1, null, null, "Finishing two-week assignment", 100, "Basic" },
-                    { 2, null, null, "Passing a Checkpoint", 500, "Basic" }
+                    table.PrimaryKey("PK_StudentQuest", x => new { x.StudentId, x.QuestId });
+                    table.ForeignKey(
+                        name: "FK_StudentQuest_Quest_QuestId",
+                        column: x => x.QuestId,
+                        principalTable: "Quest",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_StudentQuest_User_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -178,19 +180,9 @@ namespace QuestStore.Infrastructure.Data.Migrations
                 column: "ClassroomId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MentorClassroom_MentorId",
-                table: "MentorClassroom",
-                column: "MentorId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_StudentArtifact_ArtifactId",
                 table: "StudentArtifact",
                 column: "ArtifactId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StudentArtifact_StudentId",
-                table: "StudentArtifact",
-                column: "StudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StudentClassroom_ClassroomId",
@@ -198,9 +190,9 @@ namespace QuestStore.Infrastructure.Data.Migrations
                 column: "ClassroomId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StudentClassroom_StudentId",
-                table: "StudentClassroom",
-                column: "StudentId");
+                name: "IX_StudentQuest_QuestId",
+                table: "StudentQuest",
+                column: "QuestId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -209,19 +201,22 @@ namespace QuestStore.Infrastructure.Data.Migrations
                 name: "MentorClassroom");
 
             migrationBuilder.DropTable(
-                name: "Quest");
-
-            migrationBuilder.DropTable(
                 name: "StudentArtifact");
 
             migrationBuilder.DropTable(
                 name: "StudentClassroom");
 
             migrationBuilder.DropTable(
+                name: "StudentQuest");
+
+            migrationBuilder.DropTable(
                 name: "Artifact");
 
             migrationBuilder.DropTable(
                 name: "Classroom");
+
+            migrationBuilder.DropTable(
+                name: "Quest");
 
             migrationBuilder.DropTable(
                 name: "User");
