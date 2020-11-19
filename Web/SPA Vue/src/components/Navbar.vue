@@ -22,8 +22,7 @@
             <cld-image
               v-if="getLoggedUser.image !== ''"
               :public-id="getLoggedUser.image"
-              auto
-              crop="fit"
+              resize="fit"
             />
             <img v-else src="../assets/avatar.svg" />
           </v-list-item-avatar>

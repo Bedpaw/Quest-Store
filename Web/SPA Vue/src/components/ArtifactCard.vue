@@ -6,7 +6,7 @@
       dpr="auto"
       responsive="width"
       width="auto"
-      crop="scale"
+      height="300px"
       loading="lazy"
     />
     <v-img v-else src="../assets/artifact.jpg" height="300px"></v-img>
