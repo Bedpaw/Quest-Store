@@ -1,22 +1,54 @@
 <template>
   <div>
-    <v-card>
-      <v-card-title>
-        {{ _class.name }}
-      </v-card-title>
-      <v-card-subtitle>
-        Mentors: {{ getUsersFullNameAsString(_class.mentors) }}
-      </v-card-subtitle>
+    <v-card class="bg">
+      <v-row>
+        <v-col cols="12" md="6" class="pt-0">
+          <img
+            src="@/assets/classroom-default.jpg"
+            :alt="classroom.name"
+            class="cover"
+          />
+        </v-col>
 
-      <h3>Students</h3>
-      <div v-for="(student, index) in _class.students" :key="student.id">
-        {{ index + 1 }}. {{ getFullName(student) }}
-      </div>
-      <v-card-actions>
-        <v-btn class="f-text-danger" @click="$router.go(-1)">
-          Back
-        </v-btn>
-      </v-card-actions>
+        <v-col cols="12" md="6" class="pt-0 d-flex align-center justify-center">
+          <v-card-title
+            class=" text-md-h1 text-h5 font-weight-bold text-center"
+          >
+            {{ classroom.name }}
+          </v-card-title>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12" md="6">
+          <v-card-subtitle
+            class="text-center text-h6 text-sm-h4 font-weight-bold"
+          >
+            Students
+          </v-card-subtitle>
+          <p
+            v-for="(student, index) in classroom.students"
+            :key="student.id"
+            class="text-center text-h6 text-sm-h5"
+          >
+            {{ index + 1 }}. {{ getFullName(student) }}
+          </p>
+        </v-col>
+
+        <v-col cols="12" md="6">
+          <v-card-subtitle
+            class="text-center text-h6 text-sm-h4 font-weight-bold"
+          >
+            Mentors
+          </v-card-subtitle>
+          <p
+            v-for="(mentor, index) in classroom.mentors"
+            :key="mentor.id"
+            class="text-center text-h6 text-sm-h5"
+          >
+            {{ index + 1 }}. {{ getFullName(mentor) }}
+          </p>
+        </v-col>
+      </v-row>
     </v-card>
   </div>
 </template>
@@ -26,14 +58,34 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'ClassDetails',
+  data() {
+    return {
+      classroom: {
+        students: [],
+        mentors: []
+      }
+    };
+  },
+  created() {
+    this.$store
+      .dispatch('classroom/fetchClass', this.$route.params.id)
+      .then(response => (this.classroom = response));
+  },
   computed: {
-    ...mapGetters('classroom', ['getClassById']),
     ...mapGetters('user', ['getUsersFullNameAsString', 'getFullName']),
-    _class() {
-      return this.getClassById(this.$route.params.id);
+    mentorsFullNames() {
+      return this.getUsersFullNameAsString(this.classroom.mentors);
     }
   }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.cover {
+  object-fit: cover;
+  width: 100%;
+}
+.bg {
+  background-color: #07689f;
+}
+</style>

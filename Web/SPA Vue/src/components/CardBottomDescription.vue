@@ -24,15 +24,12 @@
 </template>
 
 <script>
-
 export default {
-  name: "CardBottomDescription",
+  name: 'CardBottomDescription',
   data: () => ({
-    show: false,
-  }),
-}
+    show: false
+  })
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

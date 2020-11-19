@@ -9,7 +9,7 @@ export const arrayUtils = {
   updateItem(array, newItem) {
     const itemToUpdate = array.find(item => item.id === newItem.id);
     const indexToReplace = array.indexOf(itemToUpdate);
-    return (array[indexToReplace] = newItem);
+    return array.splice(indexToReplace, 1, newItem);
   },
   isEmptyArray(array) {
     return Array.isArray(array) && array.length === 0;

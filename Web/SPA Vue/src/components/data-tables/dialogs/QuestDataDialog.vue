@@ -83,11 +83,11 @@ import {
   descriptionRules,
   positive
 } from '@/components/data-tables/validators';
-import UploadFile from "@/components/utils/uploadFile";
+import UploadFile from '@/components/utils/uploadFile';
 
 export default {
   name: 'QuestDataDialog',
-  components: {UploadFile},
+  components: { UploadFile },
   mixins: [dataTableDialogMixin],
   data() {
     return {

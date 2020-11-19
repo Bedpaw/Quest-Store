@@ -24,7 +24,7 @@
           :color="quantityChipColor(item.quantity)"
           style="font-weight: bold"
         >
-          {{ item.quantity }}
+          {{ item.quantity !== null ? item.quantity : 'unlimited' }}
         </v-chip>
       </template>
 
@@ -116,7 +116,8 @@ export default {
       this.clearEditedItem();
     },
     quantityChipColor(quantity) {
-      return quantity === 0 ? 'red' : 'green';
+      if (quantity === null) return 'yellow';
+      return parseInt(quantity) === 0 ? 'red' : 'green';
     }
   }
 };

@@ -6,7 +6,7 @@ export const artifacts = [
     name: 'Additional consultation (0,5h)',
     description:
       'Duis dignissim, lorem eget interdum hendrerit, erat lectus consequat libero, condimentum rhoncus urna nulla feugiat orci.',
-    image: '',
+    image: 'iw5fl4fg1rpktt3j7vwt',
     cost: 50,
     quantity: 0
   }),
@@ -15,7 +15,7 @@ export const artifacts = [
     name: 'Additional consultation (1h)',
     description:
       'Duis dignissim, lorem eget interdum hendrerit, erat lectus consequat libero, condimentum rhoncus urna nulla feugiat orci.',
-    image: '',
+    image: 'wfmzkbmjuvv3qrck5zcf',
     cost: 100,
     quantity: 5
   }),

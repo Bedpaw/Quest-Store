@@ -7,6 +7,7 @@ import { ROUTES } from '@/utils/macros/routes.js';
 import { Auth0Plugin } from '@/auth';
 import { domain, clientId, audience } from '../auth_config.json';
 import '@/cloudinary.js';
+import '@/assets/css/main.css';
 
 Vue.config.productionTip = false;
 Vue.prototype.window = window;
