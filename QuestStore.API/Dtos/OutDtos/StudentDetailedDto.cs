@@ -8,6 +8,7 @@ namespace QuestStore.API.Dtos.OutDtos
     {
         public string Surname { get; set; }
         public string Email { get; set; }
+        public string Role { get; set; }
         public int Coins { get; set; }
         public ICollection<PurchasedArtifactBriefDto> Artifacts { get; set; }
         public ICollection<ClassroomBriefDto> Classrooms { get; set; }
