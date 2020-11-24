@@ -34,8 +34,8 @@ namespace QuestStore.API.Controllers
             if (studentArtifact != null)
             {
                 return CreatedAtAction(
-                    nameof(GetResource),
-                    new { id, id2 }, Mapper.Map<StudentArtifactBriefDto>(studentArtifact));
+                    nameof(GetAllResources),
+                    new {id}, Mapper.Map<StudentArtifactBriefDto>(studentArtifact));
             }
 
             return BadRequest("The artifact cannot be purchased.");
