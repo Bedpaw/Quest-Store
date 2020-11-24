@@ -8,16 +8,16 @@ using QuestStore.Core.Interfaces;
 
 namespace QuestStore.Core.Services
 {
-    public class StudentService : IStudentService
+    public class PurchaseService : IPurchaseService
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public StudentService(IUnitOfWork unitOfWork)
+        public PurchaseService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
             _unitOfWork.NoTracking = false;
         }
-        public async Task<StudentArtifact> BuyArtifact(int studentId, int artifactId)
+        public async Task<StudentArtifact> StudentBuyArtifact(int studentId, int artifactId)
         {
             var student = await _unitOfWork.GenericRepository<Student>().GetById(studentId);
             if (student == null) throw new ArgumentException("There is no student with the given id.");
@@ -40,8 +40,7 @@ namespace QuestStore.Core.Services
             else
             {
                 studentArtifact = new StudentArtifact {StudentId = studentId, ArtifactId = artifactId, PurchasedQuantity = 1};
-                student.StudentArtifacts ??= new List<StudentArtifact>();
-                student.StudentArtifacts.Add(studentArtifact);
+                student.StudentArtifacts ??= new List<StudentArtifact> {studentArtifact};
             }
 
             await _unitOfWork.Save();
@@ -55,8 +54,8 @@ namespace QuestStore.Core.Services
 
             if (artifact.Quantity <= 0 || artifact.Type == ArtifactType.Basic) return false;
 
-            var students = (await _unitOfWork.LinkingRepository<StudentClassroom>()
-                .GetBySingleId(classroomId, false, 1))?.Select(sc => sc.Student).ToList();
+            var students =
+                await _unitOfWork.ClassroomRepository.GetClassroomStudentsWithStudentArtifact(classroomId, artifactId);
             if (students == null || students.Count == 0)
                 throw new ArgumentException(
                     "There are no students within the given classroom or the wrong classroom id.");
@@ -68,16 +67,18 @@ namespace QuestStore.Core.Services
                 if (student.Coins >= costPerStudent)
                 {
                     student.Coins -= costPerStudent;
-                    var studentArtifact = await _unitOfWork.LinkingRepository<StudentArtifact>()
-                        .GetByFullKey(student.Id, artifactId);
-                    if (studentArtifact != null)
+                    
+                    if (student.StudentArtifacts != null && student.StudentArtifacts.Count > 0)
                     {
-                        studentArtifact.PurchasedQuantity++;
+                        student.StudentArtifacts.Single().PurchasedQuantity++;
                     }
                     else
                     {
-                        student.StudentArtifacts ??= new List<StudentArtifact>();
-                        student.StudentArtifacts.Add(new StudentArtifact {ArtifactId = artifactId, PurchasedQuantity = 1});
+                        var studentArtifact = new StudentArtifact
+                            {StudentId = student.Id, ArtifactId = artifactId, PurchasedQuantity = 1};
+                        student.StudentArtifacts ??= new List<StudentArtifact> {studentArtifact};
+                        //We must add the entry manually because EFCore doesn't do it automatically for no reason.
+                        _unitOfWork.LinkingRepository<StudentArtifact>().Add(studentArtifact);
                     }
                 }
                 else

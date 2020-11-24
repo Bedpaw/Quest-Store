@@ -113,8 +113,9 @@ namespace QuestStore.API
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped(typeof(ILinkingRepository<>), typeof(LinkingRepository<>));
+            services.AddScoped<IClassroomRepository, ClassroomRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<IPurchaseService, PurchaseService>();
         }
 
         public void Configure(IApplicationBuilder app)

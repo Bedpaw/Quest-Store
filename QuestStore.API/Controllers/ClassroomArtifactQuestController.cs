@@ -18,25 +18,25 @@ namespace QuestStore.API.Controllers
     [ApiExplorerSettings(GroupName = "Classrooms")]
     public class ClassroomArtifactQuestController : ControllerBase
     {
-        private readonly IStudentService _studentService;
+        private readonly IPurchaseService _purchaseService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public ClassroomArtifactQuestController(IStudentService studentService, IUnitOfWork unitOfWork, IMapper mapper)
+        public ClassroomArtifactQuestController(IPurchaseService purchaseService, IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _studentService = studentService;
+            _purchaseService = purchaseService;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
-        [Route("classrooms/{id}/artifacts/{id2}")]
+        [Route("api/Classrooms/{id}/artifacts/{id2}")]
         [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Post))]
         [HttpPost]
         public async Task<IActionResult> CreateClassPurchase(int id, int id2)
         {
             try
             {
-                if (await _studentService.ClassBuyArtifact(id, id2)) 
+                if (await _purchaseService.ClassBuyArtifact(id, id2)) 
                     return StatusCode(StatusCodes.Status201Created);
             }
             catch (ArgumentException ex)
@@ -47,7 +47,7 @@ namespace QuestStore.API.Controllers
             return BadRequest("The artifact cannot be purchased.");
         }
 
-        [Route("classrooms/{id}/quests/pending")]
+        [Route("api/Classrooms/{id}/quests/pending")]
         [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Get))]
         [HttpGet]
         public async Task<ActionResult<List<QuestDetailedDto>>> GetPendingQuests(int id)

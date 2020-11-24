@@ -10,13 +10,13 @@ namespace QuestStore.API.Controllers
 {
     public class StudentArtifactsController : LinkingGenericController<StudentArtifact, PurchasedArtifactDetailedDto, StudentArtifactBriefDto>
     {
-        private readonly IStudentService _studentService;
+        private readonly IPurchaseService _purchaseService;
         protected override bool ReverseKeyOrder { get; } = false;
 
-        public StudentArtifactsController(IUnitOfWork unitOfWork, IMapper mapper, IStudentService studentService)
+        public StudentArtifactsController(IUnitOfWork unitOfWork, IMapper mapper, IPurchaseService purchaseService)
             : base(unitOfWork, mapper)
         {
-            _studentService = studentService;
+            _purchaseService = purchaseService;
         }
 
         public override async Task<ActionResult<StudentArtifactBriefDto>> CreateResource(int id, int id2)
@@ -24,7 +24,7 @@ namespace QuestStore.API.Controllers
             StudentArtifact studentArtifact;
             try
             {
-                studentArtifact = await _studentService.BuyArtifact(id, id2);
+                studentArtifact = await _purchaseService.StudentBuyArtifact(id, id2);
             }
             catch (ArgumentException ex)
             {

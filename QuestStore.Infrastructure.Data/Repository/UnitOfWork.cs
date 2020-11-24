@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Data;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ namespace QuestStore.Infrastructure.Data.Repository
         protected StoreDbContext Context { get; }
         private readonly Dictionary<Type, object> _genericRepositories = new Dictionary<Type, object>();
         private readonly Dictionary<Type, object> _linkingRepositories = new Dictionary<Type, object>();
+        private IClassroomRepository _classroomRepository;
 
         public UnitOfWork(StoreDbContext context)
         {
@@ -82,5 +84,7 @@ namespace QuestStore.Infrastructure.Data.Repository
 
             return (ILinkingRepository<TEntity>)repository;
         }
+
+        public virtual IClassroomRepository ClassroomRepository => _classroomRepository ??= new ClassroomRepository(Context);
     }
 }
