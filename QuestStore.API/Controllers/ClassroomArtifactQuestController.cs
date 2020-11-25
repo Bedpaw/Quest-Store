@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QuestStore.API.Dtos.Duplex;
+using QuestStore.API.Dtos.OutDtos;
 using QuestStore.Core.Entities;
 using QuestStore.Core.Enums;
 using QuestStore.Core.Interfaces;
@@ -50,28 +51,36 @@ namespace QuestStore.API.Controllers
         [Route("api/Classrooms/{id}/quests/pending")]
         [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Get))]
         [HttpGet]
-        public async Task<ActionResult<List<QuestDetailedDto>>> GetPendingQuests(int id)
+        public async Task<ActionResult<List<QuestWithStudentsDto>>> GetPendingQuests(int id)
         {
-            // List of students Ids in the given class.
-            var studentsIds = (await _unitOfWork.LinkingRepository<StudentClassroom>()
-                .GetBySingleId(id, false))?.Select(sc => sc.StudentId);
-            if (studentsIds == null) return NotFound();
+            var studentQuests =
+                await _unitOfWork.ClassroomRepository.GetClassroomStudentsWithQuests(id, QuestStatus.Pending);
+            if (studentQuests == null) return NotFound();
 
-            var pendingQuests = new List<Quest>(); 
-            foreach (var studentId in studentsIds)
+            var quests = new List<QuestWithStudentsDto>();
+            foreach (var studentQuest in studentQuests)
             {
-                var quests =
-                    (await _unitOfWork.LinkingRepository<StudentQuest>()
-                        .GetBySingleId(
-                            studentId,
-                            true,
-                            1,
-                            sq => sq.Status == QuestStatus.Pending))
-                    ?.Select(sq => sq.Quest);
-                pendingQuests.AddRange(quests ?? Array.Empty<Quest>());
+                var quest = quests.FirstOrDefault(q => q.Id == studentQuest.QuestId);
+                if (quest != null)
+                {
+                   quest.Students.Add(_mapper.Map<StudentBriefDto>(studentQuest.Student));
+                }
+                else
+                {
+                    quests.Add(
+                        new QuestWithStudentsDto
+                        {
+                            Id = studentQuest.QuestId,
+                            Name = studentQuest.Quest.Name,
+                            Students = new List<StudentBriefDto>
+                            {
+                                _mapper.Map<StudentBriefDto>(studentQuest.Student)
+                            }
+                        });
+                }
             }
 
-            return Ok(_mapper.Map<List<QuestDetailedDto>>(pendingQuests));
+            return Ok(quests);
         }
     }
 }
