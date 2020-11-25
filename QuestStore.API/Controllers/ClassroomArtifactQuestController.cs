@@ -57,30 +57,7 @@ namespace QuestStore.API.Controllers
                 await _unitOfWork.ClassroomRepository.GetClassroomStudentsWithQuests(id, QuestStatus.Pending);
             if (studentQuests == null) return NotFound();
 
-            var quests = new List<QuestWithStudentsDto>();
-            foreach (var studentQuest in studentQuests)
-            {
-                var quest = quests.FirstOrDefault(q => q.Id == studentQuest.QuestId);
-                if (quest != null)
-                {
-                   quest.Students.Add(_mapper.Map<StudentBriefDto>(studentQuest.Student));
-                }
-                else
-                {
-                    quests.Add(
-                        new QuestWithStudentsDto
-                        {
-                            Id = studentQuest.QuestId,
-                            Name = studentQuest.Quest.Name,
-                            Students = new List<StudentBriefDto>
-                            {
-                                _mapper.Map<StudentBriefDto>(studentQuest.Student)
-                            }
-                        });
-                }
-            }
-
-            return Ok(quests);
+            return Ok(_mapper.Map<List<QuestWithStudentsDto>>(studentQuests));
         }
     }
 }

@@ -7,7 +7,7 @@ using QuestStore.API.Dtos.OutDtos;
 using QuestStore.Core.Entities;
 using QuestStore.Core.Enums;
 
-namespace QuestStore.API
+namespace QuestStore.API.Profiles
 {
     public class QuestStoreProfile : Profile
     {
@@ -89,6 +89,8 @@ namespace QuestStore.API
                 .IncludeMembers(mc => mc.Classroom);
             CreateMap<MentorClassroom, MentorDetailedDto>()
                 .IncludeMembers(mc => mc.Mentor);
+
+            CreateMap<List<StudentQuest>, List<QuestWithStudentsDto>>().ConvertUsing<QuestWithStudentsListConverter>();
 
             CreateMap<Mentor, MentorDetailedDto>()
                 .ForMember(
