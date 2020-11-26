@@ -60,9 +60,11 @@ namespace QuestStore.API.Controllers
         {
             if (id != resourceDto.Id) return BadRequest();
 
-            if (!await Repository.Exists(id)) return NotFound();
+            var resource = await Repository.GetById(id);
+            if (resource == null) return NotFound();
 
-            Repository.Update(Mapper.Map<T>(resourceDto));
+            resource = Mapper.Map(resourceDto, resource);
+            Repository.Update(resource);
             await UnitOfWork.Save();
             return NoContent(); //The operation was successful
         }

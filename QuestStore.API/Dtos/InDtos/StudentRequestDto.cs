@@ -9,7 +9,6 @@ namespace QuestStore.API.Dtos.InDtos
 {
     public class StudentRequestDto : ResourceDto
     {
-        public string Role { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
         public int Coins { get; set; }
