@@ -78,6 +78,26 @@ namespace QuestStore.API.GenericControllersFactory
                             ReverseKeyOrder = false
                         }
                     },
+                    {
+                        (typeof(StudentClassroom), typeof(StudentMediumDto), typeof(StudentClassroomBriefDto)),
+                        new LinkingControllerConfiguration
+                        {
+                            Name = nameof(Classroom) + "s",
+                            ParentRoute = nameof(Classroom) + "s",
+                            ChildRoute = nameof(Student) + "s",
+                            ReverseKeyOrder = true
+                        }
+                    },
+                    {
+                        (typeof(MentorClassroom), typeof(MentorMediumDto), typeof(MentorClassroomBriefDto)),
+                        new LinkingControllerConfiguration
+                        {
+                            Name = nameof(Classroom) + "s",
+                            ParentRoute = nameof(Classroom) + "s",
+                            ChildRoute = nameof(Mentor) + "s",
+                            ReverseKeyOrder = true
+                        }
+                    }
                     //{
                     //    (typeof(StudentClassroom), typeof(ClassroomDetailedDto),
                     //        typeof(StudentClassroomBriefDto)),
@@ -89,16 +109,6 @@ namespace QuestStore.API.GenericControllersFactory
                     //        ReverseKeyOrder = false
                     //    }
                     //},
-                    {
-                        (typeof(StudentClassroom), typeof(StudentDetailedDto), typeof(StudentClassroomBriefDto)),
-                        new LinkingControllerConfiguration
-                        {
-                            Name = nameof(Classroom) + "s",
-                            ParentRoute = nameof(Classroom) + "s",
-                            ChildRoute = nameof(Student) + "s",
-                            ReverseKeyOrder = true
-                        }
-                    },
                     //{
                     //    (typeof(MentorClassroom), typeof(ClassroomDetailedDto), typeof(MentorClassroomBriefDto)),
                     //    new LinkingControllerConfiguration
@@ -108,17 +118,7 @@ namespace QuestStore.API.GenericControllersFactory
                     //        ChildRoute = nameof(Classroom) + "s",
                     //        ReverseKeyOrder = false
                     //    }
-                    //},
-                    {
-                        (typeof(MentorClassroom), typeof(MentorDetailedDto), typeof(MentorClassroomBriefDto)),
-                        new LinkingControllerConfiguration
-                        {
-                            Name = nameof(Classroom) + "s",
-                            ParentRoute = nameof(Classroom) + "s",
-                            ChildRoute = nameof(Mentor) + "s",
-                            ReverseKeyOrder = true
-                        }
-                    }
+                    //}
                 });
     }
 }
