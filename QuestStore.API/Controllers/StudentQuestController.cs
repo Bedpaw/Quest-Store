@@ -85,8 +85,8 @@ namespace QuestStore.API.Controllers
                     Repository.Update(studentQuest);
                     await UnitOfWork.Save();
                     return CreatedAtAction(
-                        nameof(GetResource),
-                        new { id, id2 },
+                        nameof(GetAllResources),
+                        new { id },
                         Mapper.Map<StudentQuestBriefDto>(studentQuest));
                 }
 
@@ -105,8 +105,8 @@ namespace QuestStore.API.Controllers
             }
             
             return CreatedAtAction(
-                nameof(GetResource),
-                new {id, id2},
+                nameof(GetAllResources),
+                new {id},
                 Mapper.Map<StudentQuestBriefDto>(studentQuest));
         }
     }

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using QuestStore.Core.Entities;
-using QuestStore.Core.Enums;
+
 
 
 namespace QuestStore.Core.Interfaces
@@ -12,10 +9,8 @@ namespace QuestStore.Core.Interfaces
     {
         public Task<int> Save();
         public bool NoTracking { get; set; }
-
         public IGenericRepository<TEntity> GenericRepository<TEntity>() where TEntity : BaseEntity, new();
-
         public ILinkingRepository<TEntity> LinkingRepository<TEntity>() where TEntity : class;
-
+        public IClassroomRepository ClassroomRepository { get; }
     }
 }

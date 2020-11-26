@@ -42,19 +42,6 @@ namespace QuestStore.API.Controllers
             return Ok(Mapper.Map<List<TOut>>(result.ToList()));
         }
 
-        [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Get))]
-        [HttpGet("{id2}")]
-        public virtual async Task<ActionResult<TOut>> GetResource(int id, int id2)
-        {
-
-            var result = ReverseKeyOrder
-                ? await Repository.GetByFullKey(id2, id, 1)
-                : await Repository.GetByFullKey(id, id2, 1);
-            if (result == null) return NotFound();
-
-            return Ok(Mapper.Map<TOut>(result));
-        }
-
         [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Post))]
         [HttpPost("{id2}")]
         public virtual async Task<ActionResult<TPost>> CreateResource(int id, int id2)
@@ -75,8 +62,8 @@ namespace QuestStore.API.Controllers
             }
 
             return CreatedAtAction(
-                nameof(GetResource),
-                new {id, id2},
+                nameof(GetAllResources),
+                new {id},
                 Mapper.Map<TPost>(resource));
         }
 
@@ -94,6 +81,19 @@ namespace QuestStore.API.Controllers
             await UnitOfWork.Save();
             return Ok();
         }
+
+        //[ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Get))]
+        //[HttpGet("{id2}")]
+        //public virtual async Task<ActionResult<TOut>> GetResource(int id, int id2)
+        //{
+
+        //    var result = ReverseKeyOrder
+        //        ? await Repository.GetByFullKey(id2, id, 1)
+        //        : await Repository.GetByFullKey(id, id2, 1);
+        //    if (result == null) return NotFound();
+
+        //    return Ok(Mapper.Map<TOut>(result));
+        //}
 
         //[ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Delete))]
         //[HttpDelete]
