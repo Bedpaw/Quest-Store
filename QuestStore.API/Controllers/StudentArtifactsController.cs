@@ -40,5 +40,19 @@ namespace QuestStore.API.Controllers
 
             return BadRequest("The artifact cannot be purchased.");
         }
+
+        public override async Task<IActionResult> DeleteResource(int id, int id2)
+        {
+            try
+            {
+                await _purchaseService.StudentReturnArtifact(id, id2);
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(ex);
+            }
+
+            return Ok();
+        }
     }
 }

@@ -116,6 +116,7 @@ namespace QuestStore.API
             services.AddScoped<IClassroomRepository, ClassroomRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IPurchaseService, PurchaseService>();
+            services.AddScoped<IQuestService, QuestService>();
         }
 
         public void Configure(IApplicationBuilder app)

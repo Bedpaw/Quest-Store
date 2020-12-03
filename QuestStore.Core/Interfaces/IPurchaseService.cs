@@ -7,5 +7,6 @@ namespace QuestStore.Core.Interfaces
     {
         Task<StudentArtifact> StudentBuyArtifact(int studentId, int artifactId);
         Task<bool> ClassBuyArtifact(int classroomId, int artifactId);
+        Task StudentReturnArtifact(int studentId, int artifactId);
     }
 }

@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Data;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -14,8 +14,11 @@ namespace QuestStore.API.Controllers
 {
     public class StudentQuestController : LinkingGenericController<StudentQuest, QuestDetailedDto, StudentQuestBriefDto>
     {
-        public StudentQuestController(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+        private readonly IQuestService _questService;
+
+        public StudentQuestController(IUnitOfWork unitOfWork, IMapper mapper, IQuestService questService) : base(unitOfWork, mapper)
         {
+            _questService = questService;
         }
 
         [HttpGet("pending")]
@@ -27,87 +30,89 @@ namespace QuestStore.API.Controllers
             await GetQuests(id, QuestStatus.Completed);
 
         [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Post))]
-        [HttpPost("pending/{id2}")]
-        public async Task<ActionResult<StudentQuestBriefDto>> CreatePendingQuest(int id, int id2) =>
-            await CreateQuest(id, id2, QuestStatus.Pending);
+        [HttpPost("{id2}")]
+        public async Task<ActionResult<StudentQuestBriefDto>> CreateQuest(int id, int id2, QuestStatus status)
+        {
+            if (status == QuestStatus.Pending)
+            {
+                var result = await base.CreateResource(id, id2);
+                if (result.Result is BadRequestObjectResult) return result;
 
-        [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Post))]
-        [HttpPost("completed/{id2}")]
-        public async Task<ActionResult<StudentQuestBriefDto>> CreateCompletedQuest(int id, int id2) =>
-            await CreateQuest(id, id2, QuestStatus.Completed);
+                var resource = (StudentQuestBriefDto) ((CreatedAtActionResult) result.Result).Value;
+                return CreatedAtAction(nameof(GetAllPendingQuests), new { id }, resource);
+            }
+
+            StudentQuest studentQuest;
+            try
+            {
+                studentQuest = await _questService.FinishQuest(id, id2);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return CreatedAtAction(
+                nameof(GetAllCompletedQuests),
+                new { id },
+                Mapper.Map<StudentQuestBriefDto>(studentQuest));
+        }
 
         [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Put))]
         [HttpPut("{id2}")]
-        public async Task<IActionResult> UpdateQuest(int id, int id2, [FromBody] QuestStatus status)
+        public async Task<IActionResult> UpdateQuest(int id, int id2, QuestStatus status)
         {
-            if (!await Repository.Exists(id, id2)) return NotFound();
+            var studentQuest = await Repository.GetByFullKey(id, id2);
+            if (studentQuest == null) return NotFound();
 
-            var studentQuest = new StudentQuest {StudentId = id, QuestId = id2, Status = status};
-            Repository.Update(studentQuest);
-            await UnitOfWork.Save();
+            try
+            {
+                switch (studentQuest.Status)
+                {
+                    case QuestStatus.Pending when status == QuestStatus.Completed:
+                        await _questService.FinishQuest(id, id2);
+                        break;
+                    case QuestStatus.Completed when status == QuestStatus.Pending:
+                        await _questService.UndoFinishQuest(id, id2);
+                        break;
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
             return NoContent(); //The operation was successful
         }
 
-        [NonAction]
-        [ApiExplorerSettings(IgnoreApi = true)]
-        public override Task<ActionResult<List<QuestDetailedDto>>> GetAllResources(int id)
+        public override async Task<IActionResult> DeleteResource(int id, int id2)
         {
-            return base.GetAllResources(id);
-        }
+            var studentQuest = await Repository.GetByFullKey(id, id2);
+            if (studentQuest == null) return NotFound();
 
-        [NonAction]
-        [ApiExplorerSettings(IgnoreApi = true)]
-        public override Task<ActionResult<StudentQuestBriefDto>> CreateResource(int id, int id2)
-        {
-            return base.CreateResource(id, id2);
+            if (studentQuest.Status == QuestStatus.Completed) await _questService.UndoFinishQuest(id, id2);
+
+            Repository.Delete(studentQuest);
+            await UnitOfWork.Save();
+            return Ok();
         }
 
         private async Task<ActionResult<List<QuestDetailedDto>>> GetQuests(int id, QuestStatus status)
         {
-            var result = await Repository.GetBySingleId(
-                id,
-                true,
-                1,
-                sq => sq.Status == status);
+            var result = await Repository
+                .GetBySingleId(id, true, 1, sq => sq.Status == status);
             if (result == null) return NotFound();
 
             return Ok(Mapper.Map<List<QuestDetailedDto>>(result.ToList()));
         }
 
-        private async Task<ActionResult<StudentQuestBriefDto>> CreateQuest(int id, int id2, QuestStatus status)
-        {
-            var studentQuest = await Repository.GetByFullKey(id, id2);
-            if (studentQuest != null)
-            {
-                if (status == QuestStatus.Completed && studentQuest.Status == QuestStatus.Pending)
-                {
-                    studentQuest.Status = QuestStatus.Completed;
-                    Repository.Update(studentQuest);
-                    await UnitOfWork.Save();
-                    return CreatedAtAction(
-                        nameof(GetAllResources),
-                        new { id },
-                        Mapper.Map<StudentQuestBriefDto>(studentQuest));
-                }
+        [NonAction]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override Task<ActionResult<List<QuestDetailedDto>>> GetAllResources(int id) => base.GetAllResources(id);
 
-                return BadRequest("Quest already exists");
-            }
-
-            studentQuest = new StudentQuest {StudentId = id, QuestId = id2, Status = status};
-            Repository.Add(studentQuest);
-            try
-            {
-                await UnitOfWork.Save();
-            }
-            catch (ConstraintException)
-            {
-                return BadRequest("Wrong primary key. Check if its components exist");
-            }
-            
-            return CreatedAtAction(
-                nameof(GetAllResources),
-                new {id},
-                Mapper.Map<StudentQuestBriefDto>(studentQuest));
-        }
+        [NonAction]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override Task<ActionResult<StudentQuestBriefDto>> CreateResource(int id, int id2) =>
+            base.CreateResource(id, id2);
     }
 }
