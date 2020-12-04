@@ -39,7 +39,7 @@ namespace QuestStore.Core.Services
             }
             else
             {
-                studentArtifact = new StudentArtifact {StudentId = studentId, ArtifactId = artifactId, PurchasedQuantity = 1};
+                studentArtifact = new StudentArtifact {StudentId = studentId, ArtifactId = artifactId, PurchasedQuantity = 1}; 
                 student.StudentArtifacts ??= new List<StudentArtifact> {studentArtifact};
             }
 
@@ -90,6 +90,29 @@ namespace QuestStore.Core.Services
             artifact.Quantity--;
             await _unitOfWork.Save();
             return true;
+        }
+
+        public async Task StudentReturnArtifact(int studentId, int artifactId)
+        {
+            var student = await _unitOfWork.GenericRepository<Student>().GetById(studentId);
+            if (student == null) throw new ArgumentException("There is no student with the given id.");
+
+            var artifact = await _unitOfWork.GenericRepository<Artifact>().GetById(artifactId);
+            if (artifact == null) throw new ArgumentException("There is no artifact with the given id.");
+
+            var studentArtifact = await _unitOfWork.LinkingRepository<StudentArtifact>()
+                .GetByFullKey(studentId, artifactId);
+            if (studentArtifact == null) throw new ArgumentException("Student does not have the given artifact.");
+
+            student.Coins += artifact.Cost;
+            artifact.Quantity++;
+            studentArtifact.PurchasedQuantity--;
+            if (studentArtifact.PurchasedQuantity <= 0)
+            {
+                _unitOfWork.LinkingRepository<StudentArtifact>().Delete(studentArtifact);
+            }
+
+            await _unitOfWork.Save();
         }
     }
 }
